@@ -1,7 +1,6 @@
-// Alric Transportation - Unified JavaScript
-// Firebase Configuration - Using CDN imports instead of modules
+// Alric Transportation - Unified JavaScript (Cleaned & Debugged)
+// Firebase Configuration - Using CDN imports
 
-// Firebase will be loaded via CDN in HTML, so we reference the global objects
 const firebaseConfig = {
   apiKey: "AIzaSyAa_GIteOi3r4GtdL8mFD7TkrOr1fE6GdE",
   authDomain: "alrictransportation.firebaseapp.com",
@@ -26,11 +25,14 @@ function initializeFirebase() {
                 analytics = firebase.analytics();
             }
             console.log('Firebase initialized successfully');
+            return true;
         } else {
             console.warn('Firebase not loaded, using fallback functionality');
+            return false;
         }
     } catch (error) {
         console.warn('Firebase initialization failed, using fallback:', error);
+        return false;
     }
 }
 
@@ -161,7 +163,7 @@ async function handleContactForm(e) {
         serviceNeeded: formData.get('serviceNeeded') || '',
         urgency: formData.get('urgency') || '',
         message: formData.get('message') || '',
-        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date().toISOString(),
         type: 'contact_inquiry'
     };
 
@@ -170,7 +172,7 @@ async function handleContactForm(e) {
             await db.collection('contacts').add(contactData);
             console.log('Contact form submitted to Firebase');
         } else {
-            // Fallback - log to console or send to alternative endpoint
+            // Fallback - log to console for development
             console.log('Contact form data (Firebase unavailable):', contactData);
         }
         
@@ -192,6 +194,8 @@ async function handleApplicationForm(e) {
     }
 
     const formData = new FormData(e.target);
+    const trackingId = `AT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+    
     const applicationData = {
         firstName: formData.get('appFirstName'),
         lastName: formData.get('appLastName'),
@@ -206,15 +210,13 @@ async function handleApplicationForm(e) {
         insurance: formData.get('insurance') || '',
         consent: formData.get('consent') === 'on',
         terms: formData.get('terms') === 'on',
-        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date().toISOString(),
         type: 'service_application',
-        status: 'pending'
+        status: 'pending',
+        trackingId: trackingId
     };
 
     try {
-        let trackingId = `AT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
-        applicationData.trackingId = trackingId;
-        
         if (db && db.collection) {
             await db.collection('applications').add(applicationData);
             console.log('Application submitted to Firebase');
@@ -222,7 +224,7 @@ async function handleApplicationForm(e) {
             console.log('Application data (Firebase unavailable):', applicationData);
         }
         
-        showSuccessMessage('applicationSuccess', 'Application submitted! We\'ll contact you within 24 hours. Your tracking ID is: ' + trackingId);
+        showSuccessMessage('applicationSuccess', `Application submitted! We'll contact you within 24 hours. Your tracking ID is: ${trackingId}`);
         e.target.reset();
         
     } catch (error) {
@@ -246,7 +248,7 @@ async function handleReviewForm(e) {
         rating: parseInt(formData.get('rating')),
         reviewText: formData.get('reviewText'),
         customerEmail: formData.get('customerEmail') || '',
-        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date().toISOString(),
         approved: false
     };
 
@@ -363,8 +365,13 @@ function setupSearchAndFilter() {
             const faqItems = document.querySelectorAll('.faq-item');
             
             faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
-                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                const questionElement = item.querySelector('.faq-question span');
+                const answerElement = item.querySelector('.faq-answer');
+                
+                if (!questionElement || !answerElement) return;
+                
+                const question = questionElement.textContent.toLowerCase();
+                const answer = answerElement.textContent.toLowerCase();
                 
                 if (question.includes(searchTerm) || answer.includes(searchTerm)) {
                     item.style.display = 'block';
@@ -375,6 +382,7 @@ function setupSearchAndFilter() {
                 }
             });
             
+            // Reset category filter when searching
             if (searchTerm) {
                 document.querySelectorAll('.category-btn').forEach(btn => {
                     btn.classList.remove('active');
@@ -401,6 +409,10 @@ function setupSearchAndFilter() {
                     section.style.display = 'none';
                 }
             });
+            
+            // Clear search when filtering by category
+            const faqSearch = document.getElementById('faqSearch');
+            if (faqSearch) faqSearch.value = '';
         });
     });
 
@@ -449,7 +461,10 @@ async function trackService() {
     const errorMessage = document.getElementById('errorMessage');
     const displayTrackingId = document.getElementById('displayTrackingId');
     
-    if (!trackingInput || !trackingResults || !errorMessage) return;
+    if (!trackingInput || !trackingResults || !errorMessage) {
+        console.error('Required tracking elements not found');
+        return;
+    }
     
     const inputValue = trackingInput.value.trim();
     
@@ -474,51 +489,46 @@ async function trackService() {
                 const data = doc.data();
                 found = true;
                 
-                if (displayTrackingId) {
-                    displayTrackingId.textContent = data.trackingId;
-                }
-                
-                errorMessage.classList.remove('show');
-                trackingResults.classList.add('show');
-                trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                
-                updateTrackingDisplay(data);
+                displayTrackingResults(data, inputValue.toUpperCase());
             } else {
-                // Search by phone number
-                const phoneQuery = applicationsRef.where('phone', '==', inputValue);
-                const phoneSnapshot = await phoneQuery.get();
+                // Search by phone number (try with and without formatting)
+                const cleanPhone = inputValue.replace(/\D/g, '');
+                const phoneQueries = [
+                    applicationsRef.where('phone', '==', inputValue),
+                    applicationsRef.where('phone', '==', cleanPhone)
+                ];
                 
-                if (!phoneSnapshot.empty) {
-                    const doc = phoneSnapshot.docs[0];
-                    const data = doc.data();
-                    found = true;
-                    
-                    if (displayTrackingId) {
-                        displayTrackingId.textContent = data.trackingId || 'Phone lookup';
+                for (const phoneQuery of phoneQueries) {
+                    const phoneSnapshot = await phoneQuery.get();
+                    if (!phoneSnapshot.empty) {
+                        const doc = phoneSnapshot.docs[0];
+                        const data = doc.data();
+                        found = true;
+                        
+                        displayTrackingResults(data, data.trackingId || 'Phone lookup');
+                        break;
                     }
-                    
-                    errorMessage.classList.remove('show');
-                    trackingResults.classList.add('show');
-                    trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    
-                    updateTrackingDisplay(data);
                 }
             }
         }
         
         if (!found) {
-            // Fallback demo for testing
-            const testIds = ['AT-2025-001234', 'BK-MD-567890', '(555) 123-4567', '5551234567'];
-            if (testIds.some(id => inputValue.toLowerCase().includes(id.toLowerCase()))) {
-                if (displayTrackingId) {
-                    displayTrackingId.textContent = inputValue.toUpperCase();
-                }
+            // Demo fallback for testing
+            const testIds = ['AT-2025-001234', 'BK-MD-567890'];
+            const testPhones = ['5551234567', '(555) 123-4567'];
+            
+            if (testIds.some(id => inputValue.toUpperCase().includes(id)) ||
+                testPhones.some(phone => inputValue.includes(phone) || inputValue.replace(/\D/g, '').includes(phone.replace(/\D/g, '')))) {
                 
-                errorMessage.classList.remove('show');
-                trackingResults.classList.add('show');
-                trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const demoData = {
+                    status: 'pending',
+                    firstName: 'Demo',
+                    lastName: 'User',
+                    primaryService: 'Medical Transport',
+                    timestamp: new Date()
+                };
                 
-                updateTrackingDisplay({ status: 'pending' });
+                displayTrackingResults(demoData, inputValue.toUpperCase());
             } else {
                 showTrackingError('Tracking ID not found. Please check your information and try again.');
             }
@@ -528,6 +538,23 @@ async function trackService() {
         console.error('Error tracking service:', error);
         showTrackingError('Unable to track service at this time. Please try again later.');
     }
+}
+
+// Display Tracking Results
+function displayTrackingResults(data, displayId) {
+    const trackingResults = document.getElementById('trackingResults');
+    const errorMessage = document.getElementById('errorMessage');
+    const displayTrackingId = document.getElementById('displayTrackingId');
+    
+    if (displayTrackingId) {
+        displayTrackingId.textContent = displayId;
+    }
+    
+    errorMessage.classList.remove('show');
+    trackingResults.classList.add('show');
+    trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    updateTrackingDisplay(data);
 }
 
 // Update Tracking Display
@@ -628,23 +655,70 @@ function setupMobileOptimizations() {
     setupMobileMenu();
 }
 
-// Mobile Menu Setup
+// Mobile Menu Setup (Single, cleaned version)
 function setupMobileMenu() {
-    const nav = document.querySelector('nav');
-    if (!nav) return;
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
     
-    if (window.innerWidth <= 768) {
-        const navLinks = nav.querySelector('.nav-links');
-        if (navLinks && !nav.querySelector('.mobile-menu-toggle')) {
-            const toggle = document.createElement('button');
-            toggle.className = 'mobile-menu-toggle';
-            toggle.innerHTML = '☰';
-            toggle.addEventListener('click', () => {
-                navLinks.classList.toggle('mobile-open');
-            });
-            nav.appendChild(toggle);
+    if (!mobileToggle || !navLinks) {
+        console.log('Mobile menu elements not found - creating fallback for small screens');
+        
+        // Create mobile menu toggle if it doesn't exist and we're on mobile
+        if (window.innerWidth <= 768) {
+            const nav = document.querySelector('nav');
+            const existingNavLinks = nav?.querySelector('.nav-links');
+            
+            if (nav && existingNavLinks && !nav.querySelector('.mobile-menu-toggle')) {
+                const toggle = document.createElement('button');
+                toggle.className = 'mobile-menu-toggle';
+                toggle.innerHTML = '☰';
+                toggle.setAttribute('aria-label', 'Toggle mobile menu');
+                
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    existingNavLinks.classList.toggle('mobile-open');
+                    this.classList.toggle('open');
+                });
+                
+                nav.appendChild(toggle);
+            }
         }
+        return;
     }
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        navLinks.classList.toggle('mobile-open');
+        this.classList.toggle('open');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        }
+    });
+    
+    // Close menu when clicking on a nav link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        });
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        }
+    });
 }
 
 // Utility Functions
@@ -673,6 +747,8 @@ function showErrorMessage(message) {
         z-index: 9999;
         transform: translateX(100%);
         transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
     `;
     
     document.body.appendChild(toast);
@@ -687,87 +763,5 @@ function showErrorMessage(message) {
     }, 4000);
 }
 
-// Global function for tracking (called from HTML onclick)
+// Global functions for HTML onclick attributes
 window.trackService = trackService;
-
-// Add this at the beginning of setupMobileMenu() function
-function setupMobileMenu() {
-    console.log('setupMobileMenu called, window width:', window.innerWidth);
-    
-    const nav = document.querySelector('nav');
-    if (!nav) {
-        console.log('Nav element not found');
-        return;
-    }
-    
-    console.log('Nav element found');
-    
-    if (window.innerWidth <= 768) {
-        const navLinks = nav.querySelector('.nav-links');
-        console.log('Nav links found:', !!navLinks);
-        
-        const existingToggle = nav.querySelector('.mobile-menu-toggle');
-        console.log('Existing toggle found:', !!existingToggle);
-        
-        if (navLinks && !existingToggle) {
-            const toggle = document.createElement('button');
-            toggle.className = 'mobile-menu-toggle';
-            toggle.innerHTML = '☰';
-            toggle.style.cssText = 'background: red; color: white; padding: 10px; font-size: 20px; border: none;'; // Temporary visible styling
-            console.log('Creating toggle button');
-            
-            toggle.addEventListener('click', () => {
-                console.log('Toggle clicked');
-                navLinks.classList.toggle('mobile-open');
-            });
-            nav.appendChild(toggle);
-            console.log('Toggle button added to nav');
-        }
-    }
-}
-// Mobile Menu Setup - Add this to your unified JavaScript
-function setupMobileMenu() {
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (!mobileToggle || !navLinks) {
-        console.warn('Mobile menu elements not found');
-        return;
-    }
-    
-    // Toggle mobile menu
-    mobileToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        navLinks.classList.toggle('mobile-open');
-        mobileToggle.classList.toggle('open');
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-            navLinks.classList.remove('mobile-open');
-            mobileToggle.classList.remove('open');
-        }
-    });
-    
-    // Close menu when clicking on a nav link
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('mobile-open');
-            mobileToggle.classList.remove('open');
-        });
-    });
-    
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            navLinks.classList.remove('mobile-open');
-            mobileToggle.classList.remove('open');
-        }
-    });
-}
-
-// Remove the old mobile menu setup function and replace it with this one
-// Make sure to call setupMobileMenu() in your initializeApp() function
