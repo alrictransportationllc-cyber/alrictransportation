@@ -435,20 +435,23 @@
             }
         }
 
-        // Check for tracking ID in URL on page load
+        // Check for tracking ID in URL on page load (only on tracking pages)
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const trackId = urlParams.get('track');
-            
-            if (trackId) {
-                // Wait for the page to fully load, then auto-track
-                setTimeout(() => {
-                    const trackingInput = document.getElementById('trackingInput');
-                    if (trackingInput && window.trackService) {
-                        trackingInput.value = trackId;
-                        window.trackService();
-                    }
-                }, 1000);
+            // Only run URL tracking check if we're on the tracking page
+            if (document.getElementById('trackingInput') && window.location.search.includes('track=')) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const trackId = urlParams.get('track');
+                
+                if (trackId) {
+                    // Wait for the page to fully load, then auto-track
+                    setTimeout(() => {
+                        const trackingInput = document.getElementById('trackingInput');
+                        if (trackingInput && window.trackService) {
+                            trackingInput.value = trackId;
+                            window.trackService();
+                        }
+                    }, 1500);
+                }
             }
         });
 
