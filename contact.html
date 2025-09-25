@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Alric Transportation | Get Quote & Apply</title>
+    <meta name="description" content="Contact Alric Transportation for medical supply transport services. Get a quote, apply for employment, or reach our customer service team.">
+    <meta name="keywords" content="contact alric transportation, medical transport quote, employment application, customer service">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alrictransportation.com/contact">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: drift 8s ease-in-out infinite alternate;
+            top: -10%;
+            left: -10%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: drift 6s ease-in-out infinite alternate-reverse;
+            bottom: -10%;
+            right: -10%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            animation: bounceInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: bounceInUp 1s ease-out 0.3s both;
+        }
+
+        /* Contact Info Section */
+        .contact-info {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .contact-card h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: #4facfe;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: #2c3e50;
+        }
+
+        /* Forms Section */
+        .forms-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .forms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .form-wrapper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .form-wrapper:nth-child(2) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            animation: slideInRight 1s ease-out;
+        }
+
+        .form-wrapper h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transform: scale(1.02);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .map-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(30px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-30px);
+            }
+            80% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 30px) rotate(3deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .forms-container { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <h1>Alric Transportation</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="track.html">Track</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get in Touch</h1>
+                <p>Ready to partner with us? We're here to help with all your medical transportation needs</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-info">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Phone Support</h3>
+                    <p>24/7 Customer Service</p>
+                    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                    <p>Emergency Line</p>
+                    <p><a href="tel:+15559876543">+1 (555) 987-6543</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email Us</h3>
+                    <p>General Inquiries</p>
+                    <p><a href="mailto:info@alrictransportation.com">info@alrictransportation.com</a></p>
+                    <p>Emergency Services</p>
+                    <p><a href="mailto:emergency@alrictransportation.com">emergency@alrictransportation.com</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Visit Us</h3>
+                    <p>123 Medical Drive</p>
+                    <p>Healthcare City, HC 12345</p>
+                    <p>Hours: Mon-Fri 8AM-6PM</p>
+                    <p>Emergency: 24/7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="forms-section">
+        <div class="container">
+            <div class="forms-container">
+                <!-- Contact Form -->
+                <div class="form-wrapper">
+                    <h3>Get a Quote</h3>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactFirstName">First Name *</label>
+                                <input type="text" id="contactFirstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactLastName">Last Name *</label>
+                                <input type="text" id="contactLastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address *</label>
+                                <input type="email" id="contactEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number *</label>
+                                <input type="tel" id="contactPhone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactCompany">Company/Organization</label>
+                            <input type="text" id="contactCompany" name="company">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactService">Service Needed *</label>
+                            <select id="contactService" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="prescription-delivery">Prescription Delivery</option>
+                                <option value="medical-supply">Medical Supply Transport</option>
+                                <option value="emergency">Emergency Delivery</option>
+                                <option value="pharmacy">Pharmacy Services</option>
+                                <option value="cold-chain">Cold Chain Transport</option>
+                                <option value="laboratory">Laboratory Services</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactPickup">Pickup Location *</label>
+                                <input type="text" id="contactPickup" name="pickup" placeholder="City, State" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactDelivery">Delivery Location *</label>
+                                <input type="text" id="contactDelivery" name="delivery" placeholder="City, State" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactUrgency">Urgency Level *</label>
+                            <select id="contactUrgency" name="urgency" required>
+                                <option value="">Select urgency</option>
+                                <option value="emergency">Emergency (ASAP)</option>
+                                <option value="same-day">Same Day</option>
+                                <option value="next-day">Next Day</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="regular">Regular Service</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Additional Details</label>
+                            <textarea id="contactMessage" name="message" rows="4" placeholder="Please describe your transportation needs, special requirements, or any questions..."></textarea>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="contactConsent" name="consent" required>
+                            <label for="contactConsent">I agree to be contacted regarding my inquiry</label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Get Quote</button>
+                    </form>
+                </div>
+
+                <!-- Application Form -->
+                <div class="form-wrapper">
+                    <h3>Join Our Team</h3>
+                    <form id="applicationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appFirstName">First Name *</label>
+                                <input type="text" id="appFirstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appLastName">Last Name *</label>
+                                <input type="text" id="appLastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appEmail">Email Address *</label>
+                                <input type="email" id="appEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appPhone">Phone Number *</label>
+                                <input type="tel" id="appPhone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appAddress">Full Address *</label>
+                            <input type="text" id="appAddress" name="address" placeholder="Street, City, State, ZIP" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appPosition">Position Applying For *</label>
+                            <select id="appPosition" name="position" required>
+                                <option value="">Select a position</option>
+                                <option value="driver">Medical Transport Driver</option>
+                                <option value="dispatcher">Dispatcher</option>
+                                <option value="customer-service">Customer Service Representative</option>
+                                <option value="operations">Operations Specialist</option>
+                                <option value="warehouse">Warehouse Associate</option>
+                                <option value="management">Management Position</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appExperience">Years of Experience</label>
+                                <select id="appExperience" name="experience">
+                                    <option value="">Select experience</option>
+                                    <option value="0-1">0-1 years</option>
+                                    <option value="2-5">2-5 years</option>
+                                    <option value="6-10">6-10 years</option>
+                                    <option value="10+">10+ years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="appLicense">Valid Driver's License?</label>
+                                <select id="appLicense" name="license">
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appAvailability">Availability *</label>
+                            <select id="appAvailability" name="availability" required>
+                                <option value="">Select availability</option>
+                                <option value="full-time">Full Time</option>
+                                <option value="part-time">Part Time</option>
+                                <option value="weekends">Weekends Only</option>
+                                <option value="on-call">On-Call</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appBackground">Relevant Background</label>
+                            <textarea id="appBackground" name="background" rows="4" placeholder="Tell us about your relevant experience, skills, or qualifications..."></textarea>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="appBackground" name="backgroundCheck" required>
+                            <label for="appBackground">I consent to background check and drug screening</label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container">
+                <div class="map-placeholder">
+                    🗺️ Interactive Map Coming Soon
+                </div>
+                <h3>Our Service Area</h3>
+                <p>We provide medical transportation services throughout the metropolitan area and surrounding regions. Contact us to confirm coverage in your specific location.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="services.html">Services</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="legal.html">Legal</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="services.html">Prescription Delivery</a>
+                    <a href="services.html">Medical Supplies</a>
+                    <a href="services.html">Emergency Transport</a>
+                    <a href="track.html">Track Shipment</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📧 info@alrictransportation.com</p>
+                    <p>📍 123 Medical Drive, Healthcare City</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.contact-card, .form-wrapper').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Handle contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const contactData = Object.fromEntries(formData);
+            
+            // Show success message
+            alert('Thank you for your inquiry! We will contact you within 24 hours with a detailed quote.');
+            
+            // Reset form
+            this.reset();
+            
+            console.log('Contact form submitted:', contactData);
+        });
+
+        // Handle application form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const applicationData = Object.fromEntries(formData);
+            
+            // Show success message
+            alert('Thank you for your application! Our HR team will review your submission and contact you if there is a match for current openings.');
+            
+            // Reset form
+            this.reset();
+            
+            console.log('Application submitted:', applicationData);
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(30, 60, 114, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
