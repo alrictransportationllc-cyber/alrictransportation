@@ -239,7 +239,12 @@
         </div>
     </footer>
 
-    <!-- Unified JavaScript -->
-    <script type="module" src="js/unified-scripts.js"></script>
+    <!-- Firebase CDN Scripts - MUST load BEFORE your JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+    
+    <!-- Your unified JavaScript file - load AFTER Firebase -->
+    <script src="js/unified-scripts.js"></script>
 </body>
 </html>
