@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Transportation Services - Alric Transportation</title>
-    <meta name="description" content="Professional medication delivery, medical supply transport, emergency services, and pharmacy logistics. Temperature-controlled, secure transport solutions.">
-    <meta name="keywords" content="medication delivery, medical transport services, prescription delivery, medical supply shipping, pharmacy logistics">
-    <meta name="robots" content="index, follow">
+    <title>Our Services - Alric Transportation | Medical Transportation Services</title>
+    <meta name="description" content="Comprehensive medical transportation services including wheelchair accessible rides, medication delivery, student transportation, and airport transfers. Professional and compassionate care.">
+    <meta name="keywords" content="medical transportation services, wheelchair accessible rides, medication delivery, student rides, airport transportation, on-demand rides">
+    <meta name="author" content="Alric Transportation">
     <link rel="canonical" href="https://alrictransportation.com/services">
+    <meta property="og:title" content="Our Services - Alric Transportation">
+    <meta property="og:description" content="Professional medical transportation and specialized ride services">
+    <meta property="og:image" content="assets/img/alrictlogo.png">
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -16,51 +20,65 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --success-color: #10B981;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: var(--shadow);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
         .logo img {
             height: 50px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .nav-links {
@@ -70,21 +88,39 @@
         }
 
         .nav-links a {
-            color: white;
             text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #ffd700;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 140px 0 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -93,172 +129,185 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            top: 20%;
-            left: 10%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            animation: float 4s ease-in-out infinite reverse;
-            top: 60%;
-            right: 15%;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
+            color: var(--white);
             margin-bottom: 1rem;
-            animation: slideInDown 1s ease-out;
+            animation: slideInUp 1s ease-out;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 2rem;
             opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         /* Services Section */
         .services {
             padding: 80px 0;
-            background: #f8f9fa;
+            background: var(--white);
         }
 
-        .services h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2c3e50;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .service-item {
-            background: white;
+        .service-detail {
+            background: var(--light-gray);
+            margin: 3rem 0;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out;
         }
 
-        .service-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        .service-detail:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .service-header {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            color: white;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--white);
             padding: 2rem;
-            text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
-        .service-header::before {
+        .service-header::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 10s linear infinite;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid var(--accent-color);
+        }
+
+        .service-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .service-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
         }
 
         .service-content {
-            padding: 2rem;
+            padding: 3rem 2rem 2rem;
         }
 
         .service-features {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
-        .service-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .service-features li::before {
-            content: '✓';
-            color: #27ae60;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Review Section */
-        .reviews {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .reviews h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-        }
-
-        .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
 
-        .review-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid #4facfe;
-            animation: slideInRight 1s ease-out;
+        .feature-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .review-rating {
-            color: #ffd700;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        }
+
+        /* Review Form Section */
+        .review-section {
+            background: linear-gradient(135deg, var(--light-gray), var(--white));
+            padding: 80px 0;
+            margin-top: 4rem;
         }
 
         .review-form {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--white);
             padding: 3rem;
             border-radius: 20px;
-            margin-top: 3rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .review-form h3 {
+            color: var(--secondary-color);
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         .form-group {
@@ -268,59 +317,74 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            color: var(--text-dark);
+            font-weight: 600;
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 12px;
-            border: none;
+            border: 2px solid var(--light-gray);
             border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            background: var(--white);
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-            transform: scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
         }
 
-        .submit-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: #ddd;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .success-message {
+            background: var(--success-color);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--secondary-color) 100%);
+            color: var(--white);
             padding: 3rem 0 1rem;
-            text-align: center;
         }
 
         .footer-content {
@@ -331,343 +395,383 @@
         }
 
         .footer-section h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            color: #ffd700;
         }
 
+        .footer-section p,
         .footer-section a {
-            color: #bdc3c7;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+            line-height: 1.8;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--primary-color);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 1rem;
-            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr; }
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .service-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="track.html">Track</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Our Professional Services</h1>
-                <p>Comprehensive medical transportation solutions for all your healthcare logistics needs</p>
-            </div>
+        <div class="hero-content">
+            <h1>Our Transportation Services</h1>
+            <p>Comprehensive medical and specialized transportation solutions tailored to your needs</p>
         </div>
     </section>
 
+    <!-- Services Section -->
     <section class="services">
         <div class="container">
-            <h2>Medical Transportation Services</h2>
-            <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">💊</div>
-                        <h3>Prescription Delivery</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>Professional door-to-door prescription medication delivery with strict temperature and security protocols.</p>
-                        <ul class="service-features">
-                            <li>Temperature-controlled transport</li>
-                            <li>Secure chain of custody</li>
-                            <li>Same-day delivery available</li>
-                            <li>Real-time tracking</li>
-                            <li>Signature confirmation</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Pharmacies, patients, healthcare facilities</p>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">🏥</div>
-                        <h3>Medical Supply Transport</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>Specialized transportation for medical equipment, supplies, and diagnostic materials.</p>
-                        <ul class="service-features">
-                            <li>Sterile packaging protocols</li>
-                            <li>Equipment-specific handling</li>
-                            <li>Scheduled and on-demand service</li>
-                            <li>Insurance coverage verification</li>
-                            <li>Regulatory compliance</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Hospitals, clinics, medical device companies</p>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">🚨</div>
-                        <h3>Emergency Delivery</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>24/7 emergency medical supply and medication delivery for critical situations.</p>
-                        <ul class="service-features">
-                            <li>24/7 availability</li>
-                            <li>Priority dispatch</li>
-                            <li>Direct hospital delivery</li>
-                            <li>Emergency contact protocols</li>
-                            <li>Expedited processing</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Emergency departments, urgent care, critical patients</p>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">⚕️</div>
-                        <h3>Pharmacy Services</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>Comprehensive pharmacy-to-pharmacy and pharmacy-to-patient delivery solutions.</p>
-                        <ul class="service-features">
-                            <li>Controlled substance transport</li>
-                            <li>Bulk medication delivery</li>
-                            <li>Inventory management support</li>
-                            <li>Route optimization</li>
-                            <li>Compliance documentation</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Pharmacy chains, independent pharmacies, patients</p>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">❄️</div>
-                        <h3>Cold Chain Transport</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>Specialized temperature-controlled transport for vaccines, biologics, and sensitive medications.</p>
-                        <ul class="service-features">
-                            <li>Continuous temperature monitoring</li>
-                            <li>Validation documentation</li>
-                            <li>Backup cooling systems</li>
-                            <li>Data logging capabilities</li>
-                            <li>Quality assurance protocols</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Vaccine distributors, research facilities, specialty pharmacies</p>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-header">
-                        <div class="service-icon">🩺</div>
-                        <h3>Laboratory Services</h3>
-                    </div>
-                    <div class="service-content">
-                        <p>Secure transport of laboratory specimens, samples, and diagnostic materials.</p>
-                        <ul class="service-features">
-                            <li>Specimen integrity protocols</li>
-                            <li>Biohazard compliance</li>
-                            <li>Chain of custody tracking</li>
-                            <li>Time-sensitive delivery</li>
-                            <li>Laboratory partnerships</li>
-                        </ul>
-                        <p><strong>Ideal for:</strong> Laboratories, clinics, diagnostic centers</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="reviews">
-        <div class="container">
-            <h2>What Our Clients Say</h2>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; color: #666;">Trusted by healthcare professionals across the region</p>
             
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p>"Alric Transportation has been our go-to partner for medication deliveries. Their reliability and professionalism are unmatched."</p>
-                    <h4>- Dr. Sarah Johnson, Metro General Hospital</h4>
+            <!-- Medical Transportation -->
+            <div class="service-detail fade-in" id="medical">
+                <div class="service-header">
+                    <h2><span class="service-icon">🏥</span> Medical Transportation</h2>
+                    <p>Professional transportation to medical facilities with trained staff</p>
                 </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p>"The cold chain transport service saved our vaccine program. Temperature monitoring and documentation were perfect."</p>
-                    <h4>- Mark Williams, City Health Department</h4>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-rating">★★★★★</div>
-                    <p>"Emergency deliveries when we needed them most. Fast, secure, and always on time. Highly recommended!"</p>
-                    <h4>- Lisa Chen, Regional Pharmacy Chain</h4>
-                </div>
-            </div>
-
-            <div class="review-form">
-                <h3>Share Your Experience</h3>
-                <form id="reviewForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="reviewName">Full Name *</label>
-                            <input type="text" id="reviewName" name="name" required>
+                <div class="service-content">
+                    <p>Our medical transportation service ensures safe, comfortable, and timely transport to hospitals, clinics, dialysis centers, and other medical facilities. Our trained drivers understand the importance of punctuality and comfort for medical appointments.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>🚑 Emergency Ready</h4>
+                            <p>Quick response times for urgent medical transportation needs</p>
                         </div>
-                        <div class="form-group">
-                            <label for="reviewEmail">Email Address *</label>
-                            <input type="email" id="reviewEmail" name="email" required>
+                        <div class="feature-item">
+                            <h4>👨‍⚕️ Trained Staff</h4>
+                            <p>Drivers trained in basic medical assistance and patient care</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🕐 Scheduled Rides</h4>
+                            <p>Regular appointments and recurring medical visits</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>📱 Real-time Updates</h4>
+                            <p>Live tracking and communication during transport</p>
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="reviewCompany">Company/Organization</label>
-                            <input type="text" id="reviewCompany" name="company">
+                    <a href="contact.html" class="btn btn-primary">Book Medical Transport</a>
+                </div>
+            </div>
+
+            <!-- Wheelchair/STS -->
+            <div class="service-detail fade-in" id="wheelchair">
+                <div class="service-header">
+                    <h2><span class="service-icon">♿</span> Wheelchair/STS Transportation</h2>
+                    <p>Specialized vehicles for wheelchair and stretcher transportation</p>
+                </div>
+                <div class="service-content">
+                    <p>Our wheelchair accessible and stretcher transportation services provide dignity and comfort for mobility-limited passengers. We maintain a fleet of specially equipped vehicles with hydraulic lifts and secure wheelchair restraint systems.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>♿ ADA Compliant</h4>
+                            <p>All vehicles meet ADA accessibility requirements</p>
                         </div>
-                        <div class="form-group">
-                            <label for="reviewService">Service Used *</label>
-                            <select id="reviewService" name="service" required>
-                                <option value="">Select a service</option>
-                                <option value="prescription-delivery">Prescription Delivery</option>
-                                <option value="medical-supply">Medical Supply Transport</option>
-                                <option value="emergency">Emergency Delivery</option>
-                                <option value="pharmacy">Pharmacy Services</option>
-                                <option value="cold-chain">Cold Chain Transport</option>
-                                <option value="laboratory">Laboratory Services</option>
-                            </select>
+                        <div class="feature-item">
+                            <h4>🛏️ Stretcher Service</h4>
+                            <p>Specialized stretcher transportation for bed-bound patients</p>
                         </div>
+                        <div class="feature-item">
+                            <h4>🔧 Secure Systems</h4>
+                            <p>Professional wheelchair restraint and safety systems</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>👥 Companion Seating</h4>
+                            <p>Space available for family members or caregivers</p>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-primary">Request Wheelchair Service</a>
+                </div>
+            </div>
+
+            <!-- On-Demand Rides -->
+            <div class="service-detail fade-in" id="ondemand">
+                <div class="service-header">
+                    <h2><span class="service-icon">🚗</span> On-Demand Rides</h2>
+                    <p>Flexible transportation available when you need it most</p>
+                </div>
+                <div class="service-content">
+                    <p>Our on-demand ride service provides reliable transportation for everyday needs, errands, and unexpected trips. Available 24/7 with professional drivers who prioritize your comfort and safety.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>⏰ 24/7 Availability</h4>
+                            <p>Round-the-clock service for your transportation needs</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>📞 Easy Booking</h4>
+                            <p>Simple phone or online booking system</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🎯 Local Knowledge</h4>
+                            <p>Experienced drivers familiar with local areas</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>💳 Flexible Payment</h4>
+                            <p>Multiple payment options for your convenience</p>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-primary">Request On-Demand Ride</a>
+                </div>
+            </div>
+
+            <!-- Airport Transportation -->
+            <div class="service-detail fade-in" id="airport">
+                <div class="service-header">
+                    <h2><span class="service-icon">✈️</span> Airport Transportation</h2>
+                    <p>Reliable airport pickup and drop-off services</p>
+                </div>
+                <div class="service-content">
+                    <p>Start and end your travels stress-free with our airport transportation service. We monitor flight schedules and provide punctual, comfortable rides to ensure you never miss a flight or wait after landing.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>🛫 Flight Monitoring</h4>
+                            <p>We track your flight status for timely pickups</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🧳 Luggage Assistance</h4>
+                            <p>Help with loading and unloading luggage</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🕐 Pre-scheduled</h4>
+                            <p>Book in advance for guaranteed availability</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🚗 Clean Vehicles</h4>
+                            <p>Immaculate vehicles for a pleasant journey</p>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-primary">Book Airport Transfer</a>
+                </div>
+            </div>
+
+            <!-- Student Rides -->
+            <div class="service-detail fade-in" id="student">
+                <div class="service-header">
+                    <h2><span class="service-icon">🎓</span> Student Transportation</h2>
+                    <p>Safe and reliable rides for students of all ages</p>
+                </div>
+                <div class="service-content">
+                    <p>Our student transportation service provides safe, dependable rides to and from educational institutions. We prioritize safety and maintain clear communication with parents and schools.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>🛡️ Safety First</h4>
+                            <p>Background-checked drivers and safety protocols</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>📱 Parent Updates</h4>
+                            <p>Real-time notifications to parents about pickups</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>📅 Regular Schedule</h4>
+                            <p>Consistent daily transportation schedules</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🏫 School Coordination</h4>
+                            <p>Direct communication with educational institutions</p>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-primary">Arrange Student Transport</a>
+                </div>
+            </div>
+
+            <!-- Medication Delivery -->
+            <div class="service-detail fade-in" id="medication">
+                <div class="service-header">
+                    <h2><span class="service-icon">💊</span> Medication Delivery</h2>
+                    <p>Secure delivery of medications and medical supplies</p>
+                </div>
+                <div class="service-content">
+                    <p>Our medication delivery service ensures your prescriptions and medical supplies reach you safely and on time. We maintain proper storage conditions and provide secure, trackable delivery services.</p>
+                    
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <h4>🔒 Secure Transport</h4>
+                            <p>Locked containers and chain of custody protocols</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🌡️ Climate Control</h4>
+                            <p>Temperature-controlled transport when required</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>✅ Delivery Confirmation</h4>
+                            <p>Signature confirmation and delivery notifications</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>⚡ Same-Day Service</h4>
+                            <p>Urgent medication delivery available</p>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="btn btn-primary">Schedule Delivery</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Review Form Section -->
+    <section class="review-section">
+        <div class="container">
+            <div class="review-form">
+                <h3>Share Your Experience</h3>
+                <div class="success-message" id="reviewSuccess">
+                    Thank you for your review! Your feedback helps us improve our services.
+                </div>
+                
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="customerName">Your Name *</label>
+                        <input type="text" id="customerName" name="customerName" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="reviewRating">Rating *</label>
-                        <select id="reviewRating" name="rating" required>
-                            <option value="">Select rating</option>
-                            <option value="5">★★★★★ Excellent</option>
-                            <option value="4">★★★★☆ Very Good</option>
-                            <option value="3">★★★☆☆ Good</option>
-                            <option value="2">★★☆☆☆ Fair</option>
-                            <option value="1">★☆☆☆☆ Poor</option>
+                        <label for="serviceUsed">Service Used *</label>
+                        <select id="serviceUsed" name="serviceUsed" required>
+                            <option value="">Select a service</option>
+                            <option value="medical">Medical Transportation</option>
+                            <option value="wheelchair">Wheelchair/STS</option>
+                            <option value="ondemand">On-Demand Rides</option>
+                            <option value="airport">Airport Transportation</option>
+                            <option value="student">Student Rides</option>
+                            <option value="medication">Medication Delivery</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="reviewComment">Your Review *</label>
-                        <textarea id="reviewComment" name="comment" rows="4" placeholder="Tell us about your experience with our services..." required></textarea>
+                        <label>Rating *</label>
+                        <div class="rating" id="rating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                        <input type="hidden" id="ratingValue" name="rating" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>
-                            <input type="checkbox" name="consent" required>
-                            I agree to allow Alric Transportation to use my review for marketing purposes
-                        </label>
+                        <label for="reviewText">Your Review *</label>
+                        <textarea id="reviewText" name="reviewText" placeholder="Share your experience with our service..." required></textarea>
                     </div>
                     
-                    <button type="submit" class="submit-btn">Submit Review</button>
+                    <div class="form-group">
+                        <label for="customerEmail">Email (Optional)</label>
+                        <input type="email" id="customerEmail" name="customerEmail" placeholder="your@email.com">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
                 </form>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="services.html">Services</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="legal.html">Legal</a>
+                    <h3>Alric Transportation</h3>
+                    <p>Professional medical transportation services with compassionate care and reliability you can trust.</p>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="services.html">Services</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+                
                 <div class="footer-section">
                     <h3>Services</h3>
-                    <a href="services.html">Prescription Delivery</a>
-                    <a href="services.html">Medical Supplies</a>
-                    <a href="services.html">Emergency Transport</a>
-                    <a href="track.html">Track Shipment</a>
+                    <p><a href="#medical">Medical Transportation</a></p>
+                    <p><a href="#wheelchair">Wheelchair/STS</a></p>
+                    <p><a href="#ondemand">On-Demand Rides</a></p>
+                    <p><a href="#medication">Medication Delivery</a></p>
                 </div>
+                
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📞 (555) 123-4567</p>
                     <p>📧 info@alrictransportation.com</p>
-                    <p>📍 123 Medical Drive, Healthcare City</p>
+                    <p>📍 123 Medical Center Dr</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+                <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Animate elements on scroll
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -676,48 +780,67 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        // Observe all service items and review cards
-        document.querySelectorAll('.service-item, .review-card').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(item);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
 
-        // Handle review form submission
+        // Rating system
+        const stars = document.querySelectorAll('.star');
+        const ratingValue = document.getElementById('ratingValue');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.dataset.rating;
+                ratingValue.value = rating;
+                
+                stars.forEach(s => s.classList.remove('active'));
+                for(let i = 0; i < rating; i++) {
+                    stars[i].classList.add('active');
+                }
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const rating = this.dataset.rating;
+                stars.forEach(s => s.classList.remove('active'));
+                for(let i = 0; i < rating; i++) {
+                    stars[i].classList.add('active');
+                }
+            });
+        });
+        
+        document.getElementById('rating').addEventListener('mouseleave', function() {
+            const currentRating = ratingValue.value;
+            stars.forEach(s => s.classList.remove('active'));
+            for(let i = 0; i < currentRating; i++) {
+                stars[i].classList.add('active');
+            }
+        });
+
+        // Review form submission
         document.getElementById('reviewForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Collect form data
-            const formData = new FormData(this);
-            const reviewData = Object.fromEntries(formData);
-            
-            // Show success message
-            alert('Thank you for your review! We appreciate your feedback and will review it shortly.');
+            // Simulate form submission
+            const successMessage = document.getElementById('reviewSuccess');
+            successMessage.classList.add('show');
             
             // Reset form
             this.reset();
+            ratingValue.value = '';
+            stars.forEach(s => s.classList.remove('active'));
             
-            // In a real application, you would send this data to your server
-            console.log('Review submitted:', reviewData);
-        });
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(30, 60, 114, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
-                header.style.backdropFilter = 'none';
-            }
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
     </script>
 </body>
