@@ -1,5 +1,5 @@
-// Alric Transportation - Unified JavaScript (Cleaned & Debugged)
-// Firebase Configuration - Using CDN imports
+// Alric Transportation - Enhanced Real-Time Tracking System
+// Firebase Configuration with Realtime Database
 
 const firebaseConfig = {
   apiKey: "AIzaSyAa_GIteOi3r4GtdL8mFD7TkrOr1fE6GdE",
@@ -8,50 +8,14 @@ const firebaseConfig = {
   storageBucket: "alrictransportation.firebasestorage.app",
   messagingSenderId: "257683950593",
   appId: "1:257683950593:web:8e84e6599a517f9c284400",
-  measurementId: "G-P8EDVYFFJD"
+  measurementId: "G-P8EDVYFFJD",
+  databaseURL: "https://alrictransportation-default-rtdb.firebaseio.com/"
 };
 
 // Global Variables
 let currentRating = 0;
-let app, db, analytics;
-
-// Initialize Firebase with retry mechanism
-function initializeFirebase() {
-    try {
-        // Check if Firebase is available
-        if (typeof firebase !== 'undefined' && firebase.apps && firebase.firestore) {
-            // Check if already initialized
-            if (firebase.apps.length === 0) {
-                app = firebase.initializeApp(firebaseConfig);
-            } else {
-                app = firebase.apps[0];
-            }
-            
-            db = firebase.firestore();
-            
-            if (firebase.analytics && typeof firebase.analytics === 'function') {
-                try {
-                    analytics = firebase.analytics();
-                } catch (analyticsError) {
-                    console.log('Analytics not available:', analyticsError.message);
-                }
-            }
-            
-            console.log('Firebase initialized successfully');
-            return true;
-        } else {
-            console.warn('Firebase not fully loaded. Available:', {
-                firebase: typeof firebase !== 'undefined',
-                apps: typeof firebase !== 'undefined' && firebase.apps,
-                firestore: typeof firebase !== 'undefined' && firebase.firestore
-            });
-            return false;
-        }
-    } catch (error) {
-        console.warn('Firebase initialization failed:', error);
-        return false;
-    }
-}
+let app, db, realtimeDb, analytics;
+let currentTrackingRef = null; // For cleanup
 
 // Debug Firebase loading
 function debugFirebaseLoading() {
@@ -61,11 +25,11 @@ function debugFirebaseLoading() {
     if (typeof firebase !== 'undefined') {
         console.log('firebase.apps exists:', !!firebase.apps);
         console.log('firebase.firestore exists:', !!firebase.firestore);
+        console.log('firebase.database exists:', !!firebase.database);
         console.log('firebase.analytics exists:', !!firebase.analytics);
         console.log('firebase.initializeApp exists:', !!firebase.initializeApp);
     }
     
-    // Check if scripts are loaded
     const scripts = Array.from(document.scripts);
     const firebaseScripts = scripts.filter(script => 
         script.src.includes('firebase') || script.src.includes('gstatic.com')
@@ -78,16 +42,53 @@ function debugFirebaseLoading() {
     console.log('=== End Firebase Debug ===');
 }
 
-// Wait for Firebase to load, then initialize
+// Initialize Firebase with Realtime Database
+function initializeFirebase() {
+    try {
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.firestore && firebase.database) {
+            if (firebase.apps.length === 0) {
+                app = firebase.initializeApp(firebaseConfig);
+            } else {
+                app = firebase.apps[0];
+            }
+            
+            db = firebase.firestore(); // For structured data
+            realtimeDb = firebase.database(); // For real-time updates
+            
+            if (firebase.analytics && typeof firebase.analytics === 'function') {
+                try {
+                    analytics = firebase.analytics();
+                } catch (analyticsError) {
+                    console.log('Analytics not available:', analyticsError.message);
+                }
+            }
+            
+            console.log('Firebase initialized successfully with Realtime Database');
+            return true;
+        } else {
+            console.warn('Firebase not fully loaded. Available:', {
+                firebase: typeof firebase !== 'undefined',
+                apps: typeof firebase !== 'undefined' && firebase.apps,
+                firestore: typeof firebase !== 'undefined' && firebase.firestore,
+                database: typeof firebase !== 'undefined' && firebase.database
+            });
+            return false;
+        }
+    } catch (error) {
+        console.warn('Firebase initialization failed:', error);
+        return false;
+    }
+}
+
+// Wait for Firebase to load with retry mechanism
 function waitForFirebaseAndInit() {
     let attempts = 0;
-    const maxAttempts = 20; // Increased attempts
+    const maxAttempts = 20;
     
     function checkFirebase() {
         attempts++;
         console.log(`Checking for Firebase... attempt ${attempts}`);
         
-        // Debug on first attempt
         if (attempts === 1) {
             debugFirebaseLoading();
         }
@@ -98,11 +99,11 @@ function waitForFirebaseAndInit() {
         }
         
         if (attempts < maxAttempts) {
-            setTimeout(checkFirebase, 300); // Reduced wait time
+            setTimeout(checkFirebase, 300);
         } else {
             console.warn('Firebase failed to load after multiple attempts. Using fallback mode.');
-            debugFirebaseLoading(); // Debug again on failure
-            initializeApp(); // Initialize app without Firebase
+            debugFirebaseLoading();
+            initializeApp();
         }
     }
     
@@ -111,7 +112,6 @@ function waitForFirebaseAndInit() {
 
 // DOM Content Loaded Event Listener
 document.addEventListener('DOMContentLoaded', function() {
-    // Give Firebase scripts time to load
     setTimeout(waitForFirebaseAndInit, 100);
 });
 
@@ -141,12 +141,10 @@ function setupScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe all animation elements
     document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
         observer.observe(el);
     });
 
-    // Counter animation for statistics
     const counterObserver = new IntersectionObserver(animateCounters, observerOptions);
     document.querySelectorAll('.stat-number').forEach(counter => {
         counterObserver.observe(counter);
@@ -197,25 +195,21 @@ function setupHeaderScrollEffect() {
 
 // Form Handlers
 function setupFormHandlers() {
-    // Contact Form
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', handleContactForm);
     }
 
-    // Application Form
     const applicationForm = document.getElementById('applicationForm');
     if (applicationForm) {
         applicationForm.addEventListener('submit', handleApplicationForm);
     }
 
-    // Review Form
     const reviewForm = document.getElementById('reviewForm');
     if (reviewForm) {
         reviewForm.addEventListener('submit', handleReviewForm);
     }
 
-    // Real-time validation
     setupRealTimeValidation();
 }
 
@@ -245,7 +239,6 @@ async function handleContactForm(e) {
             await db.collection('contacts').add(contactData);
             console.log('Contact form submitted to Firebase');
         } else {
-            // Fallback - log to console for development
             console.log('Contact form data (Firebase unavailable):', contactData);
         }
         
@@ -270,6 +263,7 @@ async function handleApplicationForm(e) {
     const trackingId = `AT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
     
     const applicationData = {
+        trackingId: trackingId,
         firstName: formData.get('appFirstName'),
         lastName: formData.get('appLastName'),
         phone: formData.get('appPhone'),
@@ -286,13 +280,17 @@ async function handleApplicationForm(e) {
         timestamp: db ? firebase.firestore.Timestamp.now() : new Date().toISOString(),
         type: 'service_application',
         status: 'pending',
-        trackingId: trackingId
+        assignedDriverId: null,
+        createdAt: new Date().toISOString()
     };
 
     try {
         if (db && db.collection) {
             await db.collection('applications').add(applicationData);
             console.log('Application submitted to Firebase');
+            
+            // Create initial tracking record
+            await createTrackingRecord(applicationData);
         } else {
             console.log('Application data (Firebase unavailable):', applicationData);
         }
@@ -340,6 +338,49 @@ async function handleReviewForm(e) {
     } catch (error) {
         console.error('Error submitting review:', error);
         showErrorMessage('Failed to submit review. Please try again.');
+    }
+}
+
+// Create initial tracking record when booking is made
+async function createTrackingRecord(applicationData) {
+    if (!realtimeDb) return;
+    
+    const trackingId = applicationData.trackingId;
+    
+    const initialTrackingData = {
+        trackingId: trackingId,
+        status: 'pending',
+        customer: {
+            name: `${applicationData.firstName} ${applicationData.lastName}`,
+            phone: applicationData.phone,
+            email: applicationData.email
+        },
+        service: {
+            type: applicationData.primaryService,
+            medicalNeeds: applicationData.medicalNeeds || '',
+            pickupAddress: applicationData.address
+        },
+        timeline: {
+            booked: {
+                time: new Date().toISOString(),
+                completed: true
+            },
+            driverAssigned: { completed: false },
+            dispatched: { completed: false },
+            enroute: { completed: false },
+            arrived: { completed: false },
+            intransit: { completed: false },
+            completed: { completed: false }
+        },
+        messages: {},
+        lastUpdated: firebase.database.ServerValue.TIMESTAMP
+    };
+    
+    try {
+        await realtimeDb.ref(`live_tracking/${trackingId}`).set(initialTrackingData);
+        console.log(`Tracking record created for ${trackingId}`);
+    } catch (error) {
+        console.error('Error creating tracking record:', error);
     }
 }
 
@@ -430,7 +471,6 @@ function resetRatingSystem() {
 
 // FAQ Search and Filter
 function setupSearchAndFilter() {
-    // FAQ Search
     const faqSearch = document.getElementById('faqSearch');
     if (faqSearch) {
         faqSearch.addEventListener('input', function() {
@@ -455,7 +495,6 @@ function setupSearchAndFilter() {
                 }
             });
             
-            // Reset category filter when searching
             if (searchTerm) {
                 document.querySelectorAll('.category-btn').forEach(btn => {
                     btn.classList.remove('active');
@@ -466,7 +505,6 @@ function setupSearchAndFilter() {
         });
     }
 
-    // Category Filtering
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -483,19 +521,16 @@ function setupSearchAndFilter() {
                 }
             });
             
-            // Clear search when filtering by category
             const faqSearch = document.getElementById('faqSearch');
             if (faqSearch) faqSearch.value = '';
         });
     });
 
-    // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', function() {
             const answer = this.nextElementSibling;
             const icon = this.querySelector('.faq-icon');
             
-            // Close all other FAQs
             document.querySelectorAll('.faq-question').forEach(q => {
                 if (q !== this) {
                     q.classList.remove('active');
@@ -505,7 +540,6 @@ function setupSearchAndFilter() {
                 }
             });
             
-            // Toggle current FAQ
             this.classList.toggle('active');
             answer.classList.toggle('active');
             if (icon) {
@@ -527,12 +561,11 @@ function setupTrackingSystem() {
     }
 }
 
-// Track Service Function
+// Enhanced Track Service with Real-Time Updates
 async function trackService() {
     const trackingInput = document.getElementById('trackingInput');
     const trackingResults = document.getElementById('trackingResults');
     const errorMessage = document.getElementById('errorMessage');
-    const displayTrackingId = document.getElementById('displayTrackingId');
     
     if (!trackingInput || !trackingResults || !errorMessage) {
         console.error('Required tracking elements not found');
@@ -546,46 +579,19 @@ async function trackService() {
         return;
     }
 
+    // Stop any existing tracking
+    stopRealTimeTracking();
+
     try {
-        let found = false;
+        // First, find the tracking record in Firestore
+        const trackingData = await findTrackingRecord(inputValue);
         
-        if (db && db.collection) {
-            // Try to search Firebase
-            const applicationsRef = db.collection('applications');
+        if (trackingData) {
+            displayTrackingResults(trackingData, trackingData.trackingId);
             
-            // Search by tracking ID
-            const trackingQuery = applicationsRef.where('trackingId', '==', inputValue.toUpperCase());
-            const trackingSnapshot = await trackingQuery.get();
-            
-            if (!trackingSnapshot.empty) {
-                const doc = trackingSnapshot.docs[0];
-                const data = doc.data();
-                found = true;
-                
-                displayTrackingResults(data, inputValue.toUpperCase());
-            } else {
-                // Search by phone number (try with and without formatting)
-                const cleanPhone = inputValue.replace(/\D/g, '');
-                const phoneQueries = [
-                    applicationsRef.where('phone', '==', inputValue),
-                    applicationsRef.where('phone', '==', cleanPhone)
-                ];
-                
-                for (const phoneQuery of phoneQueries) {
-                    const phoneSnapshot = await phoneQuery.get();
-                    if (!phoneSnapshot.empty) {
-                        const doc = phoneSnapshot.docs[0];
-                        const data = doc.data();
-                        found = true;
-                        
-                        displayTrackingResults(data, data.trackingId || 'Phone lookup');
-                        break;
-                    }
-                }
-            }
-        }
-        
-        if (!found) {
+            // Start real-time updates
+            startRealTimeTracking(trackingData.trackingId);
+        } else {
             // Demo fallback for testing
             const testIds = ['AT-2025-001234', 'BK-MD-567890'];
             const testPhones = ['5551234567', '(555) 123-4567'];
@@ -594,14 +600,15 @@ async function trackService() {
                 testPhones.some(phone => inputValue.includes(phone) || inputValue.replace(/\D/g, '').includes(phone.replace(/\D/g, '')))) {
                 
                 const demoData = {
-                    status: 'pending',
+                    trackingId: inputValue.toUpperCase(),
+                    status: 'enroute',
                     firstName: 'Demo',
-                    lastName: 'User',
-                    primaryService: 'Medical Transport',
-                    timestamp: new Date()
+                    lastName: 'Customer',
+                    primaryService: 'Medical Transportation'
                 };
                 
                 displayTrackingResults(demoData, inputValue.toUpperCase());
+                startDemoRealTimeUpdates(inputValue.toUpperCase());
             } else {
                 showTrackingError('Tracking ID not found. Please check your information and try again.');
             }
@@ -610,6 +617,172 @@ async function trackService() {
     } catch (error) {
         console.error('Error tracking service:', error);
         showTrackingError('Unable to track service at this time. Please try again later.');
+    }
+}
+
+// Find tracking record in Firestore
+async function findTrackingRecord(inputValue) {
+    if (!db) return null;
+
+    try {
+        const applicationsRef = db.collection('applications');
+        
+        let query = applicationsRef.where('trackingId', '==', inputValue.toUpperCase());
+        let snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            return snapshot.docs[0].data();
+        }
+        
+        const cleanPhone = inputValue.replace(/\D/g, '');
+        const phoneQueries = [
+            applicationsRef.where('phone', '==', inputValue),
+            applicationsRef.where('phone', '==', cleanPhone)
+        ];
+        
+        for (const phoneQuery of phoneQueries) {
+            const phoneSnapshot = await phoneQuery.get();
+            if (!phoneSnapshot.empty) {
+                return phoneSnapshot.docs[0].data();
+            }
+        }
+        
+        return null;
+    } catch (error) {
+        console.error('Error finding tracking record:', error);
+        return null;
+    }
+}
+
+// Start Real-Time Tracking Updates
+function startRealTimeTracking(trackingId) {
+    if (!realtimeDb) {
+        console.warn('Realtime Database not available - using demo mode');
+        startDemoRealTimeUpdates(trackingId);
+        return;
+    }
+    
+    const trackingRef = realtimeDb.ref(`live_tracking/${trackingId}`);
+    currentTrackingRef = trackingRef;
+    
+    trackingRef.on('value', (snapshot) => {
+        const liveData = snapshot.val();
+        if (liveData) {
+            updateLiveTrackingDisplay(liveData);
+        } else {
+            console.log('No real-time data found, using demo updates');
+            startDemoRealTimeUpdates(trackingId);
+        }
+    });
+    
+    window.addEventListener('beforeunload', stopRealTimeTracking);
+}
+
+// Demo real-time updates for testing
+function startDemoRealTimeUpdates(trackingId) {
+    console.log('Starting demo real-time updates for', trackingId);
+    
+    let updateCount = 0;
+    const demoInterval = setInterval(() => {
+        updateCount++;
+        
+        const demoLiveData = {
+            trackingId: trackingId,
+            status: updateCount < 3 ? 'enroute' : updateCount < 5 ? 'arrived' : 'intransit',
+            driver: {
+                id: 'demo_driver',
+                name: 'Robert Martinez',
+                phone: '555-234-5678',
+                avatar: '👨‍🚗',
+                vehicle: {
+                    make: 'Ford',
+                    model: 'Transit',
+                    year: 2023,
+                    licensePlate: 'AMT-4567',
+                    type: 'wheelchair_accessible'
+                }
+            },
+            location: {
+                lat: 40.7128 + (updateCount * 0.001),
+                lng: -74.0060 + (updateCount * 0.001),
+                address: `${updateCount + 4}th & Main Street`,
+                eta: new Date(Date.now() + (10 - updateCount) * 60000).toISOString()
+            },
+            timeline: {
+                booked: { time: new Date(Date.now() - 3600000).toISOString(), completed: true },
+                driverAssigned: { time: new Date(Date.now() - 1800000).toISOString(), completed: true },
+                dispatched: { time: new Date(Date.now() - 600000).toISOString(), completed: true },
+                enroute: { time: new Date(Date.now() - 300000).toISOString(), completed: updateCount >= 1 },
+                arrived: { completed: updateCount >= 4 },
+                intransit: { completed: updateCount >= 5 },
+                completed: { completed: updateCount >= 7 }
+            }
+        };
+        
+        updateLiveTrackingDisplay(demoLiveData);
+        
+        if (updateCount >= 8) {
+            clearInterval(demoInterval);
+            console.log('Demo updates completed');
+        }
+    }, 3000); // Update every 3 seconds for demo
+    
+    window.demoInterval = demoInterval;
+}
+
+// Update Live Tracking Display
+function updateLiveTrackingDisplay(liveData) {
+    updateDriverInfo(liveData.driver);
+    updateLocation(liveData.location);
+    updateStatus(liveData.status);
+    updateTimelineStatus(liveData.status);
+    updateTimelineTimestamps(liveData.timeline);
+}
+
+// Update Driver Information
+function updateDriverInfo(driverData) {
+    if (!driverData) return;
+    
+    const driverDetails = document.querySelector('.driver-details');
+    if (driverDetails) {
+        driverDetails.innerHTML = `
+            <h4>${driverData.name}</h4>
+            <p>Professional Medical Transport Driver</p>
+            <p>Vehicle: ${driverData.vehicle.year} ${driverData.vehicle.make} ${driverData.vehicle.model} 
+               ${driverData.vehicle.type === 'wheelchair_accessible' ? '(Wheelchair Accessible)' : ''}</p>
+            <p>License Plate: ${driverData.vehicle.licensePlate}</p>
+        `;
+    }
+    
+    const contactButtons = document.querySelector('.contact-driver');
+    if (contactButtons && driverData.phone) {
+        contactButtons.innerHTML = `
+            <a href="tel:${driverData.phone}" class="contact-btn">📞 Call Driver</a>
+            <a href="sms:${driverData.phone}" class="contact-btn">💬 Text Driver</a>
+        `;
+    }
+}
+
+// Update Location Display
+function updateLocation(locationData) {
+    if (!locationData) return;
+    
+    const mapContainer = document.querySelector('.map-container');
+    if (mapContainer) {
+        const currentLocationP = mapContainer.querySelector('p');
+        const etaP = mapContainer.querySelector('p:last-child');
+        
+        if (currentLocationP) {
+            currentLocationP.innerHTML = `<strong>Current Location:</strong> ${locationData.address}`;
+        }
+        
+        if (etaP && locationData.eta) {
+            const eta = new Date(locationData.eta);
+            const now = new Date();
+            const minutesRemaining = Math.round((eta - now) / (1000 * 60));
+            
+            etaP.innerHTML = `<strong>ETA:</strong> ${minutesRemaining > 0 ? minutesRemaining + ' minutes' : 'Arriving now'}`;
+        }
     }
 }
 
@@ -690,6 +863,35 @@ function updateTimelineStatus(status) {
     });
 }
 
+// Update Timeline Timestamps
+function updateTimelineTimestamps(timelineData) {
+    if (!timelineData) return;
+    
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const statusOrder = ['booked', 'driverAssigned', 'dispatched', 'enroute', 'arrived', 'intransit', 'completed'];
+    
+    timelineItems.forEach((item, index) => {
+        const statusKey = statusOrder[index];
+        const timeElement = item.querySelector('.timeline-time');
+        
+        if (timeElement && timelineData[statusKey]) {
+            if (timelineData[statusKey].completed && timelineData[statusKey].time) {
+                const time = new Date(timelineData[statusKey].time);
+                timeElement.textContent = `Today, ${time.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit' 
+                })}`;
+            } else if (timelineData[statusKey].eta) {
+                const eta = new Date(timelineData[statusKey].eta);
+                timeElement.textContent = `Estimated: Today, ${eta.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit' 
+                })}`;
+            }
+        }
+    });
+}
+
 // Show Tracking Error
 function showTrackingError(message) {
     const errorMessage = document.getElementById('errorMessage');
@@ -706,13 +908,136 @@ function showTrackingError(message) {
     }
 }
 
+// Stop Real-Time Tracking
+function stopRealTimeTracking() {
+    if (currentTrackingRef) {
+        currentTrackingRef.off();
+        currentTrackingRef = null;
+    }
+    
+    if (window.demoInterval) {
+        clearInterval(window.demoInterval);
+        window.demoInterval = null;
+    }
+}
+
+// Admin/Driver Functions for updating tracking data
+async function updateDriverLocation(trackingId, lat, lng, address) {
+    if (!realtimeDb) return;
+    
+    const updates = {
+        [`live_tracking/${trackingId}/location`]: {
+            lat: lat,
+            lng: lng,
+            address: address,
+            lastUpdated: firebase.database.ServerValue.TIMESTAMP
+        }
+    };
+    
+    try {
+        await realtimeDb.ref().update(updates);
+        console.log(`Location updated for ${trackingId}`);
+    } catch (error) {
+        console.error('Error updating location:', error);
+    }
+}
+
+async function updateServiceStatus(trackingId, newStatus) {
+    if (!realtimeDb || !db) return;
+    
+    const liveUpdates = {
+        [`live_tracking/${trackingId}/status`]: newStatus,
+        [`live_tracking/${trackingId}/timeline/${newStatus}`]: {
+            time: new Date().toISOString(),
+            completed: true
+        },
+        [`live_tracking/${trackingId}/lastUpdated`]: firebase.database.ServerValue.TIMESTAMP
+    };
+    
+    try {
+        await realtimeDb.ref().update(liveUpdates);
+        
+        // Update Firestore for historical record
+        const applicationsRef = db.collection('applications');
+        const query = applicationsRef.where('trackingId', '==', trackingId);
+        const snapshot = await query.get();
+        
+        if (!snapshot.empty) {
+            const docRef = snapshot.docs[0].ref;
+            await docRef.update({
+                status: newStatus,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }
+        
+        console.log(`Status updated to ${newStatus} for ${trackingId}`);
+    } catch (error) {
+        console.error('Error updating status:', error);
+    }
+}
+
+async function assignDriver(trackingId, driverData) {
+    if (!realtimeDb) return;
+    
+    const updates = {
+        [`live_tracking/${trackingId}/driver`]: driverData,
+        [`live_tracking/${trackingId}/status`]: 'approved',
+        [`live_tracking/${trackingId}/timeline/driverAssigned`]: {
+            time: new Date().toISOString(),
+            completed: true
+        },
+        [`live_tracking/${trackingId}/lastUpdated`]: firebase.database.ServerValue.TIMESTAMP
+    };
+    
+    try {
+        await realtimeDb.ref().update(updates);
+        console.log(`Driver ${driverData.name} assigned to ${trackingId}`);
+    } catch (error) {
+        console.error('Error assigning driver:', error);
+    }
+}
+
+// Auto-assign available driver
+async function autoAssignDriver(trackingId, customerLocation) {
+    if (!db) return;
+    
+    try {
+        const driversRef = db.collection('drivers');
+        const availableDrivers = await driversRef.where('status', '==', 'available').get();
+        
+        if (availableDrivers.empty) {
+            console.log('No available drivers');
+            return;
+        }
+        
+        const driver = availableDrivers.docs[0].data();
+        
+        await assignDriver(trackingId, {
+            id: driver.id,
+            name: `${driver.firstName} ${driver.lastName}`,
+            phone: driver.phone,
+            vehicle: driver.vehicle,
+            avatar: driver.avatar || "👨‍🚗"
+        });
+        
+        await driversRef.doc(driver.id).update({ 
+            status: 'busy', 
+            currentJob: trackingId 
+        });
+        
+        console.log(`Driver ${driver.firstName} ${driver.lastName} assigned to ${trackingId}`);
+        
+    } catch (error) {
+        console.error('Error auto-assigning driver:', error);
+    }
+}
+
 // Mobile Optimizations
 function setupMobileOptimizations() {
     if ('ontouchstart' in window) {
         document.body.classList.add('touch-device');
     }
     
-    // Prevent zoom on input focus for iOS
     if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
         const inputs = document.querySelectorAll('input, textarea, select');
         inputs.forEach(input => {
@@ -728,7 +1053,7 @@ function setupMobileOptimizations() {
     setupMobileMenu();
 }
 
-// Mobile Menu Setup (Single, cleaned version)
+// Mobile Menu Setup
 function setupMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -736,7 +1061,6 @@ function setupMobileMenu() {
     if (!mobileToggle || !navLinks) {
         console.log('Mobile menu elements not found - creating fallback for small screens');
         
-        // Create mobile menu toggle if it doesn't exist and we're on mobile
         if (window.innerWidth <= 768) {
             const nav = document.querySelector('nav');
             const existingNavLinks = nav?.querySelector('.nav-links');
@@ -744,7 +1068,11 @@ function setupMobileMenu() {
             if (nav && existingNavLinks && !nav.querySelector('.mobile-menu-toggle')) {
                 const toggle = document.createElement('button');
                 toggle.className = 'mobile-menu-toggle';
-                toggle.innerHTML = '☰';
+                toggle.innerHTML = `
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                `;
                 toggle.setAttribute('aria-label', 'Toggle mobile menu');
                 
                 toggle.addEventListener('click', function(e) {
@@ -760,7 +1088,6 @@ function setupMobileMenu() {
         return;
     }
     
-    // Toggle mobile menu
     mobileToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -769,7 +1096,6 @@ function setupMobileMenu() {
         this.classList.toggle('open');
     });
     
-    // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
             navLinks.classList.remove('mobile-open');
@@ -777,7 +1103,6 @@ function setupMobileMenu() {
         }
     });
     
-    // Close menu when clicking on a nav link
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function() {
             navLinks.classList.remove('mobile-open');
@@ -785,7 +1110,6 @@ function setupMobileMenu() {
         });
     });
     
-    // Handle window resize
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
             navLinks.classList.remove('mobile-open');
@@ -836,5 +1160,9 @@ function showErrorMessage(message) {
     }, 4000);
 }
 
-// Global functions for HTML onclick attributes
+// Global functions for HTML onclick attributes and admin use
 window.trackService = trackService;
+window.updateDriverLocation = updateDriverLocation;
+window.updateServiceStatus = updateServiceStatus;
+window.assignDriver = assignDriver;
+window.autoAssignDriver = autoAssignDriver;
