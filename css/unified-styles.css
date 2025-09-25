@@ -2084,3 +2084,59 @@ footer {
     white-space: nowrap !important;
     border: 0 !important;
 }
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        padding: 1rem 0;
+    }
+    
+    .nav-links.mobile-open {
+        display: flex;
+    }
+    
+    .nav-links li {
+        padding: 0.5rem 2rem;
+    }
+    
+    .nav-links a {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--light-gray);
+    }
+    
+    /* Mobile menu toggle button */
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-menu-toggle:hover {
+        background: var(--light-gray);
+        color: var(--primary-color);
+    }
+    
+    /* Make sure nav is positioned relative for absolute positioning of menu */
+    nav {
+        position: relative;
+    }
+}
+
+/* Hide mobile toggle on desktop */
+.mobile-menu-toggle {
+    display: none;
+}
