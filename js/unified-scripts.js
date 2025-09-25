@@ -158,10 +158,10 @@ async function handleContactForm(e) {
         lastName: formData.get('lastName'),
         phone: formData.get('phone'),
         email: formData.get('email'),
-        serviceNeeded: formData.get('serviceNeeded'),
-        urgency: formData.get('urgency'),
-        message: formData.get('message'),
-        timestamp: new Date().toISOString(),
+        serviceNeeded: formData.get('serviceNeeded') || '',
+        urgency: formData.get('urgency') || '',
+        message: formData.get('message') || '',
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
         type: 'contact_inquiry'
     };
 
@@ -198,15 +198,15 @@ async function handleApplicationForm(e) {
         phone: formData.get('appPhone'),
         email: formData.get('appEmail'),
         address: formData.get('address'),
-        dateOfBirth: formData.get('dateOfBirth'),
-        emergencyContact: formData.get('emergencyContact'),
+        dateOfBirth: formData.get('dateOfBirth') || '',
+        emergencyContact: formData.get('emergencyContact') || '',
         primaryService: formData.get('primaryService'),
-        frequency: formData.get('frequency'),
-        medicalNeeds: formData.get('medicalNeeds'),
-        insurance: formData.get('insurance'),
+        frequency: formData.get('frequency') || '',
+        medicalNeeds: formData.get('medicalNeeds') || '',
+        insurance: formData.get('insurance') || '',
         consent: formData.get('consent') === 'on',
         terms: formData.get('terms') === 'on',
-        timestamp: new Date().toISOString(),
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
         type: 'service_application',
         status: 'pending'
     };
@@ -245,8 +245,8 @@ async function handleReviewForm(e) {
         serviceUsed: formData.get('serviceUsed'),
         rating: parseInt(formData.get('rating')),
         reviewText: formData.get('reviewText'),
-        customerEmail: formData.get('customerEmail'),
-        timestamp: new Date().toISOString(),
+        customerEmail: formData.get('customerEmail') || '',
+        timestamp: db ? firebase.firestore.Timestamp.now() : new Date(),
         approved: false
     };
 
