@@ -13,7 +13,9 @@
     <meta property="og:image" content="assets/img/alrictlogo.png">
     <meta property="og:url" content="https://alrictransportation.com">
     <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
-    <link rel="stylesheet" href="css/unified-styles-mobile.css">
+    <!-- Unified CSS file that includes all styles and animations -->
+    <link rel="stylesheet" href="css/unified-styles.css">
+   
 </head>
 <body>
     <!-- Header -->
@@ -23,13 +25,8 @@
                 <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -169,32 +166,6 @@
     </footer>
 
     <script>
-        // Mobile Navigation Toggle
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        navToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const isNavClick = navToggle.contains(event.target) || navLinks.contains(event.target);
-            if (!isNavClick && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                navToggle.classList.remove('active');
-            }
-        });
-
         // Scroll animations
         const observerOptions = {
             threshold: 0.1,
