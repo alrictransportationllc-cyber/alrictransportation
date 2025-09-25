@@ -2140,3 +2140,20 @@ footer {
 .mobile-menu-toggle {
     display: none;
 }
+
+.mobile-menu-toggle {
+    display: block !important;
+    background: red !important;
+    color: white !important;
+    padding: 10px !important;
+    font-size: 20px !important;
+    border: none !important;
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+}
