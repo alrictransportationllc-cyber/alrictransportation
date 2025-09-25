@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Alric Transportation</title>
+    <meta name="description" content="Admin dashboard for managing Alric Transportation operations, orders, and customer communications.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .admin-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Layout */
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Stats Cards */
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-change {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: #27ae60;
+        }
+
+        .stat-change.negative {
+            color: #e74c3c;
+        }
+
+        /* Content Sections */
+        .admin-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79,172,254,0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        /* Tables */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .admin-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .admin-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-new {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-processing {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-completed {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+
+        .status-urgent {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #f8f9fa;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79,172,254,0.2);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideInDown 0.3s ease-out;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        /* Filters and Search */
+        .filters-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid #f8f9fa;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #f8f9fa;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-table {
+                font-size: 0.9rem;
+            }
+            
+            .admin-table th,
+            .admin-table td {
+                padding: 0.5rem;
+            }
+            
+            .filters-bar {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-container">
+            <div class="admin-logo">
+                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <h1>Admin Dashboard</h1>
+            </div>
+            <div class="admin-user">
+                <div class="user-avatar">👨‍💼</div>
+                <span>Admin User</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- Dashboard Stats -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-number" id="totalOrders">247</div>
+                <div class="stat-label">Total Orders</div>
+                <div class="stat-change positive">↑ 12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚚</div>
+                <div class="stat-number" id="activeDeliveries">18</div>
+                <div class="stat-label">Active Deliveries</div>
+                <div class="stat-change positive">↑ 3 from yesterday</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number" id="avgRating">4.8</div>
+                <div class="stat-label">Average Rating</div>
+                <div class="stat-change positive">↑ 0.2 this week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number" id="revenue">$45.2K</div>
+                <div class="stat-label">Monthly Revenue</div>
+                <div class="stat-change positive">↑ 8% from last month</div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">📦 Recent Orders</h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="refreshOrders()">Refresh</button>
+                    <button class="btn btn-primary" onclick="showNewOrderModal()">New Order</button>
+                </div>
+            </div>
+            
+            <div class="filters-bar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search orders..." id="orderSearch">
+                </div>
+                <select class="filter-select" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="new">New</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="urgent">Urgent</option>
+                </select>
+                <select class="filter-select" id="serviceFilter">
+                    <option value="">All Services</option>
+                    <option value="prescription">Prescription Delivery</option>
+                    <option value="medical-supply">Medical Supply</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="cold-chain">Cold Chain</option>
+                </select>
+            </div>
+
+            <table class="admin-table" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <tr>
+                        <td>ALR001</td>
+                        <td>Metro General Hospital</td>
+                        <td>Emergency Delivery</td>
+                        <td>Central Pharmacy</td>
+                        <td>ER Department</td>
+                        <td><span class="status-badge status-urgent">Urgent</span></td>
+                        <td>2 hours ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR001')">View</button>
+                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR001')">Edit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ALR002</td>
+                        <td>City Pharmacy</td>
+                        <td>Prescription Delivery</td>
+                        <td>Warehouse</td>
+                        <td>Patient Home</td>
+                        <td><span class="status-badge status-processing">Processing</span></td>
+                        <td>4 hours ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR002')">View</button>
+                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR002')">Edit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ALR003</td>
+                        <td>Research Lab Inc</td>
+                        <td>Cold Chain Transport</td>
+                        <td>Biotech Center</td>
+                        <td>Testing Facility</td>
+                        <td><span class="status-badge status-completed">Completed</span></td>
+                        <td>1 day ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR003')">View</button>
+                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR003')">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Contact Forms -->
+        <div class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">💬 Contact Form Submissions</h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="refreshContacts()">Refresh</button>
+                    <button class="btn btn-primary" onclick="exportContacts()">Export</button>
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Sarah Johnson</td>
+                        <td>sarah.johnson@metrohospital.com</td>
+                        <td>Metro Hospital</td>
+                        <td>Emergency Delivery</td>
+                        <td><span class="status-badge status-new">New</span></td>
+                        <td>1 hour ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="respondToContact(1)">Respond</button>
+                            <button class="btn btn-secondary btn-sm" onclick="viewContactDetails(1)">Details</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mike Chen</td>
+                        <td>m.chen@citypharmacy.com</td>
+                        <td>City Pharmacy</td>
+                        <td>Regular Delivery</td>
+                        <td><span class="status-badge status-processing">Responded</span></td>
+                        <td>3 hours ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="respondToContact(2)">Respond</button>
+                            <button class="btn btn-secondary btn-sm" onclick="viewContactDetails(2)">Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Reviews -->
+        <div class="admin-section">
+            <div class="section-header">
+                <h2 class="section-title">⭐ Customer Reviews</h2>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="refreshReviews()">Refresh</button>
+                    <button class="btn btn-primary" onclick="moderateReviews()">Moderate</button>
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Rating</th>
+                        <th>Service</th>
+                        <th>Review</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Lisa Martinez</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>Emergency Delivery</td>
+                        <td>"Excellent service, very fast and professional..."</td>
+                        <td><span class="status-badge status-new">Pending</span></td>
+                        <td>2 hours ago</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="approveReview(1)">Approve</button>
+                            <button class="btn btn-danger btn-sm" onclick="rejectReview(1)">Reject</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Smith</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>Prescription Delivery</td>
+                        <td>"Great tracking system and friendly drivers..."</td>
+                        <td><span class="status-badge status-completed">Approved</span></td>
+                        <td>1 day ago</td>
+                        <td>
+                            <button class="btn btn-secondary btn-sm" onclick="viewReview(2)">View</button>
+                            <button class="btn btn-danger btn-sm" onclick="hideReview(2)">Hide</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Order Details</h3>
+                <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Order ID</label>
+                    <input type="text" class="form-control" id="modalOrderId" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Customer</label>
+                    <input type="text" class="form-control" id="modalCustomer">
+                </div>
+                <div class="form-group">
+                    <label>Service Type</label>
+                    <select class="form-control" id="modalService">
+                        <option value="prescription">Prescription Delivery</option>
+                        <option value="medical-supply">Medical Supply</option>
+                        <option value="emergency">Emergency</option>
+                        <option value="cold-chain">Cold Chain</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="modalStatus">
+                        <option value="new">New</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pickup Location</label>
+                    <input type="text" class="form-control" id="modalPickup">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Location</label>
+                    <input type="text" class="form-control" id="modalDelivery">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Special Instructions</label>
+                <textarea class="form-control" rows="3" id="modalInstructions"></textarea>
+            </div>
+            <div class="section-actions">
+                <button class="btn btn-primary" onclick="saveOrder()">Save Changes</button>
+                <button class="btn btn-secondary" onclick="closeModal('orderModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        let orders = [
+            {
+                id: 'ALR001',
+                customer: 'Metro General Hospital',
+                service: 'Emergency Delivery',
+                from: 'Central Pharmacy',
+                to: 'ER Department',
+                status: 'urgent',
+                created: '2 hours ago'
+            },
+            {
+                id: 'ALR002',
+                customer: 'City Pharmacy',
+                service: 'Prescription Delivery',
+                from: 'Warehouse',
+                to: 'Patient Home',
+                status: 'processing',
+                created: '4 hours ago'
+            },
+            {
+                id: 'ALR003',
+                customer: 'Research Lab Inc',
+                service: 'Cold Chain Transport',
+                from: 'Biotech Center',
+                to: 'Testing Facility',
+                status: 'completed',
+                created: '1 day ago'
+            }
+        ];
+
+        // Initialize dashboard
+        function initDashboard() {
+            updateStats();
+            renderOrdersTable();
+            attachEventListeners();
+        }
+
+        // Update dashboard statistics
+        function updateStats() {
+            // Simulate real-time updates
+            setInterval(() => {
+                const totalOrders = Math.floor(Math.random() * 50) + 200;
+                const activeDeliveries = Math.floor(Math.random() * 20) + 10;
+                const avgRating = (Math.random() * 0.5 + 4.5).toFixed(1);
+                const revenue = (Math.random() * 10 + 40).toFixed(1);
+
+                document.getElementById('totalOrders').textContent = totalOrders;
+                document.getElementById('activeDeliveries').textContent = activeDeliveries;
+                document.getElementById('avgRating').textContent = avgRating;
+                document.getElementById('revenue').textContent = `${revenue}K`;
+            }, 30000); // Update every 30 seconds
+        }
+
+        // Render orders table
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = '';
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.service}</td>
+                    <td>${order.from}</td>
+                    <td>${order.to}</td>
+                    <td><span class="status-badge status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
+                    <td>${order.created}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="viewOrder('${order.id}')">View</button>
+                        <button class="btn btn-secondary btn-sm" onclick="editOrder('${order.id}')">Edit</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Attach event listeners
+        function attachEventListeners() {
+            // Search functionality
+            document.getElementById('orderSearch').addEventListener('input', filterOrders);
+            document.getElementById('statusFilter').addEventListener('change', filterOrders);
+            document.getElementById('serviceFilter').addEventListener('change', filterOrders);
+        }
+
+        // Filter orders
+        function filterOrders() {
+            const searchTerm = document.getElementById('orderSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const serviceFilter = document.getElementById('serviceFilter').value;
+
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const statusMatch = !statusFilter || row.querySelector('.status-badge').classList.contains(`status-${statusFilter}`);
+                const serviceMatch = !serviceFilter || text.includes(serviceFilter.replace('-', ' '));
+                const searchMatch = !searchTerm || text.includes(searchTerm);
+
+                if (statusMatch && serviceMatch && searchMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal functions
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                document.getElementById('modalOrderId').value = order.id;
+                document.getElementById('modalCustomer').value = order.customer;
+                document.getElementById('modalPickup').value = order.from;
+                document.getElementById('modalDelivery').value = order.to;
+                document.getElementById('modalStatus').value = order.status;
+                showModal('orderModal');
+            }
+        }
+
+        function editOrder(orderId) {
+            viewOrder(orderId);
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveOrder() {
+            alert('Order updated successfully!');
+            closeModal('orderModal');
+        }
+
+        // Action functions
+        function refreshOrders() {
+            renderOrdersTable();
+            showToast('Orders refreshed successfully');
+        }
+
+        function showNewOrderModal() {
+            document.getElementById('modalOrderId').value = 'ALR' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            document.getElementById('modalCustomer').value = '';
+            document.getElementById('modalPickup').value = '';
+            document.getElementById('modalDelivery').value = '';
+            document.getElementById('modalStatus').value = 'new';
+            showModal('orderModal');
+        }
+
+        function refreshContacts() {
+            showToast('Contacts refreshed successfully');
+        }
+
+        function exportContacts() {
+            alert('Contact export functionality would be implemented here');
+        }
+
+        function respondToContact(contactId) {
+            alert(`Opening response form for contact #${contactId}`);
+        }
+
+        function viewContactDetails(contactId) {
+            alert(`Viewing details for contact #${contactId}`);
+        }
+
+        function refreshReviews() {
+            showToast('Reviews refreshed successfully');
+        }
+
+        function moderateReviews() {
+            alert('Opening review moderation panel');
+        }
+
+        function approveReview(reviewId) {
+            alert(`Review #${reviewId} approved`);
+        }
+
+        function rejectReview(reviewId) {
+            if (confirm('Are you sure you want to reject this review?')) {
+                alert(`Review #${reviewId} rejected`);
+            }
+        }
+
+        function viewReview(reviewId) {
+            alert(`Viewing review #${reviewId}`);
+        }
+
+        function hideReview(reviewId) {
+            if (confirm('Are you sure you want to hide this review?')) {
+                alert(`Review #${reviewId} hidden`);
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Initialize dashboard when page loads
+        window.addEventListener('load', initDashboard);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
