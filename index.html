@@ -13,9 +13,7 @@
     <meta property="og:image" content="assets/img/alrictlogo.png">
     <meta property="og:url" content="https://alrictransportation.com">
     <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
-    <!-- Unified CSS file that includes all styles and animations -->
     <link rel="stylesheet" href="css/unified-styles.css">
-   
 </head>
 <body>
     <!-- Header -->
@@ -25,15 +23,36 @@
                 <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
+            
+            <!-- Desktop Navigation -->
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="faq.html">FAQ</a></li>
                 <li><a href="track.html">Track</a></li>
             </ul>
+
+            <!-- Mobile Hamburger Menu -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
+            </ul>
+        </div>
     </header>
 
     <!-- Hero Section with animated background -->
@@ -165,36 +184,6 @@
         </div>
     </footer>
 
-    <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-    </script>
+    <script src="js/unified-scripts.js"></script>
 </body>
 </html>
