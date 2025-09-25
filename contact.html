@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Alric Transportation | Get Quote & Apply</title>
-    <meta name="description" content="Contact Alric Transportation for medical supply transport services. Get a quote, apply for employment, or reach our customer service team.">
-    <meta name="keywords" content="contact alric transportation, medical transport quote, employment application, customer service">
-    <meta name="robots" content="index, follow">
+    <title>Contact Us - Alric Transportation | Get Quote & Apply for Services</title>
+    <meta name="description" content="Contact Alric Transportation for medical transportation services. Get a free quote, apply for services, or reach out with questions. Available 24/7 for your transportation needs.">
+    <meta name="keywords" content="contact alric transportation, medical transport quote, apply for transportation services, emergency transport contact, 24/7 transport service">
+    <meta name="author" content="Alric Transportation">
     <link rel="canonical" href="https://alrictransportation.com/contact">
+    <meta property="og:title" content="Contact Us - Alric Transportation">
+    <meta property="og:description" content="Get in touch for medical transportation services and quotes">
+    <meta property="og:image" content="assets/img/alrictlogo.png">
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -16,51 +20,67 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: var(--shadow);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
         .logo img {
             height: 50px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .nav-links {
@@ -70,21 +90,39 @@
         }
 
         .nav-links a {
-            color: white;
             text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #ffd700;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 140px 0 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -93,164 +131,164 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: drift 8s ease-in-out infinite alternate;
-            top: -10%;
-            left: -10%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: drift 6s ease-in-out infinite alternate-reverse;
-            bottom: -10%;
-            right: -10%;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
+            color: var(--white);
             margin-bottom: 1rem;
-            animation: bounceInDown 1s ease-out;
+            animation: slideInUp 1s ease-out;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 2rem;
             opacity: 0.9;
-            animation: bounceInUp 1s ease-out 0.3s both;
+            animation: slideInUp 1s ease-out 0.2s both;
         }
 
-        /* Contact Info Section */
-        .contact-info {
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .contact-section {
             padding: 80px 0;
-            background: #f8f9fa;
+            background: var(--white);
         }
 
-        .contact-grid {
+        .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
         .contact-card {
-            background: white;
-            padding: 3rem 2rem;
-            border-radius: 20px;
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: left 0.3s ease;
+        }
+
+        .contact-card:hover::before {
+            left: 0;
         }
 
         .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .contact-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2rem;
-            color: white;
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
         }
 
         .contact-card h3 {
-            color: #2c3e50;
-            font-size: 1.5rem;
+            color: var(--secondary-color);
             margin-bottom: 1rem;
         }
 
         .contact-card p {
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 0.5rem;
         }
 
         .contact-card a {
-            color: #4facfe;
+            color: var(--accent-color);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
         }
 
         .contact-card a:hover {
-            color: #2c3e50;
+            color: var(--secondary-color);
         }
 
         /* Forms Section */
         .forms-section {
+            background: var(--light-gray);
             padding: 80px 0;
-            background: white;
         }
 
         .forms-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
+            margin-top: 2rem;
         }
 
         .form-wrapper {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
+            background: var(--white);
             padding: 3rem;
-            color: white;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        .form-wrapper:nth-child(2) {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            animation: slideInRight 1s ease-out;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
         }
 
         .form-wrapper h3 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
             text-align: center;
-            font-size: 2rem;
+        }
+
+        .form-wrapper .form-description {
+            color: var(--text-light);
+            text-align: center;
             margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3);
-            transform: scale(1.02);
         }
 
         .form-row {
@@ -259,70 +297,181 @@
             gap: 1rem;
         }
 
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .required {
+            color: var(--error-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
         .checkbox-group {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.5rem;
-            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         .checkbox-group input[type="checkbox"] {
             width: auto;
-            transform: scale(1.2);
+            margin-top: 2px;
         }
 
-        .submit-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 1rem;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        }
+
+        .success-message,
+        .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .error-message {
+            background: var(--error-color);
+            color: var(--white);
+        }
+
+        .success-message.show,
+        .error-message.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        /* Emergency Contact */
+        .emergency-section {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .emergency-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .emergency-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .emergency-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .emergency-phone {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         /* Map Section */
         .map-section {
             padding: 80px 0;
-            background: #f8f9fa;
+            background: var(--white);
         }
 
         .map-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--light-gray);
+            border-radius: 15px;
+            padding: 3rem;
             text-align: center;
+            box-shadow: var(--shadow);
         }
 
         .map-placeholder {
-            width: 100%;
             height: 400px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 2rem;
+            color: var(--white);
+            font-size: 3rem;
             margin-bottom: 2rem;
+        }
+
+        .map-info {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .map-info h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .map-info p {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--secondary-color) 100%);
+            color: var(--white);
             padding: 3rem 0 1rem;
-            text-align: center;
         }
 
         .footer-content {
@@ -333,397 +482,381 @@
         }
 
         .footer-section h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            color: #ffd700;
         }
 
+        .footer-section p,
         .footer-section a {
-            color: #bdc3c7;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+            line-height: 1.8;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--primary-color);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 1rem;
-            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes bounceInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-100px);
-            }
-            60% {
-                opacity: 1;
-                transform: translateY(30px);
-            }
-            80% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounceInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(100px);
-            }
-            60% {
-                opacity: 1;
-                transform: translateY(-30px);
-            }
-            80% {
-                transform: translateY(10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes drift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(30px, -30px) rotate(5deg); }
-            50% { transform: translate(-20px, 20px) rotate(-5deg); }
-            75% { transform: translate(20px, 30px) rotate(3deg); }
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .forms-container { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; }
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .forms-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .form-wrapper {
+                padding: 2rem 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .emergency-phone {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="track.html">Track</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Get in Touch</h1>
-                <p>Ready to partner with us? We're here to help with all your medical transportation needs</p>
-            </div>
+        <div class="hero-content">
+            <h1>Contact Us</h1>
+            <p>Get in touch for quotes, applications, or any questions about our services</p>
         </div>
     </section>
 
-    <section class="contact-info">
+    <!-- Contact Information -->
+    <section class="contact-section">
         <div class="container">
-            <div class="contact-grid">
-                <div class="contact-card">
+            <div class="contact-info">
+                <div class="contact-card fade-in">
                     <div class="contact-icon">📞</div>
-                    <h3>Phone Support</h3>
-                    <p>24/7 Customer Service</p>
-                    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-                    <p>Emergency Line</p>
-                    <p><a href="tel:+15559876543">+1 (555) 987-6543</a></p>
+                    <h3>Call Us</h3>
+                    <p>24/7 Service Available</p>
+                    <p><a href="tel:+15551234567">(555) 123-4567</a></p>
+                    <p><a href="tel:+15551234568">(555) 123-4568</a> (Emergency)</p>
                 </div>
-
-                <div class="contact-card">
+                
+                <div class="contact-card fade-in">
                     <div class="contact-icon">📧</div>
                     <h3>Email Us</h3>
-                    <p>General Inquiries</p>
+                    <p>We'll respond within 2 hours</p>
                     <p><a href="mailto:info@alrictransportation.com">info@alrictransportation.com</a></p>
-                    <p>Emergency Services</p>
                     <p><a href="mailto:emergency@alrictransportation.com">emergency@alrictransportation.com</a></p>
                 </div>
-
-                <div class="contact-card">
+                
+                <div class="contact-card fade-in">
                     <div class="contact-icon">📍</div>
                     <h3>Visit Us</h3>
-                    <p>123 Medical Drive</p>
-                    <p>Healthcare City, HC 12345</p>
-                    <p>Hours: Mon-Fri 8AM-6PM</p>
-                    <p>Emergency: 24/7</p>
+                    <p>Main Office & Dispatch</p>
+                    <p>123 Medical Center Drive<br>Healthcare District<br>Your City, ST 12345</p>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">⏰</div>
+                    <h3>Office Hours</h3>
+                    <p>Administrative Office</p>
+                    <p>Monday - Friday: 8:00 AM - 6:00 PM<br>
+                    Saturday: 9:00 AM - 4:00 PM<br>
+                    Sunday: Emergency Only</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Forms Section -->
     <section class="forms-section">
         <div class="container">
+            <div class="section-title">
+                <h2>Get Started Today</h2>
+                <p>Contact us for a quote or apply for our transportation services</p>
+            </div>
+            
             <div class="forms-container">
                 <!-- Contact Form -->
-                <div class="form-wrapper">
-                    <h3>Get a Quote</h3>
+                <div class="form-wrapper fade-in">
+                    <h3>🗨️ Contact Form</h3>
+                    <p class="form-description">Get a free quote or ask questions about our services</p>
+                    
+                    <div class="success-message" id="contactSuccess">
+                        Thank you! We'll get back to you within 2 hours.
+                    </div>
+                    
                     <form id="contactForm">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="contactFirstName">First Name *</label>
-                                <input type="text" id="contactFirstName" name="firstName" required>
+                                <label for="firstName">First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" name="firstName" required>
                             </div>
                             <div class="form-group">
-                                <label for="contactLastName">Last Name *</label>
-                                <input type="text" id="contactLastName" name="lastName" required>
+                                <label for="lastName">Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" name="lastName" required>
                             </div>
                         </div>
-
+                        
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="contactEmail">Email Address *</label>
-                                <input type="email" id="contactEmail" name="email" required>
+                                <label for="phone">Phone <span class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" required>
                             </div>
                             <div class="form-group">
-                                <label for="contactPhone">Phone Number *</label>
-                                <input type="tel" id="contactPhone" name="phone" required>
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required>
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="contactCompany">Company/Organization</label>
-                            <input type="text" id="contactCompany" name="company">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contactService">Service Needed *</label>
-                            <select id="contactService" name="service" required>
+                            <label for="serviceNeeded">Service Needed</label>
+                            <select id="serviceNeeded" name="serviceNeeded">
                                 <option value="">Select a service</option>
-                                <option value="prescription-delivery">Prescription Delivery</option>
-                                <option value="medical-supply">Medical Supply Transport</option>
-                                <option value="emergency">Emergency Delivery</option>
-                                <option value="pharmacy">Pharmacy Services</option>
-                                <option value="cold-chain">Cold Chain Transport</option>
-                                <option value="laboratory">Laboratory Services</option>
-                                <option value="other">Other</option>
+                                <option value="medical">Medical Transportation</option>
+                                <option value="wheelchair">Wheelchair/STS</option>
+                                <option value="ondemand">On-Demand Rides</option>
+                                <option value="airport">Airport Transportation</option>
+                                <option value="student">Student Rides</option>
+                                <option value="medication">Medication Delivery</option>
                             </select>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactPickup">Pickup Location *</label>
-                                <input type="text" id="contactPickup" name="pickup" placeholder="City, State" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactDelivery">Delivery Location *</label>
-                                <input type="text" id="contactDelivery" name="delivery" placeholder="City, State" required>
-                            </div>
-                        </div>
-
+                        
                         <div class="form-group">
-                            <label for="contactUrgency">Urgency Level *</label>
-                            <select id="contactUrgency" name="urgency" required>
-                                <option value="">Select urgency</option>
-                                <option value="emergency">Emergency (ASAP)</option>
-                                <option value="same-day">Same Day</option>
-                                <option value="next-day">Next Day</option>
-                                <option value="scheduled">Scheduled</option>
-                                <option value="regular">Regular Service</option>
+                            <label for="urgency">When do you need this service?</label>
+                            <select id="urgency" name="urgency">
+                                <option value="today">Today (Emergency)</option>
+                                <option value="tomorrow">Tomorrow</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="quote">Just Getting a Quote</option>
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="contactMessage">Additional Details</label>
-                            <textarea id="contactMessage" name="message" rows="4" placeholder="Please describe your transportation needs, special requirements, or any questions..."></textarea>
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your transportation needs, any special requirements, pickup/drop-off locations, etc."></textarea>
                         </div>
-
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="contactConsent" name="consent" required>
-                            <label for="contactConsent">I agree to be contacted regarding my inquiry</label>
-                        </div>
-
-                        <button type="submit" class="submit-btn">Get Quote</button>
+                        
+                        <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
                 </div>
-
+                
                 <!-- Application Form -->
-                <div class="form-wrapper">
-                    <h3>Join Our Team</h3>
+                <div class="form-wrapper fade-in">
+                    <h3>📋 Service Application</h3>
+                    <p class="form-description">Apply to become a regular client for ongoing transportation services</p>
+                    
+                    <div class="success-message" id="applicationSuccess">
+                        Application submitted! We'll contact you within 24 hours.
+                    </div>
+                    
                     <form id="applicationForm">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="appFirstName">First Name *</label>
-                                <input type="text" id="appFirstName" name="firstName" required>
+                                <label for="appFirstName">First Name <span class="required">*</span></label>
+                                <input type="text" id="appFirstName" name="appFirstName" required>
                             </div>
                             <div class="form-group">
-                                <label for="appLastName">Last Name *</label>
-                                <input type="text" id="appLastName" name="lastName" required>
+                                <label for="appLastName">Last Name <span class="required">*</span></label>
+                                <input type="text" id="appLastName" name="appLastName" required>
                             </div>
                         </div>
-
+                        
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="appEmail">Email Address *</label>
-                                <input type="email" id="appEmail" name="email" required>
+                                <label for="appPhone">Phone <span class="required">*</span></label>
+                                <input type="tel" id="appPhone" name="appPhone" required>
                             </div>
                             <div class="form-group">
-                                <label for="appPhone">Phone Number *</label>
-                                <input type="tel" id="appPhone" name="phone" required>
+                                <label for="appEmail">Email <span class="required">*</span></label>
+                                <input type="email" id="appEmail" name="appEmail" required>
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="appAddress">Full Address *</label>
-                            <input type="text" id="appAddress" name="address" placeholder="Street, City, State, ZIP" required>
+                            <label for="address">Full Address <span class="required">*</span></label>
+                            <textarea id="address" name="address" rows="3" placeholder="Street address, city, state, zip code" required></textarea>
                         </div>
-
-                        <div class="form-group">
-                            <label for="appPosition">Position Applying For *</label>
-                            <select id="appPosition" name="position" required>
-                                <option value="">Select a position</option>
-                                <option value="driver">Medical Transport Driver</option>
-                                <option value="dispatcher">Dispatcher</option>
-                                <option value="customer-service">Customer Service Representative</option>
-                                <option value="operations">Operations Specialist</option>
-                                <option value="warehouse">Warehouse Associate</option>
-                                <option value="management">Management Position</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-
+                        
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="appExperience">Years of Experience</label>
-                                <select id="appExperience" name="experience">
-                                    <option value="">Select experience</option>
-                                    <option value="0-1">0-1 years</option>
-                                    <option value="2-5">2-5 years</option>
-                                    <option value="6-10">6-10 years</option>
-                                    <option value="10+">10+ years</option>
-                                </select>
+                                <label for="dateOfBirth">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth">
                             </div>
                             <div class="form-group">
-                                <label for="appLicense">Valid Driver's License?</label>
-                                <select id="appLicense" name="license">
-                                    <option value="">Select</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
+                                <label for="emergencyContact">Emergency Contact</label>
+                                <input type="text" id="emergencyContact" name="emergencyContact" placeholder="Name and phone">
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="appAvailability">Availability *</label>
-                            <select id="appAvailability" name="availability" required>
-                                <option value="">Select availability</option>
-                                <option value="full-time">Full Time</option>
-                                <option value="part-time">Part Time</option>
-                                <option value="weekends">Weekends Only</option>
-                                <option value="on-call">On-Call</option>
-                                <option value="flexible">Flexible</option>
+                            <label for="primaryService">Primary Service Needed <span class="required">*</span></label>
+                            <select id="primaryService" name="primaryService" required>
+                                <option value="">Select primary service</option>
+                                <option value="medical">Medical Transportation</option>
+                                <option value="wheelchair">Wheelchair/STS</option>
+                                <option value="ondemand">On-Demand Rides</option>
+                                <option value="airport">Airport Transportation</option>
+                                <option value="student">Student Rides</option>
+                                <option value="medication">Medication Delivery</option>
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="appBackground">Relevant Background</label>
-                            <textarea id="appBackground" name="background" rows="4" placeholder="Tell us about your relevant experience, skills, or qualifications..."></textarea>
+                            <label for="frequency">How often will you need service?</label>
+                            <select id="frequency" name="frequency">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="occasional">Occasionally</option>
+                                <option value="emergency">Emergency Only</option>
+                            </select>
                         </div>
-
+                        
+                        <div class="form-group">
+                            <label for="medicalNeeds">Special Medical Needs</label>
+                            <textarea id="medicalNeeds" name="medicalNeeds" placeholder="Please describe any special medical equipment, mobility aids, or assistance needed"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="insurance">Insurance Information</label>
+                            <input type="text" id="insurance" name="insurance" placeholder="Insurance provider and policy number (if applicable)">
+                        </div>
+                        
                         <div class="checkbox-group">
-                            <input type="checkbox" id="appBackground" name="backgroundCheck" required>
-                            <label for="appBackground">I consent to background check and drug screening</label>
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <label for="consent">I consent to Alric Transportation contacting me regarding my application and services. I understand that my information will be kept confidential and used only for service provision. <span class="required">*</span></label>
                         </div>
-
-                        <button type="submit" class="submit-btn">Submit Application</button>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="legal.html" target="_blank">Terms of Service</a> and <a href="legal.html" target="_blank">Privacy Policy</a>. <span class="required">*</span></label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="map-section">
+    <!-- Emergency Contact -->
+    <section class="emergency-section">
         <div class="container">
-            <div class="map-container">
-                <div class="map-placeholder">
-                    🗺️ Interactive Map Coming Soon
-                </div>
-                <h3>Our Service Area</h3>
-                <p>We provide medical transportation services throughout the metropolitan area and surrounding regions. Contact us to confirm coverage in your specific location.</p>
+            <div class="emergency-content fade-in">
+                <h2>🚨 Emergency Transportation</h2>
+                <p>For immediate medical transportation needs, call our emergency line:</p>
+                <div class="emergency-phone">(555) 123-4568</div>
+                <p>Available 24/7 for urgent medical transportation situations</p>
             </div>
         </div>
     </section>
 
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container fade-in">
+                <div class="map-placeholder">🗺️</div>
+                <div class="map-info">
+                    <h3>Our Location</h3>
+                    <p><strong>Address:</strong> 123 Medical Center Drive, Healthcare District, Your City, ST 12345</p>
+                    <p><strong>Parking:</strong> Free parking available in our lot</p>
+                    <p><strong>Public Transit:</strong> Bus routes 15, 22, and 34 stop nearby</p>
+                    <p><strong>Accessibility:</strong> Fully wheelchair accessible entrance and facilities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="services.html">Services</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="legal.html">Legal</a>
+                    <h3>Alric Transportation</h3>
+                    <p>Professional medical transportation services with compassionate care and reliability you can trust.</p>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="services.html">Services</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+                
                 <div class="footer-section">
                     <h3>Services</h3>
-                    <a href="services.html">Prescription Delivery</a>
-                    <a href="services.html">Medical Supplies</a>
-                    <a href="services.html">Emergency Transport</a>
-                    <a href="track.html">Track Shipment</a>
+                    <p><a href="services.html#medical">Medical Transportation</a></p>
+                    <p><a href="services.html#wheelchair">Wheelchair/STS</a></p>
+                    <p><a href="services.html#ondemand">On-Demand Rides</a></p>
+                    <p><a href="services.html#medication">Medication Delivery</a></p>
                 </div>
+                
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📞 (555) 123-4567</p>
                     <p>📧 info@alrictransportation.com</p>
-                    <p>📍 123 Medical Drive, Healthcare City</p>
+                    <p>📍 123 Medical Center Dr</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+                <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Animate elements on scroll
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -732,63 +865,115 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        // Observe all animated elements
-        document.querySelectorAll('.contact-card, .form-wrapper').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(item);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
 
-        // Handle contact form submission
+        // Contact Form Submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const formData = new FormData(this);
-            const contactData = Object.fromEntries(formData);
+            // Validate required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
             
-            // Show success message
-            alert('Thank you for your inquiry! We will contact you within 24 hours with a detailed quote.');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--error-color)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = 'var(--light-gray)';
+                }
+            });
             
-            // Reset form
-            this.reset();
-            
-            console.log('Contact form submitted:', contactData);
+            if (isValid) {
+                // Simulate form submission
+                const successMessage = document.getElementById('contactSuccess');
+                successMessage.classList.add('show');
+                
+                // Reset form
+                this.reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
 
-        // Handle application form submission
+        // Application Form Submission
         document.getElementById('applicationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const formData = new FormData(this);
-            const applicationData = Object.fromEntries(formData);
+            // Validate required fields
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
             
-            // Show success message
-            alert('Thank you for your application! Our HR team will review your submission and contact you if there is a match for current openings.');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--error-color)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = 'var(--light-gray)';
+                }
+            });
             
-            // Reset form
-            this.reset();
-            
-            console.log('Application submitted:', applicationData);
+            if (isValid) {
+                // Simulate form submission
+                const successMessage = document.getElementById('applicationSuccess');
+                successMessage.classList.add('show');
+                
+                // Reset form
+                this.reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
 
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(30, 60, 114, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
-                header.style.backdropFilter = 'none';
-            }
+        // Real-time validation
+        document.querySelectorAll('input[required], select[required], textarea[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.borderColor = 'var(--error-color)';
+                } else {
+                    this.style.borderColor = 'var(--success-color)';
+                }
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = 'var(--success-color)';
+                }
+            });
         });
     </script>
 </body>
-</html>
+</html> {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn
