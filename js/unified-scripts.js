@@ -689,3 +689,39 @@ function showErrorMessage(message) {
 
 // Global function for tracking (called from HTML onclick)
 window.trackService = trackService;
+
+// Add this at the beginning of setupMobileMenu() function
+function setupMobileMenu() {
+    console.log('setupMobileMenu called, window width:', window.innerWidth);
+    
+    const nav = document.querySelector('nav');
+    if (!nav) {
+        console.log('Nav element not found');
+        return;
+    }
+    
+    console.log('Nav element found');
+    
+    if (window.innerWidth <= 768) {
+        const navLinks = nav.querySelector('.nav-links');
+        console.log('Nav links found:', !!navLinks);
+        
+        const existingToggle = nav.querySelector('.mobile-menu-toggle');
+        console.log('Existing toggle found:', !!existingToggle);
+        
+        if (navLinks && !existingToggle) {
+            const toggle = document.createElement('button');
+            toggle.className = 'mobile-menu-toggle';
+            toggle.innerHTML = '☰';
+            toggle.style.cssText = 'background: red; color: white; padding: 10px; font-size: 20px; border: none;'; // Temporary visible styling
+            console.log('Creating toggle button');
+            
+            toggle.addEventListener('click', () => {
+                console.log('Toggle clicked');
+                navLinks.classList.toggle('mobile-open');
+            });
+            nav.appendChild(toggle);
+            console.log('Toggle button added to nav');
+        }
+    }
+}
