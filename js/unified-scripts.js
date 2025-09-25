@@ -725,3 +725,49 @@ function setupMobileMenu() {
         }
     }
 }
+// Mobile Menu Setup - Add this to your unified JavaScript
+function setupMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (!mobileToggle || !navLinks) {
+        console.warn('Mobile menu elements not found');
+        return;
+    }
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        navLinks.classList.toggle('mobile-open');
+        mobileToggle.classList.toggle('open');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        }
+    });
+    
+    // Close menu when clicking on a nav link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        });
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('mobile-open');
+            mobileToggle.classList.remove('open');
+        }
+    });
+}
+
+// Remove the old mobile menu setup function and replace it with this one
+// Make sure to call setupMobileMenu() in your initializeApp() function
