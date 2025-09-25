@@ -115,15 +115,82 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(waitForFirebaseAndInit, 100);
 });
 
-// Initialize Application
+// Initialize Application with page detection
 function initializeApp() {
+    // Detect current page
+    const currentPage = detectCurrentPage();
+    console.log('Current page detected:', currentPage);
+    
+    // Always setup these universal features
     setupScrollAnimations();
     setupHeaderScrollEffect();
-    setupFormHandlers();
-    setupRatingSystem();
-    setupSearchAndFilter();
-    setupTrackingSystem();
     setupMobileOptimizations();
+    
+    // Page-specific initialization
+    switch(currentPage) {
+        case 'track':
+            setupTrackingSystem();
+            break;
+        case 'contact':
+        case 'services':
+        case 'application':
+            setupFormHandlers();
+            setupRatingSystem();
+            break;
+        case 'faq':
+            setupSearchAndFilter();
+            break;
+        default:
+            // For other pages, setup basic functionality only
+            setupBasicFormHandlers();
+            break;
+    }
+}
+
+// Detect current page based on URL and content
+function detectCurrentPage() {
+    const path = window.location.pathname.toLowerCase();
+    const filename = path.split('/').pop().replace('.html', '') || 'index';
+    
+    // Check for specific page indicators
+    if (filename.includes('track') || document.getElementById('trackingInput')) {
+        return 'track';
+    } else if (filename.includes('contact') || document.getElementById('contactForm')) {
+        return 'contact';
+    } else if (filename.includes('services') || document.getElementById('applicationForm')) {
+        return 'services';
+    } else if (filename.includes('faq') || document.getElementById('faqSearch')) {
+        return 'faq';
+    } else if (document.getElementById('reviewForm')) {
+        return 'review';
+    }
+    
+    return filename || 'index';
+}
+
+// Basic form handlers for pages that might have simple forms
+function setupBasicFormHandlers() {
+    // Only setup handlers if forms exist
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactForm);
+    }
+
+    const applicationForm = document.getElementById('applicationForm');
+    if (applicationForm) {
+        applicationForm.addEventListener('submit', handleApplicationForm);
+    }
+
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', handleReviewForm);
+    }
+
+    // Only setup validation if there are required fields
+    const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+    if (requiredFields.length > 0) {
+        setupRealTimeValidation();
+    }
 }
 
 // Scroll Animations
@@ -420,18 +487,25 @@ function setupRealTimeValidation() {
     });
 }
 
-// Rating System
+// Rating System - Only for review pages
 function setupRatingSystem() {
     const stars = document.querySelectorAll('.star');
     const ratingValue = document.getElementById('ratingValue');
+    const ratingContainer = document.getElementById('rating');
     
-    if (!stars.length || !ratingValue) return;
+    // Only proceed if rating elements exist
+    if (stars.length === 0 && !ratingValue && !ratingContainer) {
+        console.log('Rating system not needed on this page');
+        return;
+    }
+    
+    console.log('Setting up rating system');
     
     stars.forEach(star => {
         star.addEventListener('click', function() {
             const rating = parseInt(this.dataset.rating);
             currentRating = rating;
-            ratingValue.value = rating;
+            if (ratingValue) ratingValue.value = rating;
             updateStars(rating);
         });
         
@@ -441,7 +515,6 @@ function setupRatingSystem() {
         });
     });
     
-    const ratingContainer = document.getElementById('rating');
     if (ratingContainer) {
         ratingContainer.addEventListener('mouseleave', function() {
             updateStars(currentRating);
@@ -469,9 +542,21 @@ function resetRatingSystem() {
     updateStars(0);
 }
 
-// FAQ Search and Filter
+// FAQ Search and Filter - Only for FAQ pages
 function setupSearchAndFilter() {
     const faqSearch = document.getElementById('faqSearch');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    // Only proceed if FAQ elements exist
+    if (!faqSearch && categoryButtons.length === 0 && faqQuestions.length === 0) {
+        console.log('FAQ system not needed on this page');
+        return;
+    }
+    
+    console.log('Setting up FAQ search and filter system');
+    
+    // FAQ Search
     if (faqSearch) {
         faqSearch.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
@@ -496,7 +581,7 @@ function setupSearchAndFilter() {
             });
             
             if (searchTerm) {
-                document.querySelectorAll('.category-btn').forEach(btn => {
+                categoryButtons.forEach(btn => {
                     btn.classList.remove('active');
                 });
                 const allBtn = document.querySelector('.category-btn[data-category="all"]');
@@ -505,9 +590,10 @@ function setupSearchAndFilter() {
         });
     }
 
-    document.querySelectorAll('.category-btn').forEach(btn => {
+    // Category Filtering
+    categoryButtons.forEach(btn => {
         btn.addEventListener('click', function() {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            categoryButtons.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             
             const category = this.dataset.category;
@@ -521,27 +607,28 @@ function setupSearchAndFilter() {
                 }
             });
             
-            const faqSearch = document.getElementById('faqSearch');
             if (faqSearch) faqSearch.value = '';
         });
     });
 
-    document.querySelectorAll('.faq-question').forEach(question => {
+    // FAQ Accordion
+    faqQuestions.forEach(question => {
         question.addEventListener('click', function() {
             const answer = this.nextElementSibling;
             const icon = this.querySelector('.faq-icon');
             
-            document.querySelectorAll('.faq-question').forEach(q => {
+            faqQuestions.forEach(q => {
                 if (q !== this) {
                     q.classList.remove('active');
-                    q.nextElementSibling.classList.remove('active');
+                    const qAnswer = q.nextElementSibling;
+                    if (qAnswer) qAnswer.classList.remove('active');
                     const qIcon = q.querySelector('.faq-icon');
                     if (qIcon) qIcon.style.transform = 'rotate(0deg)';
                 }
             });
             
             this.classList.toggle('active');
-            answer.classList.toggle('active');
+            if (answer) answer.classList.toggle('active');
             if (icon) {
                 icon.style.transform = this.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
             }
@@ -549,25 +636,56 @@ function setupSearchAndFilter() {
     });
 }
 
-// Tracking System
+// Tracking System - Only initialize on tracking pages
 function setupTrackingSystem() {
     const trackingInput = document.getElementById('trackingInput');
-    if (trackingInput) {
-        trackingInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+    if (!trackingInput) {
+        console.log('Tracking system not needed on this page');
+        return;
+    }
+    
+    console.log('Setting up tracking system');
+    
+    trackingInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            trackService();
+        }
+    });
+    
+    // Check for URL parameters
+    checkForUrlTrackingId();
+}
+
+// Check for tracking ID in URL parameters
+function checkForUrlTrackingId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackId = urlParams.get('track');
+    
+    if (trackId) {
+        console.log('Auto-tracking from URL:', trackId);
+        setTimeout(() => {
+            const trackingInput = document.getElementById('trackingInput');
+            if (trackingInput) {
+                trackingInput.value = trackId;
                 trackService();
             }
-        });
+        }, 1000);
     }
 }
 
-// Enhanced Track Service with Real-Time Updates
+// Enhanced Track Service with better error handling
 async function trackService() {
     const trackingInput = document.getElementById('trackingInput');
     const trackingResults = document.getElementById('trackingResults');
     const errorMessage = document.getElementById('errorMessage');
     
-    if (!trackingInput || !trackingResults || !errorMessage) {
+    // Check if we're on the right page
+    if (!trackingInput) {
+        console.error('trackService called but tracking input not found - wrong page?');
+        return;
+    }
+    
+    if (!trackingResults || !errorMessage) {
         console.error('Required tracking elements not found');
         return;
     }
@@ -588,8 +706,6 @@ async function trackService() {
         
         if (trackingData) {
             displayTrackingResults(trackingData, trackingData.trackingId);
-            
-            // Start real-time updates
             startRealTimeTracking(trackingData.trackingId);
         } else {
             // Demo fallback for testing
@@ -601,7 +717,7 @@ async function trackService() {
                 
                 const demoData = {
                     trackingId: inputValue.toUpperCase(),
-                    status: 'enroute',
+                    status: 'pending',
                     firstName: 'Demo',
                     lastName: 'Customer',
                     primaryService: 'Medical Transportation'
@@ -617,6 +733,25 @@ async function trackService() {
     } catch (error) {
         console.error('Error tracking service:', error);
         showTrackingError('Unable to track service at this time. Please try again later.');
+    }
+}
+
+// Show Tracking Error - only if elements exist
+function showTrackingError(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    const trackingResults = document.getElementById('trackingResults');
+    
+    if (!errorMessage) {
+        console.error('Error message element not found');
+        return;
+    }
+    
+    errorMessage.textContent = message;
+    errorMessage.classList.add('show');
+    setTimeout(() => errorMessage.classList.remove('show'), 5000);
+    
+    if (trackingResults) {
+        trackingResults.classList.remove('show');
     }
 }
 
@@ -730,13 +865,70 @@ function startDemoRealTimeUpdates(trackingId) {
     window.demoInterval = demoInterval;
 }
 
-// Update Live Tracking Display
+// Update Live Tracking Display with enhanced UI updates
 function updateLiveTrackingDisplay(liveData) {
+    // Show live notifications
+    showLiveNotification(`Status updated: ${getStatusText(liveData.status)}`);
+    
+    // Update last updated time
+    updateLastUpdatedTime();
+    
+    // Update all sections
     updateDriverInfo(liveData.driver);
     updateLocation(liveData.location);
     updateStatus(liveData.status);
     updateTimelineStatus(liveData.status);
     updateTimelineTimestamps(liveData.timeline);
+    
+    // Update connection status
+    updateConnectionStatus(true);
+}
+
+// Show live notification - only if elements exist
+function showLiveNotification(message) {
+    const notificationsDiv = document.getElementById('liveNotifications');
+    const notificationText = document.getElementById('notificationText');
+    
+    if (!notificationsDiv || !notificationText) {
+        console.log('Live notification elements not found on this page');
+        return;
+    }
+    
+    notificationText.textContent = message;
+    notificationsDiv.style.display = 'block';
+    
+    setTimeout(() => {
+        notificationsDiv.style.display = 'none';
+    }, 5000);
+}
+
+// Update last updated time - only if element exists
+function updateLastUpdatedTime() {
+    const lastUpdatedElement = document.getElementById('lastUpdatedTime');
+    if (!lastUpdatedElement) return;
+    
+    const now = new Date();
+    lastUpdatedElement.textContent = now.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+}
+
+// Update connection status - only if elements exist
+function updateConnectionStatus(connected) {
+    const statusDiv = document.getElementById('connectionStatus');
+    const statusText = document.getElementById('connectionText');
+    
+    if (!statusDiv || !statusText) return;
+    
+    if (connected) {
+        statusDiv.className = 'connection-status';
+        statusText.textContent = '🔗 Connected to real-time updates';
+    } else {
+        statusDiv.className = 'connection-status disconnected';
+        statusText.textContent = '⚠️ Connection lost - retrying...';
+    }
 }
 
 // Update Driver Information
@@ -763,25 +955,42 @@ function updateDriverInfo(driverData) {
     }
 }
 
-// Update Location Display
+// Update Location Display with enhanced details
 function updateLocation(locationData) {
     if (!locationData) return;
     
-    const mapContainer = document.querySelector('.map-container');
-    if (mapContainer) {
-        const currentLocationP = mapContainer.querySelector('p');
-        const etaP = mapContainer.querySelector('p:last-child');
+    const currentLocationSpan = document.getElementById('currentLocation');
+    const currentETASpan = document.getElementById('currentETA');
+    const currentDistanceSpan = document.getElementById('currentDistance');
+    
+    if (currentLocationSpan) {
+        currentLocationSpan.textContent = locationData.address || 'Location updating...';
+    }
+    
+    if (currentETASpan && locationData.eta) {
+        const eta = new Date(locationData.eta);
+        const now = new Date();
+        const minutesRemaining = Math.round((eta - now) / (1000 * 60));
         
-        if (currentLocationP) {
-            currentLocationP.innerHTML = `<strong>Current Location:</strong> ${locationData.address}`;
+        if (minutesRemaining > 0) {
+            currentETASpan.textContent = `${minutesRemaining} minutes`;
+        } else if (minutesRemaining > -5) {
+            currentETASpan.textContent = 'Arriving now';
+        } else {
+            currentETASpan.textContent = 'Arrived';
         }
-        
-        if (etaP && locationData.eta) {
-            const eta = new Date(locationData.eta);
-            const now = new Date();
-            const minutesRemaining = Math.round((eta - now) / (1000 * 60));
-            
-            etaP.innerHTML = `<strong>ETA:</strong> ${minutesRemaining > 0 ? minutesRemaining + ' minutes' : 'Arriving now'}`;
+    }
+    
+    if (currentDistanceSpan && locationData.distance) {
+        currentDistanceSpan.textContent = locationData.distance;
+    } else if (currentDistanceSpan) {
+        // Calculate approximate distance (demo)
+        const eta = locationData.eta ? new Date(locationData.eta) : null;
+        const now = new Date();
+        if (eta) {
+            const minutes = Math.round((eta - now) / (1000 * 60));
+            const miles = Math.max(0, Math.round(minutes * 0.5)); // Rough estimate
+            currentDistanceSpan.textContent = `~${miles} miles`;
         }
     }
 }
