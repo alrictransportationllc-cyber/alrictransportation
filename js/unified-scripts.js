@@ -15,31 +15,104 @@ const firebaseConfig = {
 let currentRating = 0;
 let app, db, analytics;
 
-// Initialize Firebase when the script loads
+// Initialize Firebase with retry mechanism
 function initializeFirebase() {
     try {
-        if (typeof firebase !== 'undefined') {
-            app = firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            if (firebase.analytics) {
-                analytics = firebase.analytics();
+        // Check if Firebase is available
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.firestore) {
+            // Check if already initialized
+            if (firebase.apps.length === 0) {
+                app = firebase.initializeApp(firebaseConfig);
+            } else {
+                app = firebase.apps[0];
             }
+            
+            db = firebase.firestore();
+            
+            if (firebase.analytics && typeof firebase.analytics === 'function') {
+                try {
+                    analytics = firebase.analytics();
+                } catch (analyticsError) {
+                    console.log('Analytics not available:', analyticsError.message);
+                }
+            }
+            
             console.log('Firebase initialized successfully');
             return true;
         } else {
-            console.warn('Firebase not loaded, using fallback functionality');
+            console.warn('Firebase not fully loaded. Available:', {
+                firebase: typeof firebase !== 'undefined',
+                apps: typeof firebase !== 'undefined' && firebase.apps,
+                firestore: typeof firebase !== 'undefined' && firebase.firestore
+            });
             return false;
         }
     } catch (error) {
-        console.warn('Firebase initialization failed, using fallback:', error);
+        console.warn('Firebase initialization failed:', error);
         return false;
     }
 }
 
+// Debug Firebase loading
+function debugFirebaseLoading() {
+    console.log('=== Firebase Debug Info ===');
+    console.log('window.firebase exists:', typeof firebase !== 'undefined');
+    
+    if (typeof firebase !== 'undefined') {
+        console.log('firebase.apps exists:', !!firebase.apps);
+        console.log('firebase.firestore exists:', !!firebase.firestore);
+        console.log('firebase.analytics exists:', !!firebase.analytics);
+        console.log('firebase.initializeApp exists:', !!firebase.initializeApp);
+    }
+    
+    // Check if scripts are loaded
+    const scripts = Array.from(document.scripts);
+    const firebaseScripts = scripts.filter(script => 
+        script.src.includes('firebase') || script.src.includes('gstatic.com')
+    );
+    
+    console.log('Firebase scripts found:', firebaseScripts.length);
+    firebaseScripts.forEach(script => {
+        console.log('Script:', script.src, 'Loaded:', script.readyState || 'unknown');
+    });
+    console.log('=== End Firebase Debug ===');
+}
+
+// Wait for Firebase to load, then initialize
+function waitForFirebaseAndInit() {
+    let attempts = 0;
+    const maxAttempts = 20; // Increased attempts
+    
+    function checkFirebase() {
+        attempts++;
+        console.log(`Checking for Firebase... attempt ${attempts}`);
+        
+        // Debug on first attempt
+        if (attempts === 1) {
+            debugFirebaseLoading();
+        }
+        
+        if (initializeFirebase()) {
+            initializeApp();
+            return;
+        }
+        
+        if (attempts < maxAttempts) {
+            setTimeout(checkFirebase, 300); // Reduced wait time
+        } else {
+            console.warn('Firebase failed to load after multiple attempts. Using fallback mode.');
+            debugFirebaseLoading(); // Debug again on failure
+            initializeApp(); // Initialize app without Firebase
+        }
+    }
+    
+    checkFirebase();
+}
+
 // DOM Content Loaded Event Listener
 document.addEventListener('DOMContentLoaded', function() {
-    initializeFirebase();
-    initializeApp();
+    // Give Firebase scripts time to load
+    setTimeout(waitForFirebaseAndInit, 100);
 });
 
 // Initialize Application
