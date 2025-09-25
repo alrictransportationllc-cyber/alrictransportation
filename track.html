@@ -79,7 +79,7 @@
                 <div class="tracking-header">
                     <h3>Medical Transportation Service</h3>
                     <div class="tracking-id">Tracking ID: <span id="displayTrackingId">AT-2025-001234</span></div>
-                    <div class="status-indicator status-enroute" id="statusIndicator">En Route to Pickup</div>
+                    <div class="status-indicator status-pending" id="statusIndicator">Application Under Review</div>
                 </div>
 
                 <!-- Driver Information -->
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     
-                    <div class="timeline-item completed">
+                    <div class="timeline-item">
                         <div class="timeline-content">
                             <h4>Vehicle Dispatched</h4>
                             <p>Driver is en route to your pickup location</p>
@@ -140,11 +140,11 @@
                         </div>
                     </div>
                     
-                    <div class="timeline-item active">
+                    <div class="timeline-item">
                         <div class="timeline-content">
                             <h4>En Route to Pickup</h4>
-                            <p>Driver is currently 8 minutes away from your location</p>
-                            <div class="timeline-time">Current Status</div>
+                            <p>Driver is currently en route to your location</p>
+                            <div class="timeline-time">Estimated: Today, 9:30 AM</div>
                         </div>
                     </div>
                     
@@ -152,7 +152,7 @@
                         <div class="timeline-content">
                             <h4>Arrival at Pickup</h4>
                             <p>Driver will arrive at your pickup location</p>
-                            <div class="timeline-time">Today, 9:30 AM (Estimated)</div>
+                            <div class="timeline-time">Estimated: Today, 9:35 AM</div>
                         </div>
                     </div>
                     
@@ -160,7 +160,7 @@
                         <div class="timeline-content">
                             <h4>En Route to Destination</h4>
                             <p>Transportation to your medical appointment</p>
-                            <div class="timeline-time">Today, 9:40 AM (Estimated)</div>
+                            <div class="timeline-time">Estimated: Today, 9:40 AM</div>
                         </div>
                     </div>
                     
@@ -168,7 +168,7 @@
                         <div class="timeline-content">
                             <h4>Service Completed</h4>
                             <p>Safe arrival at your destination</p>
-                            <div class="timeline-time">Today, 10:00 AM (Estimated)</div>
+                            <div class="timeline-time">Estimated: Today, 10:00 AM</div>
                         </div>
                     </div>
                 </div>
@@ -233,101 +233,7 @@
         </div>
     </footer>
 
-    <script>
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Tracking functionality
-        function trackService() {
-            const trackingInput = document.getElementById('trackingInput');
-            const trackingResults = document.getElementById('trackingResults');
-            const errorMessage = document.getElementById('errorMessage');
-            const displayTrackingId = document.getElementById('displayTrackingId');
-            
-            const inputValue = trackingInput.value.trim();
-            
-            if (!inputValue) {
-                errorMessage.textContent = 'Please enter a tracking ID, booking reference, or phone number.';
-                errorMessage.classList.add('show');
-                setTimeout(() => errorMessage.classList.remove('show'), 5000);
-                return;
-            }
-            
-            // Simulate tracking lookup
-            const validIds = [
-                'AT-2025-001234', 'BK-MD-567890', '(555) 123-4567', 
-                'AT-2025-001235', 'BK-WC-567891', '(555) 123-4568'
-            ];
-            
-            if (validIds.some(id => id.toLowerCase().includes(inputValue.toLowerCase()))) {
-                errorMessage.classList.remove('show');
-                displayTrackingId.textContent = inputValue.toUpperCase();
-                trackingResults.classList.add('show');
-                trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                
-                // Simulate real-time updates
-                setTimeout(() => {
-                    updateTrackingStatus('arrived', 'Arrived at Pickup Location');
-                }, 10000);
-                
-            } else {
-                errorMessage.classList.add('show');
-                trackingResults.classList.remove('show');
-                setTimeout(() => errorMessage.classList.remove('show'), 5000);
-            }
-        }
-
-        // Update tracking status
-        function updateTrackingStatus(status, statusText) {
-            const statusIndicator = document.getElementById('statusIndicator');
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            
-            statusIndicator.className = `status-indicator status-${status}`;
-            statusIndicator.textContent = statusText;
-            
-            // Update timeline based on status
-            if (status === 'arrived') {
-                timelineItems[4].classList.add('completed');
-                timelineItems[4].classList.remove('active');
-                timelineItems[5].classList.add('active');
-            }
-        }
-
-        // Enter key support for tracking input
-        document.getElementById('trackingInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                trackService();
-            }
-        });
-
-        // Auto-refresh tracking status (simulate real-time updates)
-        setInterval(() => {
-            if (document.getElementById('trackingResults').classList.contains('show')) {
-                // Simulate random updates
-                const updates = [
-                    'Driver 2 minutes away',
-                    'Driver has arrived',
-                    'Passenger picked up',
-                    'En route to destination'
-                ];
-                // In a real application, this would fetch actual updates from the server
-            }
-        }, 30000); // Update every 30 seconds
-    </script>
+    <!-- Unified JavaScript -->
+    <script type="module" src="js/unified-scripts.js"></script>
 </body>
 </html>
