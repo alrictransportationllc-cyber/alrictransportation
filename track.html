@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Your Shipment - Real-Time Tracking | Alric Transportation</title>
-    <meta name="description" content="Track your medical supply shipment in real-time with Alric Transportation. Get live updates on delivery status, location, and estimated arrival time.">
-    <meta name="keywords" content="track shipment, medical delivery tracking, prescription tracking, shipment status, delivery updates">
-    <meta name="robots" content="index, follow">
+    <title>Track Shipment - Alric Transportation | Real-Time Transportation Tracking</title>
+    <meta name="description" content="Track your medical transportation, medication delivery, or ride in real-time with Alric Transportation's live tracking system.">
+    <meta name="keywords" content="track medical transport, medication delivery tracking, real-time transport tracking, alric transportation tracking">
+    <meta name="author" content="Alric Transportation">
     <link rel="canonical" href="https://alrictransportation.com/track">
+    <meta property="og:title" content="Track Shipment - Alric Transportation">
+    <meta property="og:description" content="Real-time tracking for medical transportation and delivery services">
+    <meta property="og:image" content="assets/img/alrictlogo.png">
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -16,51 +20,67 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: var(--shadow);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
         .logo img {
             height: 50px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .nav-links {
@@ -70,21 +90,39 @@
         }
 
         .nav-links a {
-            color: white;
             text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #ffd700;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 140px 0 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -93,321 +131,422 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: moveAround 10s linear infinite;
-            top: 20%;
-            left: 10%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            animation: moveAround 8s linear infinite reverse;
-            bottom: 20%;
-            right: 15%;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
+            color: var(--white);
             margin-bottom: 1rem;
-            animation: slideInDown 1s ease-out;
+            animation: slideInUp 1s ease-out;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 2rem;
             opacity: 0.9;
-            animation: slideInUp 1s ease-out 0.3s both;
+            animation: slideInUp 1s ease-out 0.2s both;
         }
 
-        /* Tracking Section */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
         .tracking-section {
             padding: 80px 0;
-            background: #f8f9fa;
+            background: var(--white);
         }
 
         .tracking-form {
-            background: white;
+            background: var(--light-gray);
             padding: 3rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 1s ease-out;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
         }
 
-        .form-group {
+        .tracking-form h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .tracking-form p {
+            color: var(--text-light);
             margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #2c3e50;
+        .tracking-input-group {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
         }
 
         .tracking-input {
-            width: 100%;
+            flex: 1;
             padding: 15px;
-            border: 2px solid #ddd;
+            border: 2px solid var(--primary-color);
             border-radius: 10px;
             font-size: 1.1rem;
-            transition: all 0.3s;
+            background: var(--white);
+            transition: all 0.3s ease;
         }
 
         .tracking-input:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 15px rgba(79,172,254,0.3);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+            border-color: var(--accent-color);
         }
 
-        .track-button {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            color: white;
+        .track-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--white);
             border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
+            border-radius: 10px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
+            transition: all 0.3s ease;
         }
 
-        .track-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(79,172,254,0.4);
+        .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tracking-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .example-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0;
         }
 
         /* Tracking Results */
         .tracking-results {
-            display: none;
-            background: white;
+            background: var(--white);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out;
+            box-shadow: var(--shadow);
+            padding: 3rem;
+            margin-top: 2rem;
+            display: none;
         }
 
-        .shipment-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 2rem;
+        .tracking-results.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .tracking-header {
             text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
         }
 
-        .tracking-number {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .tracking-header h3 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
 
-        .shipment-status {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .status-in-transit { color: #ffd700; }
-        .status-delivered { color: #27ae60; }
-        .status-pending { color: #f39c12; }
-        .status-delayed { color: #e74c3c; }
-
-        .shipment-details {
-            padding: 2rem;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .detail-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 5px solid #4facfe;
-        }
-
-        .detail-label {
+        .tracking-id {
+            color: var(--text-light);
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
         }
 
-        .detail-value {
-            color: #666;
+        .status-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 1rem 0;
         }
 
-        /* Progress Timeline */
-        .progress-section {
-            margin-top: 3rem;
+        .status-scheduled { background: var(--warning-color); color: var(--white); }
+        .status-enroute { background: var(--accent-color); color: var(--white); animation: pulse 2s infinite; }
+        .status-arrived { background: var(--success-color); color: var(--white); }
+        .status-completed { background: var(--secondary-color); color: var(--white); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .progress-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .timeline {
+        .tracking-timeline {
             position: relative;
             padding-left: 2rem;
         }
 
-        .timeline::before {
+        .tracking-timeline::before {
             content: '';
             position: absolute;
             left: 15px;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #ddd;
+            background: var(--light-gray);
         }
 
         .timeline-item {
             position: relative;
             margin-bottom: 2rem;
             padding-left: 2rem;
-            animation: slideInRight 1s ease-out;
-        }
-
-        .timeline-item.completed::before {
-            background: #27ae60;
-        }
-
-        .timeline-item.current::before {
-            background: #4facfe;
-            box-shadow: 0 0 15px rgba(79,172,254,0.5);
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -27px;
+            left: -8px;
             top: 5px;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: #ddd;
-            border: 3px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: var(--light-gray);
+            border: 3px solid var(--white);
+            z-index: 2;
+        }
+
+        .timeline-item.completed::before {
+            background: var(--success-color);
+        }
+
+        .timeline-item.active::before {
+            background: var(--accent-color);
+            animation: pulse 2s infinite;
         }
 
         .timeline-content {
-            background: white;
+            background: var(--light-gray);
             padding: 1.5rem;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
         }
 
-        .timeline-title {
-            font-weight: 600;
-            color: #2c3e50;
+        .timeline-content h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-light);
             margin-bottom: 0.5rem;
         }
 
         .timeline-time {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .timeline-description {
-            color: #666;
-        }
-
-        /* Map Section */
+        /* Live Map */
         .map-section {
-            padding: 3rem 0;
-            background: #e9ecef;
+            margin: 3rem 0;
+            text-align: center;
         }
 
         .map-container {
-            background: white;
+            background: var(--light-gray);
             border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 3rem;
+            margin-bottom: 2rem;
         }
 
         .map-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--white);
             font-size: 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        .map-placeholder::before {
-            content: '📍';
+        .vehicle-icon {
             position: absolute;
-            font-size: 3rem;
-            animation: bounce 2s infinite;
+            font-size: 2rem;
+            animation: moveVehicle 4s ease-in-out infinite;
         }
 
-        /* Sample Tracking Numbers */
-        .sample-numbers {
-            background: white;
-            padding: 2rem;
+        @keyframes moveVehicle {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -20px); }
+            50% { transform: translate(100px, 10px); }
+            75% { transform: translate(70px, 30px); }
+        }
+
+        /* Driver Info */
+        .driver-info {
+            background: var(--white);
             border-radius: 15px;
-            margin-top: 2rem;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
-        .sample-numbers h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        .sample-list {
+        .driver-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            font-size: 2rem;
+            color: var(--white);
         }
 
-        .sample-number {
-            background: #f8f9fa;
-            padding: 0.5rem 1rem;
+        .driver-details h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .driver-details p {
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-driver {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .contact-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-color);
+            background: var(--white);
+            color: var(--secondary-color);
             border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.9rem;
         }
 
-        .sample-number:hover {
-            background: #4facfe;
-            color: white;
-            border-color: #00f2fe;
+        .contact-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 1rem;
+            background: var(--light-gray);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Error State */
+        .error-message {
+            background: var(--error-color);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--secondary-color) 100%);
+            color: var(--white);
             padding: 3rem 0 1rem;
-            text-align: center;
+            margin-top: 4rem;
         }
 
         .footer-content {
@@ -415,104 +554,92 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
         }
 
         .footer-section h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            color: #ffd700;
         }
 
+        .footer-section p,
         .footer-section a {
-            color: #bdc3c7;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+            line-height: 1.8;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--primary-color);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 1rem;
-            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes moveAround {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(30px, -30px); }
-            50% { transform: translate(-20px, -60px); }
-            75% { transform: translate(-50px, -30px); }
-            100% { transform: translate(0, 0); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .tracking-form { padding: 2rem; }
-            .details-grid { grid-template-columns: 1fr; }
-            .sample-list { flex-direction: column; align-items: center; }
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tracking-input-group {
+                flex-direction: column;
+                max-width: 100%;
+            }
+            
+            .tracking-examples {
+                grid-template-columns: 1fr;
+            }
+            
+            .driver-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .tracking-form,
+            .tracking-results {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
             <ul class="nav-links">
@@ -520,288 +647,213 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="track.html">Track</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html" class="active">Track</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Track Your Shipment</h1>
-                <p>Real-time tracking for your medical supply deliveries</p>
-            </div>
+        <div class="hero-content">
+            <h1>📍 Track Your Service</h1>
+            <p>Real-time tracking for your transportation and delivery services</p>
         </div>
     </section>
 
+    <!-- Tracking Section -->
     <section class="tracking-section">
         <div class="container">
-            <div class="tracking-form">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: #2c3e50;">Enter Your Tracking Number</h2>
-                <form id="trackingForm">
-                    <div class="form-group">
-                        <label for="trackingNumber">Tracking Number</label>
-                        <input type="text" id="trackingNumber" name="trackingNumber" class="tracking-input" 
-                               placeholder="Enter your tracking number (e.g., ALR123456789)" required>
+            <div class="tracking-form fade-in">
+                <h2>Enter Your Tracking Information</h2>
+                <p>Enter your tracking ID, booking reference, or phone number to see real-time updates on your service</p>
+                
+                <div class="tracking-input-group">
+                    <input type="text" class="tracking-input" id="trackingInput" placeholder="Enter tracking ID or phone number">
+                    <button class="track-btn" onclick="trackService()">🔍 Track</button>
+                </div>
+                
+                <div class="tracking-examples">
+                    <div class="example-card">
+                        <h4>Tracking ID Format</h4>
+                        <p>AT-2025-001234</p>
                     </div>
-                    <button type="submit" class="track-button">Track Shipment</button>
-                </form>
-            </div>
-
-            <div class="sample-numbers">
-                <h3>Try Sample Tracking Numbers</h3>
-                <div class="sample-list">
-                    <div class="sample-number" onclick="trackSample('ALR123456789')">ALR123456789</div>
-                    <div class="sample-number" onclick="trackSample('ALR987654321')">ALR987654321</div>
-                    <div class="sample-number" onclick="trackSample('ALR555666777')">ALR555666777</div>
+                    <div class="example-card">
+                        <h4>Booking Reference</h4>
+                        <p>BK-MD-567890</p>
+                    </div>
+                    <div class="example-card">
+                        <h4>Phone Number</h4>
+                        <p>(555) 123-4567</p>
+                    </div>
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    Tracking ID not found. Please check your information and try again.
                 </div>
             </div>
 
+            <!-- Tracking Results (Initially Hidden) -->
             <div class="tracking-results" id="trackingResults">
-                <div class="shipment-header">
-                    <div class="tracking-number" id="resultTrackingNumber">ALR123456789</div>
-                    <div class="shipment-status" id="resultStatus">In Transit</div>
+                <div class="tracking-header">
+                    <h3>Medical Transportation Service</h3>
+                    <div class="tracking-id">Tracking ID: <span id="displayTrackingId">AT-2025-001234</span></div>
+                    <div class="status-indicator status-enroute" id="statusIndicator">En Route to Pickup</div>
                 </div>
 
-                <div class="shipment-details">
-                    <div class="details-grid">
-                        <div class="detail-card">
-                            <div class="detail-label">From</div>
-                            <div class="detail-value" id="resultFrom">Metro Pharmacy<br>123 Main St, Healthcare City</div>
-                        </div>
-                        <div class="detail-card">
-                            <div class="detail-label">To</div>
-                            <div class="detail-value" id="resultTo">General Hospital<br>456 Medical Ave, Healthcare City</div>
-                        </div>
-                        <div class="detail-card">
-                            <div class="detail-label">Service Type</div>
-                            <div class="detail-value" id="resultService">Emergency Delivery</div>
-                        </div>
-                        <div class="detail-card">
-                            <div class="detail-label">Estimated Delivery</div>
-                            <div class="detail-value" id="resultETA">Today, 3:45 PM</div>
-                        </div>
-                        <div class="detail-card">
-                            <div class="detail-label">Driver</div>
-                            <div class="detail-value" id="resultDriver">John Smith<br>+1 (555) 123-0001</div>
-                        </div>
-                        <div class="detail-card">
-                            <div class="detail-label">Special Instructions</div>
-                            <div class="detail-value" id="resultInstructions">Temperature controlled - Keep refrigerated</div>
-                        </div>
+                <!-- Driver Information -->
+                <div class="driver-info fade-in">
+                    <div class="driver-avatar">👨‍🚗</div>
+                    <div class="driver-details">
+                        <h4>Robert Martinez</h4>
+                        <p>Professional Medical Transport Driver</p>
+                        <p>Vehicle: 2023 Ford Transit (Wheelchair Accessible)</p>
+                        <p>License Plate: AMT-4567</p>
                     </div>
-
-                    <div class="progress-section">
-                        <h3 class="progress-title">Delivery Progress</h3>
-                        <div class="timeline" id="deliveryTimeline">
-                            <div class="timeline-item completed">
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Order Received</div>
-                                    <div class="timeline-time">Today, 1:15 PM</div>
-                                    <div class="timeline-description">Pickup request received and confirmed</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item completed">
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Package Picked Up</div>
-                                    <div class="timeline-time">Today, 1:45 PM</div>
-                                    <div class="timeline-description">Package collected from Metro Pharmacy</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item current">
-                                <div class="timeline-content">
-                                    <div class="timeline-title">In Transit</div>
-                                    <div class="timeline-time">Today, 2:00 PM</div>
-                                    <div class="timeline-description">En route to General Hospital - 15 minutes away</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Out for Delivery</div>
-                                    <div class="timeline-time">Estimated: Today, 3:30 PM</div>
-                                    <div class="timeline-description">Package arriving at destination</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Delivered</div>
-                                    <div class="timeline-time">Estimated: Today, 3:45 PM</div>
-                                    <div class="timeline-description">Package delivered and signed for</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="contact-driver">
+                        <a href="tel:+15551234580" class="contact-btn">📞 Call Driver</a>
+                        <a href="sms:+15551234580" class="contact-btn">💬 Text Driver</a>
                     </div>
                 </div>
 
+                <!-- Live Map -->
                 <div class="map-section">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Live Location</h3>
                     <div class="map-container">
                         <div class="map-placeholder">
-                            🗺️ Live Map Tracking
+                            🗺️ Live Map View
+                            <div class="vehicle-icon">🚐</div>
                         </div>
-                        <p style="text-align: center; margin-top: 1rem; color: #666;">
-                            Real-time GPS tracking shows your package location and estimated arrival time
+                        <p style="color: var(--text-light); margin-top: 1rem;">
+                            <strong>Current Location:</strong> 5th & Main Street, heading to pickup location
+                        </p>
+                        <p style="color: var(--text-light);">
+                            <strong>ETA:</strong> 8 minutes
                         </p>
                     </div>
                 </div>
+
+                <!-- Timeline -->
+                <div class="tracking-timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>Service Booked</h4>
+                            <p>Your medical transportation has been scheduled and confirmed</p>
+                            <div class="timeline-time">Today, 8:15 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>Driver Assigned</h4>
+                            <p>Robert Martinez has been assigned as your driver</p>
+                            <div class="timeline-time">Today, 8:45 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item completed">
+                        <div class="timeline-content">
+                            <h4>Vehicle Dispatched</h4>
+                            <p>Driver is en route to your pickup location</p>
+                            <div class="timeline-time">Today, 9:20 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item active">
+                        <div class="timeline-content">
+                            <h4>En Route to Pickup</h4>
+                            <p>Driver is currently 8 minutes away from your location</p>
+                            <div class="timeline-time">Current Status</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Arrival at Pickup</h4>
+                            <p>Driver will arrive at your pickup location</p>
+                            <div class="timeline-time">Today, 9:30 AM (Estimated)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>En Route to Destination</h4>
+                            <p>Transportation to your medical appointment</p>
+                            <div class="timeline-time">Today, 9:40 AM (Estimated)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Service Completed</h4>
+                            <p>Safe arrival at your destination</p>
+                            <div class="timeline-time">Today, 10:00 AM (Estimated)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <a href="tel:+15551234567" class="action-btn">
+                        <span class="action-icon">📞</span>
+                        Call Dispatch
+                    </a>
+                    <a href="contact.html" class="action-btn">
+                        <span class="action-icon">💬</span>
+                        Send Message
+                    </a>
+                    <a href="services.html" class="action-btn">
+                        <span class="action-icon">📅</span>
+                        Book Return Trip
+                    </a>
+                    <a href="contact.html" class="action-btn">
+                        <span class="action-icon">❓</span>
+                        Get Help
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="services.html">Services</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="legal.html">Legal</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Services</h3>
-                    <a href="services.html">Prescription Delivery</a>
-                    <a href="services.html">Medical Supplies</a>
-                    <a href="services.html">Emergency Transport</a>
-                    <a href="track.html">Track Shipment</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p>📞 +1 (555) 123-4567</p>
-                    <p>📧 info@alrictransportation.com</p>
-                    <p>📍 123 Medical Drive, Healthcare City</p>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Alric Transportation</h3>
+                <p>Professional medical transportation services with compassionate care and reliability you can trust.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="about.html">About Us</a></p>
+                <p><a href="contact.html">Contact</a></p>
+                <p><a href="faq.html">FAQ</a></p>
             </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p><a href="services.html#medical">Medical Transportation</a></p>
+                <p><a href="services.html#wheelchair">Wheelchair/STS</a></p>
+                <p><a href="services.html#ondemand">On-Demand Rides</a></p>
+                <p><a href="services.html#medication">Medication Delivery</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📞 (555) 123-4567</p>
+                <p>📧 info@alrictransportation.com</p>
+                <p>📍 123 Medical Center Dr</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
         </div>
     </footer>
 
     <script>
-        // Sample tracking data
-        const trackingData = {
-            'ALR123456789': {
-                status: 'In Transit',
-                statusClass: 'status-in-transit',
-                from: 'Metro Pharmacy<br>123 Main St, Healthcare City',
-                to: 'General Hospital<br>456 Medical Ave, Healthcare City',
-                service: 'Emergency Delivery',
-                eta: 'Today, 3:45 PM',
-                driver: 'John Smith<br>+1 (555) 123-0001',
-                instructions: 'Temperature controlled - Keep refrigerated',
-                timeline: [
-                    { title: 'Order Received', time: 'Today, 1:15 PM', description: 'Pickup request received and confirmed', status: 'completed' },
-                    { title: 'Package Picked Up', time: 'Today, 1:45 PM', description: 'Package collected from Metro Pharmacy', status: 'completed' },
-                    { title: 'In Transit', time: 'Today, 2:00 PM', description: 'En route to General Hospital - 15 minutes away', status: 'current' },
-                    { title: 'Out for Delivery', time: 'Estimated: Today, 3:30 PM', description: 'Package arriving at destination', status: 'pending' },
-                    { title: 'Delivered', time: 'Estimated: Today, 3:45 PM', description: 'Package delivered and signed for', status: 'pending' }
-                ]
-            },
-            'ALR987654321': {
-                status: 'Delivered',
-                statusClass: 'status-delivered',
-                from: 'Central Pharmacy<br>789 Health Blvd, Healthcare City',
-                to: 'Patient Home<br>321 Residential St, Healthcare City',
-                service: 'Prescription Delivery',
-                eta: 'Delivered: Today, 11:30 AM',
-                driver: 'Sarah Johnson<br>+1 (555) 123-0002',
-                instructions: 'Leave with doorman if not home',
-                timeline: [
-                    { title: 'Order Received', time: 'Today, 9:00 AM', description: 'Prescription delivery scheduled', status: 'completed' },
-                    { title: 'Package Picked Up', time: 'Today, 9:30 AM', description: 'Prescription collected from Central Pharmacy', status: 'completed' },
-                    { title: 'In Transit', time: 'Today, 10:00 AM', description: 'En route to patient address', status: 'completed' },
-                    { title: 'Out for Delivery', time: 'Today, 11:00 AM', description: 'Arrived at delivery location', status: 'completed' },
-                    { title: 'Delivered', time: 'Today, 11:30 AM', description: 'Package delivered and signed for by patient', status: 'completed' }
-                ]
-            },
-            'ALR555666777': {
-                status: 'Pending Pickup',
-                statusClass: 'status-pending',
-                from: 'Regional Medical Center<br>555 Hospital Dr, Healthcare City',
-                to: 'Research Laboratory<br>777 Science Way, Healthcare City',
-                service: 'Laboratory Transport',
-                eta: 'Scheduled: Tomorrow, 9:00 AM',
-                driver: 'To be assigned',
-                instructions: 'Biohazard materials - Special handling required',
-                timeline: [
-                    { title: 'Order Received', time: 'Today, 4:30 PM', description: 'Laboratory transport request received', status: 'completed' },
-                    { title: 'Scheduling', time: 'Today, 4:45 PM', description: 'Pickup scheduled for tomorrow morning', status: 'current' },
-                    { title: 'Package Pickup', time: 'Tomorrow, 8:30 AM', description: 'Scheduled pickup from Regional Medical Center', status: 'pending' },
-                    { title: 'In Transit', time: 'Tomorrow, 9:00 AM', description: 'Transport to Research Laboratory', status: 'pending' },
-                    { title: 'Delivered', time: 'Tomorrow, 9:30 AM', description: 'Delivery to laboratory receiving', status: 'pending' }
-                ]
-            }
-        };
-
-        // Track shipment function
-        function trackShipment(trackingNumber) {
-            const data = trackingData[trackingNumber];
-            
-            if (!data) {
-                alert('Tracking number not found. Please check the number and try again.');
-                return;
-            }
-
-            // Update results display
-            document.getElementById('resultTrackingNumber').textContent = trackingNumber;
-            document.getElementById('resultStatus').textContent = data.status;
-            document.getElementById('resultStatus').className = 'shipment-status ' + data.statusClass;
-            document.getElementById('resultFrom').innerHTML = data.from;
-            document.getElementById('resultTo').innerHTML = data.to;
-            document.getElementById('resultService').textContent = data.service;
-            document.getElementById('resultETA').textContent = data.eta;
-            document.getElementById('resultDriver').innerHTML = data.driver;
-            document.getElementById('resultInstructions').textContent = data.instructions;
-
-            // Update timeline
-            const timeline = document.getElementById('deliveryTimeline');
-            timeline.innerHTML = '';
-            
-            data.timeline.forEach(item => {
-                const timelineItem = document.createElement('div');
-                timelineItem.className = `timeline-item ${item.status}`;
-                timelineItem.innerHTML = `
-                    <div class="timeline-content">
-                        <div class="timeline-title">${item.title}</div>
-                        <div class="timeline-time">${item.time}</div>
-                        <div class="timeline-description">${item.description}</div>
-                    </div>
-                `;
-                timeline.appendChild(timelineItem);
-            });
-
-            // Show results
-            document.getElementById('trackingResults').style.display = 'block';
-            document.getElementById('trackingResults').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Handle form submission
-        document.getElementById('trackingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const trackingNumber = document.getElementById('trackingNumber').value.trim();
-            trackShipment(trackingNumber);
-        });
-
-        // Handle sample tracking numbers
-        function trackSample(trackingNumber) {
-            document.getElementById('trackingNumber').value = trackingNumber;
-            trackShipment(trackingNumber);
-        }
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(30, 60, 114, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-
-        // Animate elements on scroll
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -810,18 +862,91 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.tracking-form, .sample-numbers').forEach(item => {
-            item.style.opacity = '0';
-            item.style.transform = 'translateY(20px)';
-            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(item);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
+
+        // Tracking functionality
+        function trackService() {
+            const trackingInput = document.getElementById('trackingInput');
+            const trackingResults = document.getElementById('trackingResults');
+            const errorMessage = document.getElementById('errorMessage');
+            const displayTrackingId = document.getElementById('displayTrackingId');
+            
+            const inputValue = trackingInput.value.trim();
+            
+            if (!inputValue) {
+                errorMessage.textContent = 'Please enter a tracking ID, booking reference, or phone number.';
+                errorMessage.classList.add('show');
+                setTimeout(() => errorMessage.classList.remove('show'), 5000);
+                return;
+            }
+            
+            // Simulate tracking lookup
+            const validIds = [
+                'AT-2025-001234', 'BK-MD-567890', '(555) 123-4567', 
+                'AT-2025-001235', 'BK-WC-567891', '(555) 123-4568'
+            ];
+            
+            if (validIds.some(id => id.toLowerCase().includes(inputValue.toLowerCase()))) {
+                errorMessage.classList.remove('show');
+                displayTrackingId.textContent = inputValue.toUpperCase();
+                trackingResults.classList.add('show');
+                trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Simulate real-time updates
+                setTimeout(() => {
+                    updateTrackingStatus('arrived', 'Arrived at Pickup Location');
+                }, 10000);
+                
+            } else {
+                errorMessage.classList.add('show');
+                trackingResults.classList.remove('show');
+                setTimeout(() => errorMessage.classList.remove('show'), 5000);
+            }
+        }
+
+        // Update tracking status
+        function updateTrackingStatus(status, statusText) {
+            const statusIndicator = document.getElementById('statusIndicator');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            statusIndicator.className = `status-indicator status-${status}`;
+            statusIndicator.textContent = statusText;
+            
+            // Update timeline based on status
+            if (status === 'arrived') {
+                timelineItems[4].classList.add('completed');
+                timelineItems[4].classList.remove('active');
+                timelineItems[5].classList.add('active');
+            }
+        }
+
+        // Enter key support for tracking input
+        document.getElementById('trackingInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                trackService();
+            }
+        });
+
+        // Auto-refresh tracking status (simulate real-time updates)
+        setInterval(() => {
+            if (document.getElementById('trackingResults').classList.contains('show')) {
+                // Simulate random updates
+                const updates = [
+                    'Driver 2 minutes away',
+                    'Driver has arrived',
+                    'Passenger picked up',
+                    'En route to destination'
+                ];
+                // In a real application, this would fetch actual updates from the server
+            }
+        }, 30000); // Update every 30 seconds
     </script>
 </body>
 </html>
