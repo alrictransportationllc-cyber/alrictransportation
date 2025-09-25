@@ -3,35 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alric Transportation - Reliable Medical Supply Transport Services</title>
-    <meta name="description" content="Professional medication and medical supply transportation services. Safe, secure, and timely delivery of pharmaceuticals across the region.">
-    <meta name="keywords" content="medication transport, pharmaceutical delivery, medical supply shipping, healthcare logistics">
-    <meta name="robots" content="index, follow">
+    <title>Alric Transportation - Professional Medical Transportation Services</title>
+    <meta name="description" content="Alric Transportation provides reliable medical transportation, wheelchair accessible rides, medication delivery, and student transportation services. Professional, safe, and compassionate care.">
+    <meta name="keywords" content="medical transportation, wheelchair accessible rides, medication delivery, student transportation, airport pickup, on-demand rides">
+    <meta name="author" content="Alric Transportation">
     <link rel="canonical" href="https://alrictransportation.com">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Alric Transportation - Medical Supply Transport">
-    <meta property="og:description" content="Professional medication and medical supply transportation services">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Alric Transportation - Professional Medical Transportation">
+    <meta property="og:description" content="Reliable medical transportation and specialized ride services with compassionate care">
+    <meta property="og:image" content="assets/img/alrictlogo.png">
     <meta property="og:url" content="https://alrictransportation.com">
-    <meta property="og:image" content="assets/img/alriclogo.png">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Alric Transportation",
-        "description": "Professional medication and medical supply transportation services",
-        "url": "https://alrictransportation.com",
-        "logo": "assets/img/alriclogo.png",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+1-555-0123",
-            "contactType": "customer service"
-        }
-    }
-    </script>
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -40,51 +21,65 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
         .logo img {
             height: 50px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .nav-links {
@@ -94,20 +89,36 @@
         }
 
         .nav-links a {
-            color: white;
             text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #ffd700;
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             padding: 120px 0 80px;
             text-align: center;
             position: relative;
@@ -119,139 +130,220 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/></circle><circle cx="80" cy="40" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/></circle><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" values="0;1;0" dur="2.5s" repeatCount="indefinite"/></circle></svg>');
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .hero h1 {
             font-size: 3.5rem;
+            color: var(--white);
             margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out;
+            animation: slideInUp 1s ease-out;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
+            color: var(--white);
             margin-bottom: 2rem;
             opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
+            animation: slideInUp 1s ease-out 0.2s both;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        .btn {
             padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
+            border: none;
+            border-radius: 50px;
             font-size: 1.1rem;
-            transition: all 0.3s;
-            animation: fadeInUp 1s ease-out 0.6s both;
-            box-shadow: 0 5px 15px rgba(255,107,107,0.3);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .cta-button:hover {
+        .btn-primary {
+            background: var(--white);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--secondary-color);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: left 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.8;
         }
 
         /* Features Section */
         .features {
             padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2c3e50;
+            background: var(--white);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        .feature-item {
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease-out;
+            padding: 2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        .feature-item:hover {
+            background: var(--light-gray);
+            transform: translateY(-5px);
         }
 
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border-radius: 50%;
+            margin: 0 auto 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
             font-size: 2rem;
-        }
-
-        .feature-card h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        /* Services Preview */
-        .services-preview {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .services-preview h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2c3e50;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        .service-card:hover {
-            transform: scale(1.05);
+            color: var(--white);
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--secondary-color) 100%);
+            color: var(--white);
             padding: 3rem 0 1rem;
-            text-align: center;
         }
 
         .footer-content {
@@ -262,52 +354,29 @@
         }
 
         .footer-section h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            color: #ffd700;
         }
 
+        .footer-section p,
         .footer-section a {
-            color: #bdc3c7;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+            line-height: 1.8;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--primary-color);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 1rem;
-            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -317,17 +386,35 @@
                 font-size: 2.5rem;
             }
             
-            .hero p {
-                font-size: 1.1rem;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
             <ul class="nav-links">
@@ -335,113 +422,143 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="track.html">Track</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Safe & Secure Medical Transportation</h1>
-                <p>Professional medication and medical supply delivery services you can trust</p>
-                <a href="services.html" class="cta-button">Explore Our Services</a>
+        <div class="hero-content">
+            <h1>Professional Medical Transportation</h1>
+            <p>Reliable, safe, and compassionate transportation services for all your medical and mobility needs</p>
+            <div class="cta-buttons">
+                <a href="services.html" class="btn btn-primary">Our Services</a>
+                <a href="contact.html" class="btn btn-secondary">Get Quote</a>
             </div>
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive transportation solutions designed with your comfort and safety in mind</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <h3>🏥 Medical Transportation</h3>
+                    <p>Safe and comfortable transportation to medical appointments, hospitals, and healthcare facilities with trained professionals.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <h3>♿ Wheelchair/STS</h3>
+                    <p>Specialized wheelchair accessible vehicles and stretcher transportation services for mobility-limited passengers.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <h3>🚗 On-Demand Rides</h3>
+                    <p>Flexible, reliable transportation available when you need it most, with professional and caring drivers.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <h3>✈️ Airport Transportation</h3>
+                    <p>Convenient and timely airport pickup and drop-off services for stress-free travel experiences.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <h3>🎓 Student Rides</h3>
+                    <p>Safe and dependable transportation services for students to and from educational institutions.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <h3>💊 Medication Delivery</h3>
+                    <p>Secure and timely delivery of medications and medical supplies directly to your location.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2>Why Choose Alric Transportation?</h2>
+            <div class="section-title">
+                <h2>Why Choose Alric Transportation</h2>
+                <p>We're committed to providing the highest quality transportation services with care and professionalism</p>
+            </div>
+            
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🏥</div>
-                    <h3>Medical Expertise</h3>
-                    <p>Specialized in handling temperature-sensitive medications and medical supplies with proper protocols</p>
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Licensed & Insured</h3>
+                    <p>Fully licensed and insured for your peace of mind and protection</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure Transport</h3>
-                    <p>Advanced security measures and chain of custody protocols to ensure safe delivery</p>
-                </div>
-                <div class="feature-card">
+                
+                <div class="feature-item fade-in">
                     <div class="feature-icon">⏰</div>
-                    <h3>Timely Delivery</h3>
-                    <p>Reliable scheduling and real-time tracking for critical medical deliveries</p>
+                    <h3>24/7 Availability</h3>
+                    <p>Round-the-clock services for emergency and scheduled transportation needs</p>
+                </div>
+                
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3>Trained Professionals</h3>
+                    <p>Experienced drivers trained in medical transportation and patient care</p>
+                </div>
+                
+                <div class="feature-item fade-in">
+                    <div class="feature-icon">🚐</div>
+                    <h3>Modern Fleet</h3>
+                    <p>Well-maintained, clean vehicles equipped with safety and comfort features</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="services-preview">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Prescription Delivery</h3>
-                    <p>Door-to-door prescription medication delivery with temperature control</p>
-                </div>
-                <div class="service-card">
-                    <h3>Medical Supply Transport</h3>
-                    <p>Specialized transport for medical equipment and supplies</p>
-                </div>
-                <div class="service-card">
-                    <h3>Emergency Delivery</h3>
-                    <p>24/7 emergency medical supply and medication delivery services</p>
-                </div>
-                <div class="service-card">
-                    <h3>Pharmacy Services</h3>
-                    <p>Direct pharmacy-to-pharmacy and pharmacy-to-patient deliveries</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="services.html">Services</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="legal.html">Legal</a>
+                    <h3>Alric Transportation</h3>
+                    <p>Professional medical transportation services with compassionate care and reliability you can trust.</p>
                 </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="services.html">Services</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                    <p><a href="faq.html">FAQ</a></p>
+                </div>
+                
                 <div class="footer-section">
                     <h3>Services</h3>
-                    <a href="services.html">Prescription Delivery</a>
-                    <a href="services.html">Medical Supplies</a>
-                    <a href="services.html">Emergency Transport</a>
-                    <a href="track.html">Track Shipment</a>
+                    <p><a href="services.html#medical">Medical Transportation</a></p>
+                    <p><a href="services.html#wheelchair">Wheelchair/STS</a></p>
+                    <p><a href="services.html#ondemand">On-Demand Rides</a></p>
+                    <p><a href="services.html#medication">Medication Delivery</a></p>
                 </div>
+                
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📞 (555) 123-4567</p>
                     <p>📧 info@alrictransportation.com</p>
-                    <p>📍 123 Medical Drive, Healthcare City</p>
+                    <p>📍 123 Medical Center Dr</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+                <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(30, 60, 114, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-
-        // Animate elements on scroll
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -450,18 +567,25 @@
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        // Observe all feature cards and service cards
-        document.querySelectorAll('.feature-card, .service-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%)';
+                header.style.backdropFilter = 'none';
+            }
         });
     </script>
 </body>
