@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Information - Terms, Privacy & Compliance | Alric Transportation</title>
-    <meta name="description" content="Legal information for Alric Transportation including terms of service, privacy policy, HIPAA compliance, and regulatory information.">
-    <meta name="keywords" content="alric transportation legal, terms of service, privacy policy, HIPAA compliance, medical transport regulations">
-    <meta name="robots" content="index, follow">
+    <title>Legal - Alric Transportation | Terms of Service & Privacy Policy</title>
+    <meta name="description" content="Alric Transportation legal information including Terms of Service, Privacy Policy, and HIPAA compliance for medical transportation services.">
+    <meta name="keywords" content="alric transportation legal, terms of service, privacy policy, HIPAA compliance, medical transport legal">
+    <meta name="author" content="Alric Transportation">
     <link rel="canonical" href="https://alrictransportation.com/legal">
+    <meta property="og:title" content="Legal - Alric Transportation">
+    <meta property="og:description" content="Terms of Service and Privacy Policy for medical transportation services">
+    <meta property="og:image" content="assets/img/alrictlogo.png">
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -16,41 +20,47 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Header Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: var(--shadow);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
         .logo img {
@@ -59,8 +69,9 @@
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .nav-links {
@@ -70,198 +81,184 @@
         }
 
         .nav-links a {
-            color: white;
             text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #ffd700;
+            color: var(--secondary-color);
         }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 2rem 4rem;
+        }
+
+        .legal-header {
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-top: -40px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            animation: spin 20s linear infinite;
-            top: 20%;
-            left: 10%;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: spin 15s linear infinite reverse;
-            bottom: 20%;
-            right: 15%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
+        .legal-header h1 {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            animation: fadeInDown 1s ease-out;
         }
 
-        .hero p {
-            font-size: 1.3rem;
+        .legal-header p {
+            font-size: 1.1rem;
             opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        /* Legal Navigation */
         .legal-nav {
-            background: #f8f9fa;
-            padding: 2rem 0;
-            border-bottom: 3px solid #4facfe;
-        }
-
-        .legal-nav ul {
             display: flex;
-            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
             flex-wrap: wrap;
-            gap: 2rem;
-            list-style: none;
+            justify-content: center;
         }
 
-        .legal-nav a {
-            color: #2c3e50;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
+        .legal-nav button {
+            padding: 10px 20px;
+            background: var(--light-gray);
+            border: 2px solid var(--primary-color);
             border-radius: 25px;
-            transition: all 0.3s;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
-        .legal-nav a:hover,
-        .legal-nav a.active {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79,172,254,0.3);
-        }
-
-        /* Legal Content */
-        .legal-content {
-            padding: 80px 0;
-            background: white;
+        .legal-nav button.active,
+        .legal-nav button:hover {
+            background: var(--primary-color);
+            color: var(--white);
         }
 
         .legal-section {
             display: none;
-            animation: fadeInUp 0.8s ease-out;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
         }
 
         .legal-section.active {
             display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .legal-section h2 {
-            color: #2c3e50;
-            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-size: 2rem;
             margin-bottom: 2rem;
-            border-bottom: 3px solid #4facfe;
             padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
         }
 
         .legal-section h3 {
-            color: #4facfe;
-            font-size: 1.5rem;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
             margin: 2rem 0 1rem;
         }
 
         .legal-section p {
-            margin-bottom: 1.5rem;
-            color: #666;
+            color: var(--text-light);
+            margin-bottom: 1rem;
             line-height: 1.8;
         }
 
         .legal-section ul {
-            margin: 1rem 0 2rem 2rem;
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-light);
         }
 
-        .legal-section li {
+        .legal-section ul li {
             margin-bottom: 0.5rem;
-            color: #666;
+            line-height: 1.6;
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
+            background: var(--light-gray);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
             margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
         }
 
-        .highlight-box h3 {
-            color: #ffd700;
-            margin-bottom: 1rem;
-        }
-
-        .compliance-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .compliance-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid #4facfe;
-            transition: all 0.3s ease;
-        }
-
-        .compliance-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .compliance-card h4 {
-            color: #2c3e50;
+        .highlight-box h4 {
+            color: var(--secondary-color);
             margin-bottom: 1rem;
         }
 
         .last-updated {
-            background: #e8f4fd;
-            color: #2c3e50;
+            background: var(--secondary-color);
+            color: var(--white);
             padding: 1rem;
-            border-radius: 10px;
+            border-radius: 8px;
+            text-align: center;
             margin-bottom: 2rem;
-            border-left: 4px solid #4facfe;
+        }
+
+        .contact-legal {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-legal h3 {
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .contact-legal p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-legal a {
+            color: var(--white);
+            text-decoration: underline;
         }
 
         /* Footer */
         footer {
-            background: #2c3e50;
-            color: white;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--secondary-color) 100%);
+            color: var(--white);
             padding: 3rem 0 1rem;
-            text-align: center;
+            margin-top: 4rem;
         }
 
         .footer-content {
@@ -269,73 +266,75 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
         }
 
         .footer-section h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            color: #ffd700;
         }
 
+        .footer-section p,
         .footer-section a {
-            color: #bdc3c7;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
+            line-height: 1.8;
         }
 
         .footer-section a:hover {
-            color: #ffd700;
+            color: var(--primary-color);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 1rem;
-            margin-top: 2rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .legal-nav ul { flex-direction: column; align-items: center; }
-            .compliance-grid { grid-template-columns: 1fr; }
+            .nav-links {
+                display: none;
+            }
+            
+            .legal-header {
+                margin-top: -20px;
+                padding: 2rem 1rem;
+            }
+            
+            .legal-header h1 {
+                font-size: 2rem;
+            }
+            
+            .legal-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .legal-nav button {
+                width: 200px;
+            }
+            
+            .legal-section {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
                 <h1>Alric Transportation</h1>
             </div>
             <ul class="nav-links">
@@ -343,311 +342,271 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="track.html">Track</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Legal Information</h1>
-                <p>Terms, Privacy, and Compliance Information</p>
-            </div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="legal-header">
+            <h1>📋 Legal Information</h1>
+            <p>Our commitment to transparency, privacy, and compliance</p>
         </div>
-    </section>
 
-    <section class="legal-nav">
-        <div class="container">
+        <div class="last-updated">
+            Last Updated: September 25, 2025
+        </div>
+
+        <div class="legal-nav">
+            <button class="legal-tab active" data-section="terms">Terms of Service</button>
+            <button class="legal-tab" data-section="privacy">Privacy Policy</button>
+            <button class="legal-tab" data-section="hipaa">HIPAA Compliance</button>
+            <button class="legal-tab" data-section="liability">Liability & Insurance</button>
+        </div>
+
+        <!-- Terms of Service -->
+        <div class="legal-section active" id="terms">
+            <h2>Terms of Service</h2>
+            
+            <h3>1. Agreement to Terms</h3>
+            <p>By using Alric Transportation services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+
+            <h3>2. Service Description</h3>
+            <p>Alric Transportation provides medical transportation services including:</p>
             <ul>
-                <li><a href="#" onclick="showSection('terms')" class="nav-btn active">Terms of Service</a></li>
-                <li><a href="#" onclick="showSection('privacy')" class="nav-btn">Privacy Policy</a></li>
-                <li><a href="#" onclick="showSection('hipaa')" class="nav-btn">HIPAA Compliance</a></li>
-                <li><a href="#" onclick="showSection('compliance')" class="nav-btn">Regulatory Compliance</a></li>
+                <li>Medical transportation to healthcare facilities</li>
+                <li>Wheelchair accessible transportation</li>
+                <li>Stretcher transportation services</li>
+                <li>On-demand rides for medical and general purposes</li>
+                <li>Airport transportation services</li>
+                <li>Student transportation</li>
+                <li>Medication delivery services</li>
             </ul>
-        </div>
-    </section>
 
-    <section class="legal-content">
-        <div class="container">
-            <!-- Terms of Service Section -->
-            <div id="terms" class="legal-section active">
-                <div class="last-updated">
-                    <strong>Last Updated:</strong> January 15, 2025
-                </div>
-                
-                <h2>Terms of Service</h2>
-                
-                <h3>1. Acceptance of Terms</h3>
-                <p>By using Alric Transportation's services, you agree to be bound by these Terms of Service. These terms constitute a legally binding agreement between you and Alric Transportation LLC.</p>
+            <h3>3. Booking and Scheduling</h3>
+            <p>Transportation services must be booked in advance when possible. For emergency services, we will respond as quickly and safely as possible. Cancellations must be made at least 2 hours in advance to avoid cancellation fees.</p>
 
-                <h3>2. Service Description</h3>
-                <p>Alric Transportation provides specialized medical supply and medication transportation services including but not limited to:</p>
-                <ul>
-                    <li>Prescription medication delivery</li>
-                    <li>Medical supply transport</li>
-                    <li>Emergency medical delivery services</li>
-                    <li>Cold chain pharmaceutical transport</li>
-                    <li>Laboratory specimen transport</li>
-                </ul>
+            <h3>4. Payment Terms</h3>
+            <p>Payment is due upon completion of service unless other arrangements have been made. We accept cash, credit cards, and insurance payments where applicable. Rates are determined based on distance, time, and specific service requirements.</p>
 
-                <h3>3. Client Responsibilities</h3>
-                <p>Clients are responsible for:</p>
-                <ul>
-                    <li>Providing accurate pickup and delivery information</li>
-                    <li>Ensuring proper packaging of medical items</li>
-                    <li>Compliance with all applicable regulations</li>
-                    <li>Payment of fees according to agreed terms</li>
-                    <li>Proper authorization for controlled substances</li>
-                </ul>
+            <h3>5. Client Responsibilities</h3>
+            <ul>
+                <li>Provide accurate pickup and destination addresses</li>
+                <li>Be ready at the scheduled pickup time</li>
+                <li>Inform us of any special medical or mobility needs</li>
+                <li>Treat our staff with respect and courtesy</li>
+                <li>Follow safety instructions and vehicle policies</li>
+            </ul>
 
-                <div class="highlight-box">
-                    <h3>Important Notice</h3>
-                    <p>All medical transportation services are subject to state and federal regulations. Clients must ensure all items are properly documented and authorized for transport.</p>
-                </div>
+            <h3>6. Service Limitations</h3>
+            <p>We reserve the right to refuse service in cases where safety cannot be ensured, or where our equipment is not suitable for the client's needs. We are not a medical emergency service and recommend calling 911 for life-threatening emergencies.</p>
 
-                <h3>4. Liability and Insurance</h3>
-                <p>Alric Transportation maintains comprehensive insurance coverage and follows industry best practices for secure transport. Our liability is limited to the terms specified in individual service agreements.</p>
-
-                <h3>5. Pricing and Payment</h3>
-                <p>Service fees are determined based on distance, urgency, special handling requirements, and other factors. Payment terms are net 30 days unless otherwise agreed in writing.</p>
-
-                <h3>6. Cancellation Policy</h3>
-                <p>Service cancellations must be made at least 2 hours before scheduled pickup time to avoid charges. Emergency services may have different cancellation terms.</p>
-            </div>
-
-            <!-- Privacy Policy Section -->
-            <div id="privacy" class="legal-section">
-                <div class="last-updated">
-                    <strong>Last Updated:</strong> January 15, 2025
-                </div>
-                
-                <h2>Privacy Policy</h2>
-                
-                <h3>1. Information We Collect</h3>
-                <p>We collect information necessary to provide our transportation services, including:</p>
-                <ul>
-                    <li>Contact information (name, phone, email, address)</li>
-                    <li>Service details (pickup/delivery locations, item descriptions)</li>
-                    <li>Payment information</li>
-                    <li>Vehicle tracking and delivery confirmation data</li>
-                </ul>
-
-                <h3>2. How We Use Your Information</h3>
-                <p>Your information is used to:</p>
-                <ul>
-                    <li>Provide transportation services</li>
-                    <li>Communicate about service status</li>
-                    <li>Process payments</li>
-                    <li>Comply with regulatory requirements</li>
-                    <li>Improve our services</li>
-                </ul>
-
-                <div class="highlight-box">
-                    <h3>Data Security</h3>
-                    <p>We employ industry-standard security measures to protect your personal information. All sensitive data is encrypted and stored securely.</p>
-                </div>
-
-                <h3>3. Information Sharing</h3>
-                <p>We do not sell or rent personal information. We may share information only when:</p>
-                <ul>
-                    <li>Required by law or regulation</li>
-                    <li>Necessary for service delivery (with delivery partners)</li>
-                    <li>With your explicit consent</li>
-                    <li>To protect our rights or safety</li>
-                </ul>
-
-                <h3>4. Data Retention</h3>
-                <p>We retain personal information only as long as necessary for business purposes and regulatory compliance, typically 7 years for transportation records.</p>
-
-                <h3>5. Your Rights</h3>
-                <p>You have the right to access, correct, or delete your personal information. Contact us at privacy@alrictransportation.com for data requests.</p>
-            </div>
-
-            <!-- HIPAA Compliance Section -->
-            <div id="hipaa" class="legal-section">
-                <div class="last-updated">
-                    <strong>Last Updated:</strong> January 15, 2025
-                </div>
-                
-                <h2>HIPAA Compliance</h2>
-                
-                <h3>1. Our Commitment to HIPAA</h3>
-                <p>Alric Transportation is committed to protecting health information in accordance with the Health Insurance Portability and Accountability Act (HIPAA) and related regulations.</p>
-
-                <div class="highlight-box">
-                    <h3>Business Associate Agreement</h3>
-                    <p>We execute Business Associate Agreements (BAAs) with covered entities to ensure proper handling of Protected Health Information (PHI).</p>
-                </div>
-
-                <h3>2. PHI Protection Measures</h3>
-                <div class="compliance-grid">
-                    <div class="compliance-card">
-                        <h4>Physical Safeguards</h4>
-                        <p>Secure vehicles, locked storage containers, and restricted access to transportation areas.</p>
-                    </div>
-                    <div class="compliance-card">
-                        <h4>Administrative Safeguards</h4>
-                        <p>Employee training, access controls, and incident response procedures.</p>
-                    </div>
-                    <div class="compliance-card">
-                        <h4>Technical Safeguards</h4>
-                        <p>Encrypted communications, secure tracking systems, and digital access controls.</p>
-                    </div>
-                </div>
-
-                <h3>3. Employee Training</h3>
-                <p>All employees receive comprehensive HIPAA training including:</p>
-                <ul>
-                    <li>PHI identification and handling</li>
-                    <li>Privacy and security requirements</li>
-                    <li>Incident reporting procedures</li>
-                    <li>Minimum necessary standards</li>
-                </ul>
-
-                <h3>4. Incident Response</h3>
-                <p>We maintain detailed incident response procedures for potential PHI breaches and report incidents as required by law within 24 hours of discovery.</p>
-            </div>
-
-            <!-- Regulatory Compliance Section -->
-            <div id="compliance" class="legal-section">
-                <div class="last-updated">
-                    <strong>Last Updated:</strong> January 15, 2025
-                </div>
-                
-                <h2>Regulatory Compliance</h2>
-                
-                <h3>1. DOT Regulations</h3>
-                <p>Alric Transportation operates in full compliance with Department of Transportation regulations, including proper licensing, vehicle maintenance, and driver qualification standards.</p>
-
-                <h3>2. FDA Requirements</h3>
-                <p>Our pharmaceutical transportation services comply with FDA regulations for:</p>
-                <ul>
-                    <li>Good Distribution Practices</li>
-                    <li>Temperature monitoring and validation</li>
-                    <li>Chain of custody documentation</li>
-                    <li>Controlled substance handling</li>
-                </ul>
-
-                <div class="compliance-grid">
-                    <div class="compliance-card">
-                        <h4>DEA Registration</h4>
-                        <p>Licensed for controlled substance transport with proper security protocols and documentation.</p>
-                    </div>
-                    <div class="compliance-card">
-                        <h4>State Licensing</h4>
-                        <p>Properly licensed in all states where we operate with current permits and certifications.</p>
-                    </div>
-                    <div class="compliance-card">
-                        <h4>Quality Assurance</h4>
-                        <p>Regular audits and quality checks ensure ongoing compliance with all applicable regulations.</p>
-                    </div>
-                </div>
-
-                <h3>3. Environmental Compliance</h3>
-                <p>We follow environmental regulations for:</p>
-                <ul>
-                    <li>Proper disposal of medical waste packaging</li>
-                    <li>Hazardous material handling</li>
-                    <li>Vehicle emissions standards</li>
-                    <li>Spill prevention and response</li>
-                </ul>
-
-                <div class="highlight-box">
-                    <h3>Continuous Monitoring</h3>
-                    <p>We continuously monitor regulatory changes and update our procedures to maintain full compliance with all applicable laws and regulations.</p>
-                </div>
-
-                <h3>4. Contact Information</h3>
-                <p>For legal, compliance, or regulatory questions, contact:</p>
-                <p><strong>Legal Department</strong><br>
-                Email: legal@alrictransportation.com<br>
-                Phone: +1 (555) 123-4567 ext. 205</p>
+            <div class="highlight-box">
+                <h4>📞 Contact for Service Issues</h4>
+                <p>If you experience any issues with our service, please contact us immediately at (555) 123-4567 or info@alrictransportation.com</p>
             </div>
         </div>
-    </section>
 
+        <!-- Privacy Policy -->
+        <div class="legal-section" id="privacy">
+            <h2>Privacy Policy</h2>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect information necessary to provide safe and effective transportation services:</p>
+            <ul>
+                <li><strong>Personal Information:</strong> Name, address, phone number, email</li>
+                <li><strong>Medical Information:</strong> Mobility needs, medical equipment requirements</li>
+                <li><strong>Emergency Contacts:</strong> For safety and communication purposes</li>
+                <li><strong>Trip Information:</strong> Pickup/drop-off locations, appointment details</li>
+                <li><strong>Payment Information:</strong> Billing details and insurance information</li>
+            </ul>
+
+            <h3>2. How We Use Your Information</h3>
+            <ul>
+                <li>Provide transportation services safely and effectively</li>
+                <li>Coordinate with healthcare providers when necessary</li>
+                <li>Process payments and insurance claims</li>
+                <li>Communicate about service updates or scheduling</li>
+                <li>Comply with legal and regulatory requirements</li>
+                <li>Improve our services and customer experience</li>
+            </ul>
+
+            <h3>3. Information Sharing</h3>
+            <p>We do not sell or rent your personal information. We may share information only when:</p>
+            <ul>
+                <li>Required by law or legal process</li>
+                <li>Necessary for emergency medical situations</li>
+                <li>With healthcare providers for coordination of care</li>
+                <li>With insurance companies for claims processing</li>
+                <li>With trusted service providers who assist in our operations</li>
+            </ul>
+
+            <h3>4. Data Security</h3>
+            <p>We implement appropriate security measures to protect your information, including encrypted storage, secure transmission protocols, and limited access controls. However, no method of transmission over the internet is 100% secure.</p>
+
+            <h3>5. Your Rights</h3>
+            <p>You have the right to access, correct, or delete your personal information. You may also opt-out of non-essential communications. Contact us to exercise these rights.</p>
+
+            <div class="highlight-box">
+                <h4>🔒 Data Protection</h4>
+                <p>Your privacy is important to us. We are committed to protecting your personal and medical information in compliance with all applicable privacy laws.</p>
+            </div>
+        </div>
+
+        <!-- HIPAA Compliance -->
+        <div class="legal-section" id="hipaa">
+            <h2>HIPAA Compliance</h2>
+            
+            <h3>1. Protected Health Information (PHI)</h3>
+            <p>As a medical transportation provider, we may have access to your Protected Health Information. We are committed to maintaining the privacy and security of all PHI in accordance with HIPAA regulations.</p>
+
+            <h3>2. Uses and Disclosures</h3>
+            <p>We may use or disclose your PHI for:</p>
+            <ul>
+                <li><strong>Treatment:</strong> Coordinating with your healthcare providers</li>
+                <li><strong>Payment:</strong> Processing insurance claims and billing</li>
+                <li><strong>Operations:</strong> Quality improvement and staff training</li>
+                <li><strong>Required by Law:</strong> When mandated by federal or state law</li>
+                <li><strong>Emergency Situations:</strong> To protect your health and safety</li>
+            </ul>
+
+            <h3>3. Your HIPAA Rights</h3>
+            <ul>
+                <li>Right to access your PHI</li>
+                <li>Right to request amendments to your PHI</li>
+                <li>Right to receive an accounting of disclosures</li>
+                <li>Right to request restrictions on use or disclosure</li>
+                <li>Right to request confidential communications</li>
+                <li>Right to file a complaint</li>
+            </ul>
+
+            <h3>4. Security Measures</h3>
+            <p>We maintain administrative, physical, and technical safeguards to protect PHI:</p>
+            <ul>
+                <li>Staff training on HIPAA compliance</li>
+                <li>Secure storage and transmission of information</li>
+                <li>Limited access on a need-to-know basis</li>
+                <li>Regular security assessments and updates</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>📋 HIPAA Notice of Privacy Practices</h4>
+                <p>Upon request, we will provide you with a complete Notice of Privacy Practices that details how we use and protect your health information.</p>
+            </div>
+        </div>
+
+        <!-- Liability & Insurance -->
+        <div class="legal-section" id="liability">
+            <h2>Liability & Insurance</h2>
+            
+            <h3>1. Insurance Coverage</h3>
+            <p>Alric Transportation maintains comprehensive insurance coverage including:</p>
+            <ul>
+                <li>Commercial vehicle liability insurance</li>
+                <li>Professional liability coverage</li>
+                <li>General liability insurance</li>
+                <li>Workers' compensation insurance</li>
+                <li>Medical payments coverage</li>
+            </ul>
+
+            <h3>2. Service Limitations</h3>
+            <p>While we strive to provide excellent service, please understand:</p>
+            <ul>
+                <li>We are not a licensed medical facility or emergency service</li>
+                <li>Our drivers are not medical professionals unless specifically noted</li>
+                <li>We cannot provide medical treatment or medical advice</li>
+                <li>Traffic conditions and other factors may affect arrival times</li>
+            </ul>
+
+            <h3>3. Client Responsibility</h3>
+            <p>Clients are responsible for:</p>
+            <ul>
+                <li>Accurately reporting their medical and mobility needs</li>
+                <li>Following safety instructions and vehicle policies</li>
+                <li>Bringing necessary medical equipment and medications</li>
+                <li>Informing us of any changes in their condition</li>
+            </ul>
+
+            <h3>4. Limitation of Liability</h3>
+            <p>Our liability is limited to the scope of our transportation services. We are not responsible for missed appointments due to circumstances beyond our control, including but not limited to traffic, weather, or vehicle mechanical issues.</p>
+
+            <h3>5. Emergency Procedures</h3>
+            <p>In case of medical emergency during transport:</p>
+            <ul>
+                <li>We will immediately call 911 if necessary</li>
+                <li>We will proceed to the nearest appropriate medical facility</li>
+                <li>We will contact your emergency contacts</li>
+                <li>We will cooperate fully with emergency responders</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>🛡️ Safety First</h4>
+                <p>Your safety is our top priority. All vehicles are regularly inspected and maintained, and our drivers undergo background checks and safety training.</p>
+            </div>
+        </div>
+
+        <div class="contact-legal">
+            <h3>Questions About Our Legal Policies?</h3>
+            <p><strong>Phone:</strong> (555) 123-4567</p>
+            <p><strong>Email:</strong> <a href="mailto:legal@alrictransportation.com">legal@alrictransportation.com</a></p>
+            <p><strong>Address:</strong> 123 Medical Center Drive, Healthcare District, Your City, ST 12345</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="services.html">Services</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="legal.html">Legal</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Services</h3>
-                    <a href="services.html">Prescription Delivery</a>
-                    <a href="services.html">Medical Supplies</a>
-                    <a href="services.html">Emergency Transport</a>
-                    <a href="track.html">Track Shipment</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p>📞 +1 (555) 123-4567</p>
-                    <p>📧 info@alrictransportation.com</p>
-                    <p>📍 123 Medical Drive, Healthcare City</p>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Alric Transportation</h3>
+                <p>Professional medical transportation services with compassionate care and reliability you can trust.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="services.html">Services</a></p>
+                <p><a href="about.html">About Us</a></p>
+                <p><a href="contact.html">Contact</a></p>
+                <p><a href="faq.html">FAQ</a></p>
             </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p><a href="services.html#medical">Medical Transportation</a></p>
+                <p><a href="services.html#wheelchair">Wheelchair/STS</a></p>
+                <p><a href="services.html#ondemand">On-Demand Rides</a></p>
+                <p><a href="services.html#medication">Medication Delivery</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📞 (555) 123-4567</p>
+                <p>📧 info@alrictransportation.com</p>
+                <p>📍 123 Medical Center Dr</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
         </div>
     </footer>
 
     <script>
-        // Function to show different legal sections
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.legal-section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Remove active class from all nav buttons
-            const navButtons = document.querySelectorAll('.nav-btn');
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
-        }
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(30, 60, 114, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
-                header.style.backdropFilter = 'none';
-            }
-        });
-
-        // Animate compliance cards on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        // Tab functionality
+        document.querySelectorAll('.legal-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.dataset.section;
+                document.getElementById(sectionId).classList.add('active');
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.compliance-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
         });
     </script>
 </body>
