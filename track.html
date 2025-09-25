@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Shipment - Real-Time Tracking | Alric Transportation</title>
+    <meta name="description" content="Track your medical supply shipment in real-time with Alric Transportation. Get live updates on delivery status, location, and estimated arrival time.">
+    <meta name="keywords" content="track shipment, medical delivery tracking, prescription tracking, shipment status, delivery updates">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alrictransportation.com/track">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: moveAround 10s linear infinite;
+            top: 20%;
+            left: 10%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: moveAround 8s linear infinite reverse;
+            bottom: 20%;
+            right: 15%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            animation: slideInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        /* Tracking Section */
+        .tracking-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .tracking-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .tracking-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .tracking-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 15px rgba(79,172,254,0.3);
+        }
+
+        .track-button {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .track-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(79,172,254,0.4);
+        }
+
+        /* Tracking Results */
+        .tracking-results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .shipment-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .tracking-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .shipment-status {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .status-in-transit { color: #ffd700; }
+        .status-delivered { color: #27ae60; }
+        .status-pending { color: #f39c12; }
+        .status-delayed { color: #e74c3c; }
+
+        .shipment-details {
+            padding: 2rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        /* Progress Timeline */
+        .progress-section {
+            margin-top: 3rem;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ddd;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .timeline-item.completed::before {
+            background: #27ae60;
+        }
+
+        .timeline-item.current::before {
+            background: #4facfe;
+            box-shadow: 0 0 15px rgba(79,172,254,0.5);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-time {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            color: #666;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 3rem 0;
+            background: #e9ecef;
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '📍';
+            position: absolute;
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Sample Tracking Numbers */
+        .sample-numbers {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .sample-numbers h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .sample-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .sample-number {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .sample-number:hover {
+            background: #4facfe;
+            color: white;
+            border-color: #00f2fe;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes moveAround {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-20px, -60px); }
+            75% { transform: translate(-50px, -30px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .tracking-form { padding: 2rem; }
+            .details-grid { grid-template-columns: 1fr; }
+            .sample-list { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <h1>Alric Transportation</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="track.html">Track</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Track Your Shipment</h1>
+                <p>Real-time tracking for your medical supply deliveries</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tracking-section">
+        <div class="container">
+            <div class="tracking-form">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #2c3e50;">Enter Your Tracking Number</h2>
+                <form id="trackingForm">
+                    <div class="form-group">
+                        <label for="trackingNumber">Tracking Number</label>
+                        <input type="text" id="trackingNumber" name="trackingNumber" class="tracking-input" 
+                               placeholder="Enter your tracking number (e.g., ALR123456789)" required>
+                    </div>
+                    <button type="submit" class="track-button">Track Shipment</button>
+                </form>
+            </div>
+
+            <div class="sample-numbers">
+                <h3>Try Sample Tracking Numbers</h3>
+                <div class="sample-list">
+                    <div class="sample-number" onclick="trackSample('ALR123456789')">ALR123456789</div>
+                    <div class="sample-number" onclick="trackSample('ALR987654321')">ALR987654321</div>
+                    <div class="sample-number" onclick="trackSample('ALR555666777')">ALR555666777</div>
+                </div>
+            </div>
+
+            <div class="tracking-results" id="trackingResults">
+                <div class="shipment-header">
+                    <div class="tracking-number" id="resultTrackingNumber">ALR123456789</div>
+                    <div class="shipment-status" id="resultStatus">In Transit</div>
+                </div>
+
+                <div class="shipment-details">
+                    <div class="details-grid">
+                        <div class="detail-card">
+                            <div class="detail-label">From</div>
+                            <div class="detail-value" id="resultFrom">Metro Pharmacy<br>123 Main St, Healthcare City</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">To</div>
+                            <div class="detail-value" id="resultTo">General Hospital<br>456 Medical Ave, Healthcare City</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Service Type</div>
+                            <div class="detail-value" id="resultService">Emergency Delivery</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Estimated Delivery</div>
+                            <div class="detail-value" id="resultETA">Today, 3:45 PM</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Driver</div>
+                            <div class="detail-value" id="resultDriver">John Smith<br>+1 (555) 123-0001</div>
+                        </div>
+                        <div class="detail-card">
+                            <div class="detail-label">Special Instructions</div>
+                            <div class="detail-value" id="resultInstructions">Temperature controlled - Keep refrigerated</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-section">
+                        <h3 class="progress-title">Delivery Progress</h3>
+                        <div class="timeline" id="deliveryTimeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Order Received</div>
+                                    <div class="timeline-time">Today, 1:15 PM</div>
+                                    <div class="timeline-description">Pickup request received and confirmed</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Package Picked Up</div>
+                                    <div class="timeline-time">Today, 1:45 PM</div>
+                                    <div class="timeline-description">Package collected from Metro Pharmacy</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item current">
+                                <div class="timeline-content">
+                                    <div class="timeline-title">In Transit</div>
+                                    <div class="timeline-time">Today, 2:00 PM</div>
+                                    <div class="timeline-description">En route to General Hospital - 15 minutes away</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Out for Delivery</div>
+                                    <div class="timeline-time">Estimated: Today, 3:30 PM</div>
+                                    <div class="timeline-description">Package arriving at destination</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Delivered</div>
+                                    <div class="timeline-time">Estimated: Today, 3:45 PM</div>
+                                    <div class="timeline-description">Package delivered and signed for</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-section">
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            🗺️ Live Map Tracking
+                        </div>
+                        <p style="text-align: center; margin-top: 1rem; color: #666;">
+                            Real-time GPS tracking shows your package location and estimated arrival time
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="services.html">Services</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="legal.html">Legal</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="services.html">Prescription Delivery</a>
+                    <a href="services.html">Medical Supplies</a>
+                    <a href="services.html">Emergency Transport</a>
+                    <a href="track.html">Track Shipment</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📧 info@alrictransportation.com</p>
+                    <p>📍 123 Medical Drive, Healthcare City</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample tracking data
+        const trackingData = {
+            'ALR123456789': {
+                status: 'In Transit',
+                statusClass: 'status-in-transit',
+                from: 'Metro Pharmacy<br>123 Main St, Healthcare City',
+                to: 'General Hospital<br>456 Medical Ave, Healthcare City',
+                service: 'Emergency Delivery',
+                eta: 'Today, 3:45 PM',
+                driver: 'John Smith<br>+1 (555) 123-0001',
+                instructions: 'Temperature controlled - Keep refrigerated',
+                timeline: [
+                    { title: 'Order Received', time: 'Today, 1:15 PM', description: 'Pickup request received and confirmed', status: 'completed' },
+                    { title: 'Package Picked Up', time: 'Today, 1:45 PM', description: 'Package collected from Metro Pharmacy', status: 'completed' },
+                    { title: 'In Transit', time: 'Today, 2:00 PM', description: 'En route to General Hospital - 15 minutes away', status: 'current' },
+                    { title: 'Out for Delivery', time: 'Estimated: Today, 3:30 PM', description: 'Package arriving at destination', status: 'pending' },
+                    { title: 'Delivered', time: 'Estimated: Today, 3:45 PM', description: 'Package delivered and signed for', status: 'pending' }
+                ]
+            },
+            'ALR987654321': {
+                status: 'Delivered',
+                statusClass: 'status-delivered',
+                from: 'Central Pharmacy<br>789 Health Blvd, Healthcare City',
+                to: 'Patient Home<br>321 Residential St, Healthcare City',
+                service: 'Prescription Delivery',
+                eta: 'Delivered: Today, 11:30 AM',
+                driver: 'Sarah Johnson<br>+1 (555) 123-0002',
+                instructions: 'Leave with doorman if not home',
+                timeline: [
+                    { title: 'Order Received', time: 'Today, 9:00 AM', description: 'Prescription delivery scheduled', status: 'completed' },
+                    { title: 'Package Picked Up', time: 'Today, 9:30 AM', description: 'Prescription collected from Central Pharmacy', status: 'completed' },
+                    { title: 'In Transit', time: 'Today, 10:00 AM', description: 'En route to patient address', status: 'completed' },
+                    { title: 'Out for Delivery', time: 'Today, 11:00 AM', description: 'Arrived at delivery location', status: 'completed' },
+                    { title: 'Delivered', time: 'Today, 11:30 AM', description: 'Package delivered and signed for by patient', status: 'completed' }
+                ]
+            },
+            'ALR555666777': {
+                status: 'Pending Pickup',
+                statusClass: 'status-pending',
+                from: 'Regional Medical Center<br>555 Hospital Dr, Healthcare City',
+                to: 'Research Laboratory<br>777 Science Way, Healthcare City',
+                service: 'Laboratory Transport',
+                eta: 'Scheduled: Tomorrow, 9:00 AM',
+                driver: 'To be assigned',
+                instructions: 'Biohazard materials - Special handling required',
+                timeline: [
+                    { title: 'Order Received', time: 'Today, 4:30 PM', description: 'Laboratory transport request received', status: 'completed' },
+                    { title: 'Scheduling', time: 'Today, 4:45 PM', description: 'Pickup scheduled for tomorrow morning', status: 'current' },
+                    { title: 'Package Pickup', time: 'Tomorrow, 8:30 AM', description: 'Scheduled pickup from Regional Medical Center', status: 'pending' },
+                    { title: 'In Transit', time: 'Tomorrow, 9:00 AM', description: 'Transport to Research Laboratory', status: 'pending' },
+                    { title: 'Delivered', time: 'Tomorrow, 9:30 AM', description: 'Delivery to laboratory receiving', status: 'pending' }
+                ]
+            }
+        };
+
+        // Track shipment function
+        function trackShipment(trackingNumber) {
+            const data = trackingData[trackingNumber];
+            
+            if (!data) {
+                alert('Tracking number not found. Please check the number and try again.');
+                return;
+            }
+
+            // Update results display
+            document.getElementById('resultTrackingNumber').textContent = trackingNumber;
+            document.getElementById('resultStatus').textContent = data.status;
+            document.getElementById('resultStatus').className = 'shipment-status ' + data.statusClass;
+            document.getElementById('resultFrom').innerHTML = data.from;
+            document.getElementById('resultTo').innerHTML = data.to;
+            document.getElementById('resultService').textContent = data.service;
+            document.getElementById('resultETA').textContent = data.eta;
+            document.getElementById('resultDriver').innerHTML = data.driver;
+            document.getElementById('resultInstructions').textContent = data.instructions;
+
+            // Update timeline
+            const timeline = document.getElementById('deliveryTimeline');
+            timeline.innerHTML = '';
+            
+            data.timeline.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item ${item.status}`;
+                timelineItem.innerHTML = `
+                    <div class="timeline-content">
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-time">${item.time}</div>
+                        <div class="timeline-description">${item.description}</div>
+                    </div>
+                `;
+                timeline.appendChild(timelineItem);
+            });
+
+            // Show results
+            document.getElementById('trackingResults').style.display = 'block';
+            document.getElementById('trackingResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle form submission
+        document.getElementById('trackingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const trackingNumber = document.getElementById('trackingNumber').value.trim();
+            trackShipment(trackingNumber);
+        });
+
+        // Handle sample tracking numbers
+        function trackSample(trackingNumber) {
+            document.getElementById('trackingNumber').value = trackingNumber;
+            trackShipment(trackingNumber);
+        }
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(30, 60, 114, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tracking-form, .sample-numbers').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
