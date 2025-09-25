@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Frequently Asked Questions | Alric Transportation</title>
+    <meta name="description" content="Find answers to frequently asked questions about Alric Transportation's medical supply delivery services, pricing, scheduling, and more.">
+    <meta name="keywords" content="alric transportation FAQ, medical transport questions, prescription delivery help, shipping questions">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alrictransportation.com/faq">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '?';
+            position: absolute;
+            font-size: 20rem;
+            color: rgba(255,255,255,0.05);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(79,172,254,0.3);
+        }
+
+        .category-card:nth-child(even) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ Content */
+        .faq-content {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .faq-section h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 1rem;
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px 15px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background: white;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 2rem;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .faq-answer li {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .faq-question { padding: 1.5rem; }
+            .faq-item.active .faq-answer { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
+                <h1>Alric Transportation</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="track.html">Track</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about our medical transportation services</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="container">
+            <div class="search-box">
+                <div class="search-icon">🔍</div>
+                <input type="text" class="search-input" placeholder="Search for answers..." id="searchInput">
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-categories">
+        <div class="container">
+            <div class="categories-grid">
+                <div class="category-card" onclick="scrollToSection('general')">
+                    <div class="category-icon">ℹ️</div>
+                    <h3>General Questions</h3>
+                    <p>Basic information about our services</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('services')">
+                    <div class="category-icon">🚚</div>
+                    <h3>Services & Delivery</h3>
+                    <p>Questions about our transportation services</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('pricing')">
+                    <div class="category-icon">💰</div>
+                    <h3>Pricing & Billing</h3>
+                    <p>Information about costs and payments</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('compliance')">
+                    <div class="category-icon">📋</div>
+                    <h3>Compliance & Safety</h3>
+                    <p>Regulatory and safety information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-content">
+        <div class="container">
+            <!-- General Questions -->
+            <div class="faq-section" id="general">
+                <h2>General Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            What is Alric Transportation and what do you do?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Alric Transportation is a specialized medical transportation company that provides secure, reliable delivery of medications, medical supplies, and healthcare-related items. We serve pharmacies, hospitals, clinics, and patients throughout the region with professional logistics solutions designed specifically for the healthcare industry.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            What areas do you service?
+                        </div>
+                        <div class="faq-answer">
+                            <p>We provide transportation services throughout the metropolitan area and surrounding regions within a 200-mile radius of our main facility. Our service area includes:</p>
+                            <ul>
+                                <li>Urban and suburban areas</li>
+                                <li>Rural communities</li>
+                                <li>Hospital networks</li>
+                                <li>Pharmacy chains and independent pharmacies</li>
+                            </ul>
+                            <p>Contact us to confirm service availability in your specific location.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Are you available 24/7?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer 24/7 emergency medical transportation services for critical deliveries. Our regular business hours are Monday through Friday, 8 AM to 6 PM, but emergency services are available around the clock, including weekends and holidays.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            How do I schedule a delivery?
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can schedule a delivery through several methods:</p>
+                            <ul>
+                                <li>Call our main number: +1 (555) 123-4567</li>
+                                <li>Email us at: info@alrictransportation.com</li>
+                                <li>Use our online contact form on our website</li>
+                                <li>For emergencies: +1 (555) 987-6543</li>
+                            </ul>
+                            <p>We recommend scheduling at least 2 hours in advance for regular deliveries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services & Delivery -->
+            <div class="faq-section" id="services">
+                <h2>Services & Delivery</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            What types of medical items can you transport?
+                        </div>
+                        <div class="faq-answer">
+                            <p>We can transport a wide variety of medical items including:</p>
+                            <ul>
+                                <li>Prescription medications (including controlled substances)</li>
+                                <li>Over-the-counter medications</li>
+                                <li>Medical supplies and equipment</li>
+                                <li>Laboratory specimens</li>
+                                <li>Vaccines and biologics (temperature-controlled)</li>
+                                <li>Medical devices</li>
+                                <li>Hospital supplies</li>
+                            </ul>
+                            <p>All items must be properly packaged and documented according to regulatory requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Do you provide temperature-controlled transport?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We specialize in temperature-controlled transport for medications and medical supplies that require specific storage conditions. Our vehicles are equipped with:</p>
+                            <ul>
+                                <li>Refrigerated compartments (2-8°C)</li>
+                                <li>Frozen storage capability (-20°C)</li>
+                                <li>Room temperature controlled environments</li>
+                                <li>Continuous temperature monitoring</li>
+                                <li>Data logging and reporting</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            How fast can you deliver in an emergency?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Emergency deliveries are our top priority. We can typically respond within:</p>
+                            <ul>
+                                <li>30 minutes for critical emergencies</li>
+                                <li>1 hour for urgent deliveries</li>
+                                <li>2-4 hours for same-day service</li>
+                            </ul>
+                            <p>Response times may vary based on location, traffic conditions, and item preparation requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Can I track my shipment?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We provide real-time tracking for all shipments. You can track your delivery through:</p>
+                            <ul>
+                                <li>Our online tracking system on our website</li>
+                                <li>SMS notifications with status updates</li>
+                                <li>Email notifications</li>
+                                <li>Phone updates upon request</li>
+                            </ul>
+                            <p>You'll receive a tracking number when your shipment is dispatched.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing & Billing -->
+            <div class="faq-section" id="pricing">
+                <h2>Pricing & Billing</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            How is pricing calculated?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our pricing is based on several factors:</p>
+                            <ul>
+                                <li>Distance between pickup and delivery locations</li>
+                                <li>Urgency level (emergency, same-day, scheduled)</li>
+                                <li>Special handling requirements (temperature control, hazardous materials)</li>
+                                <li>Time of day and day of week</li>
+                                <li>Size and weight of items</li>
+                                <li>Insurance value of items being transported</li>
+                            </ul>
+                            <p>Contact us for a personalized quote based on your specific needs.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            What payment methods do you accept?
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept various payment methods:</p>
+                            <ul>
+                                <li>Credit cards (Visa, MasterCard, American Express)</li>
+                                <li>Check payments</li>
+                                <li>Bank transfers</li>
+                                <li>Insurance billing (when applicable)</li>
+                                <li>Corporate accounts with net payment terms</li>
+                            </ul>
+                            <p>Payment terms are typically net 30 days for established business customers.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Do you offer volume discounts?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer competitive pricing for high-volume customers and regular service agreements. Volume discounts are available for:</p>
+                            <ul>
+                                <li>Monthly service contracts</li>
+                                <li>High-frequency deliveries</li>
+                                <li>Large healthcare organizations</li>
+                                <li>Pharmacy chains</li>
+                            </ul>
+                            <p>Contact our sales team to discuss custom pricing options.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance & Safety -->
+            <div class="faq-section" id="compliance">
+                <h2>Compliance & Safety</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Are you HIPAA compliant?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we are fully HIPAA compliant. We maintain strict protocols to protect patient health information (PHI) including:</p>
+                            <ul>
+                                <li>Signed Business Associate Agreements with covered entities</li>
+                                <li>Employee HIPAA training and certification</li>
+                                <li>Secure handling and transport of PHI</li>
+                                <li>Incident response procedures</li>
+                                <li>Regular compliance audits</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            Do you transport controlled substances?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we are licensed and authorized to transport controlled substances. We maintain:</p>
+                            <ul>
+                                <li>DEA registration and licensing</li>
+                                <li>Secure chain of custody procedures</li>
+                                <li>Background-checked and trained drivers</li>
+                                <li>Advanced security measures</li>
+                                <li>Detailed documentation and reporting</li>
+                            </ul>
+                            <p>All controlled substance transports require proper authorization and documentation.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            What insurance coverage do you maintain?
+                        </div>
+                        <div class="faq-answer">
+                            <p>We maintain comprehensive insurance coverage including:</p>
+                            <ul>
+                                <li>General liability insurance</li>
+                                <li>Professional liability coverage</li>
+                                <li>Commercial auto insurance</li>
+                                <li>Cargo insurance for transported items</li>
+                                <li>Cyber liability insurance</li>
+                            </ul>
+                            <p>Insurance certificates can be provided upon request.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            How do you ensure medication safety during transport?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Medication safety is our top priority. We ensure safety through:</p>
+                            <ul>
+                                <li>Temperature-controlled vehicles with monitoring</li>
+                                <li>Secure packaging requirements</li>
+                                <li>Chain of custody documentation</li>
+                                <li>Trained and certified drivers</li>
+                                <li>GPS tracking and monitoring</li>
+                                <li>Quality assurance procedures</li>
+                                <li>Regular vehicle maintenance and inspections</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Still Have Questions?</h2>
+                <p>Our customer service team is ready to help you with any additional questions or concerns.</p>
+                <a href="contact.html" class="cta-button">Contact Us Today</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="services.html">Services</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="legal.html">Legal</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="services.html">Prescription Delivery</a>
+                    <a href="services.html">Medical Supplies</a>
+                    <a href="services.html">Emergency Transport</a>
+                    <a href="track.html">Track Shipment</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📧 info@alrictransportation.com</p>
+                    <p>📍 123 Medical Drive, Healthcare City</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Alric Transportation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle FAQ items
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all open FAQ items
+            document.querySelectorAll('.faq-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't already active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const elementPosition = element.offsetTop - headerHeight - 20;
+            
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    if (searchTerm.length > 2) {
+                        item.style.backgroundColor = '#fff3cd';
+                    } else {
+                        item.style.backgroundColor = '';
+                    }
+                } else {
+                    item.style.display = searchTerm ? 'none' : 'block';
+                    item.style.backgroundColor = '';
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(30, 60, 114, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Animate FAQ items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.faq-item, .category-card').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html> bounce 4s ease-in-out infinite;
+            top: -5%;
+            left: 15%;
+        }
+
+        .hero::after {
+            content: '?';
+            position: absolute;
+            font-size: 15rem;
+            color: rgba(255,255,255,0.03);
+            animation: bounce 3s ease-in-out infinite reverse;
+            bottom: -10%;
+            right: 20%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            animation: zoomIn 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 3rem 0;
+            background: #f8f9fa;
+            border-bottom: 3px solid #4facfe;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 15px rgba(79,172,254,0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ Categories */
+        .faq-categories {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation:
