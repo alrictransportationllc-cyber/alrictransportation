@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Alric Transportation</title>
-    <meta name="description" content="Admin dashboard for managing Alric Transportation operations, orders, and customer communications.">
+    <title>Admin Dashboard - Alric Transportation | Management Portal</title>
+    <meta name="description" content="Alric Transportation administrative dashboard for managing bookings, reviews, customer inquiries, and business operations.">
+    <meta name="keywords" content="alric transportation admin, transportation management, booking dashboard, review management">
+    <meta name="author" content="Alric Transportation">
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -14,47 +17,58 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #87CEEB;
+            --secondary-color: #4682B4;
+            --accent-color: #00BFFF;
+            --text-dark: #2C3E50;
+            --text-light: #34495E;
+            --white: #FFFFFF;
+            --light-gray: #F8FAFC;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --info-color: #3B82F6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: var(--light-gray);
+            color: var(--text-dark);
             line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
         }
 
-        /* Header Styles */
-        .admin-header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* Login Screen */
+        .nav-item-icon {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            width: calc(100% - 280px);
+        }
+
+        .top-bar {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .admin-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .admin-logo h1 {
+        .top-bar h1 {
+            color: var(--secondary-color);
             font-size: 1.5rem;
-            font-weight: 700;
         }
 
-        .admin-user {
+        .user-info {
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -63,223 +77,163 @@
         .user-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            color: var(--white);
+            font-weight: 600;
         }
 
         .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
+            padding: 8px 16px;
+            background: var(--error-color);
+            color: var(--white);
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
         .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
+            background: #DC2626;
         }
 
-        /* Main Layout */
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 20px;
+        /* Dashboard Content */
+        .dashboard-section {
+            display: none;
         }
 
-        .dashboard-grid {
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        /* Stats Cards */
         .stat-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out;
+            transition: all 0.3s ease;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .stat-icon {
-            font-size: 3rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            opacity: 0.7;
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--secondary-color);
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            color: #666;
-            font-weight: 500;
+            color: var(--text-light);
+            font-weight: 600;
         }
 
-        .stat-change {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .stat-change.positive {
-            color: #27ae60;
-        }
-
-        .stat-change.negative {
-            color: #e74c3c;
-        }
-
-        /* Content Sections */
-        .admin-section {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
+        .content-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            animation: fadeInUp 1s ease-out;
         }
 
-        .section-header {
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #f8f9fa;
-            padding-bottom: 1rem;
         }
 
-        .section-title {
-            font-size: 1.8rem;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .card-title {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
-        .section-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79,172,254,0.3);
-        }
-
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #666;
-            border: 1px solid #ddd;
-        }
-
-        .btn-secondary:hover {
-            background: #e9ecef;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
+        .card-body {
+            padding: 1.5rem;
         }
 
         /* Tables */
-        .admin-table {
+        .data-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
         }
 
-        .admin-table th,
-        .admin-table td {
+        .data-table th,
+        .data-table td {
             padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #f8f9fa;
+            border-bottom: 1px solid var(--light-gray);
         }
 
-        .admin-table th {
-            background: #f8f9fa;
+        .data-table th {
+            background: var(--light-gray);
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text-dark);
         }
 
-        .admin-table tr:hover {
-            background: #f8f9fa;
+        .data-table tr:hover {
+            background: var(--light-gray);
         }
 
         .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
-        .status-new {
-            background: #e3f2fd;
-            color: #1976d2;
+        .status-pending { background: var(--warning-color); color: var(--white); }
+        .status-confirmed { background: var(--info-color); color: var(--white); }
+        .status-completed { background: var(--success-color); color: var(--white); }
+        .status-cancelled { background: var(--error-color); color: var(--white); }
+
+        .action-btn {
+            padding: 6px 12px;
+            margin: 0 2px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
         }
 
-        .status-processing {
-            background: #fff3e0;
-            color: #f57c00;
-        }
+        .btn-view { background: var(--info-color); color: var(--white); }
+        .btn-edit { background: var(--warning-color); color: var(--white); }
+        .btn-delete { background: var(--error-color); color: var(--white); }
 
-        .status-completed {
-            background: #e8f5e8;
-            color: #388e3c;
-        }
-
-        .status-urgent {
-            background: #ffebee;
-            color: #d32f2f;
+        .action-btn:hover {
+            transform: translateY(-2px);
         }
 
         /* Forms */
-        .form-grid {
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .form-group {
@@ -289,700 +243,1085 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #2c3e50;
+            color: var(--text-dark);
+            font-weight: 600;
         }
 
-        .form-control {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #f8f9fa;
-            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .form-control:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 10px rgba(79,172,254,0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideInDown 0.3s ease-out;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #f8f9fa;
-            padding-bottom: 1rem;
-        }
-
-        .close-btn {
-            background: none;
+        .btn {
+            padding: 10px 20px;
             border: none;
-            font-size: 1.5rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            color: #666;
-            transition: color 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.25rem;
         }
 
-        .close-btn:hover {
-            color: #333;
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
         }
 
-        /* Filters and Search */
-        .filters-bar {
+        .btn-success {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Reviews Section */
+        .review-item {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            justify-content: between;
             align-items: center;
-            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
 
-        .search-box {
-            position: relative;
-            flex: 1;
-            min-width: 250px;
+        .review-rating {
+            color: #FFD700;
+            font-size: 1.2rem;
         }
 
-        .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 2px solid #f8f9fa;
-            border-radius: 25px;
-            font-size: 1rem;
+        .review-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
-
-        .filter-select {
-            padding: 0.75rem 1rem;
-            border: 2px solid #f8f9fa;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
             }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .admin-table {
-                font-size: 0.9rem;
-            }
-            
-            .admin-table th,
-            .admin-table td {
-                padding: 0.5rem;
-            }
-            
-            .filters-bar {
-                flex-direction: column;
-            }
-            
-            .search-box {
+
+            .main-content {
+                margin-left: 0;
                 width: 100%;
             }
-        }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+            .top-bar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                font-size: 0.8rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header class="admin-header">
-        <div class="header-container">
-            <div class="admin-logo">
-                <img src="assets/img/alriclogo.png" alt="Alric Transportation Logo">
-                <h1>Admin Dashboard</h1>
-            </div>
-            <div class="admin-user">
-                <div class="user-avatar">👨‍💼</div>
-                <span>Admin User</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </header>
-
-    <div class="admin-container">
-        <!-- Dashboard Stats -->
-        <div class="dashboard-grid">
-            <div class="stat-card">
-                <div class="stat-icon">📋</div>
-                <div class="stat-number" id="totalOrders">247</div>
-                <div class="stat-label">Total Orders</div>
-                <div class="stat-change positive">↑ 12% from last month</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🚚</div>
-                <div class="stat-number" id="activeDeliveries">18</div>
-                <div class="stat-label">Active Deliveries</div>
-                <div class="stat-change positive">↑ 3 from yesterday</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-number" id="avgRating">4.8</div>
-                <div class="stat-label">Average Rating</div>
-                <div class="stat-change positive">↑ 0.2 this week</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-number" id="revenue">$45.2K</div>
-                <div class="stat-label">Monthly Revenue</div>
-                <div class="stat-change positive">↑ 8% from last month</div>
-            </div>
-        </div>
-
-        <!-- Recent Orders -->
-        <div class="admin-section">
-            <div class="section-header">
-                <h2 class="section-title">📦 Recent Orders</h2>
-                <div class="section-actions">
-                    <button class="btn btn-secondary" onclick="refreshOrders()">Refresh</button>
-                    <button class="btn btn-primary" onclick="showNewOrderModal()">New Order</button>
-                </div>
-            </div>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">🔐</div>
+            <h1 class="login-title">Admin Login</h1>
+            <p class="login-subtitle">Alric Transportation Management</p>
             
-            <div class="filters-bar">
-                <div class="search-box">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" placeholder="Search orders..." id="orderSearch">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
-                <select class="filter-select" id="statusFilter">
-                    <option value="">All Status</option>
-                    <option value="new">New</option>
-                    <option value="processing">Processing</option>
-                    <option value="completed">Completed</option>
-                    <option value="urgent">Urgent</option>
-                </select>
-                <select class="filter-select" id="serviceFilter">
-                    <option value="">All Services</option>
-                    <option value="prescription">Prescription Delivery</option>
-                    <option value="medical-supply">Medical Supply</option>
-                    <option value="emergency">Emergency</option>
-                    <option value="cold-chain">Cold Chain</option>
-                </select>
-            </div>
-
-            <table class="admin-table" id="ordersTable">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Service</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="ordersTableBody">
-                    <tr>
-                        <td>ALR001</td>
-                        <td>Metro General Hospital</td>
-                        <td>Emergency Delivery</td>
-                        <td>Central Pharmacy</td>
-                        <td>ER Department</td>
-                        <td><span class="status-badge status-urgent">Urgent</span></td>
-                        <td>2 hours ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR001')">View</button>
-                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR001')">Edit</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ALR002</td>
-                        <td>City Pharmacy</td>
-                        <td>Prescription Delivery</td>
-                        <td>Warehouse</td>
-                        <td>Patient Home</td>
-                        <td><span class="status-badge status-processing">Processing</span></td>
-                        <td>4 hours ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR002')">View</button>
-                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR002')">Edit</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ALR003</td>
-                        <td>Research Lab Inc</td>
-                        <td>Cold Chain Transport</td>
-                        <td>Biotech Center</td>
-                        <td>Testing Facility</td>
-                        <td><span class="status-badge status-completed">Completed</span></td>
-                        <td>1 day ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="viewOrder('ALR003')">View</button>
-                            <button class="btn btn-secondary btn-sm" onclick="editOrder('ALR003')">Edit</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Contact Forms -->
-        <div class="admin-section">
-            <div class="section-header">
-                <h2 class="section-title">💬 Contact Form Submissions</h2>
-                <div class="section-actions">
-                    <button class="btn btn-secondary" onclick="refreshContacts()">Refresh</button>
-                    <button class="btn btn-primary" onclick="exportContacts()">Export</button>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
-            </div>
-
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Company</th>
-                        <th>Service</th>
-                        <th>Status</th>
-                        <th>Submitted</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Dr. Sarah Johnson</td>
-                        <td>sarah.johnson@metrohospital.com</td>
-                        <td>Metro Hospital</td>
-                        <td>Emergency Delivery</td>
-                        <td><span class="status-badge status-new">New</span></td>
-                        <td>1 hour ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="respondToContact(1)">Respond</button>
-                            <button class="btn btn-secondary btn-sm" onclick="viewContactDetails(1)">Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mike Chen</td>
-                        <td>m.chen@citypharmacy.com</td>
-                        <td>City Pharmacy</td>
-                        <td>Regular Delivery</td>
-                        <td><span class="status-badge status-processing">Responded</span></td>
-                        <td>3 hours ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="respondToContact(2)">Respond</button>
-                            <button class="btn btn-secondary btn-sm" onclick="viewContactDetails(2)">Details</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Reviews -->
-        <div class="admin-section">
-            <div class="section-header">
-                <h2 class="section-title">⭐ Customer Reviews</h2>
-                <div class="section-actions">
-                    <button class="btn btn-secondary" onclick="refreshReviews()">Refresh</button>
-                    <button class="btn btn-primary" onclick="moderateReviews()">Moderate</button>
-                </div>
-            </div>
-
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Customer</th>
-                        <th>Rating</th>
-                        <th>Service</th>
-                        <th>Review</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Dr. Lisa Martinez</td>
-                        <td>⭐⭐⭐⭐⭐</td>
-                        <td>Emergency Delivery</td>
-                        <td>"Excellent service, very fast and professional..."</td>
-                        <td><span class="status-badge status-new">Pending</span></td>
-                        <td>2 hours ago</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="approveReview(1)">Approve</button>
-                            <button class="btn btn-danger btn-sm" onclick="rejectReview(1)">Reject</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>John Smith</td>
-                        <td>⭐⭐⭐⭐⭐</td>
-                        <td>Prescription Delivery</td>
-                        <td>"Great tracking system and friendly drivers..."</td>
-                        <td><span class="status-badge status-completed">Approved</span></td>
-                        <td>1 day ago</td>
-                        <td>
-                            <button class="btn btn-secondary btn-sm" onclick="viewReview(2)">View</button>
-                            <button class="btn btn-danger btn-sm" onclick="hideReview(2)">Hide</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                
+                <button type="submit" class="login-btn">Login to Dashboard</button>
+            </form>
         </div>
     </div>
 
-    <!-- Order Details Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Order Details</h3>
-                <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="assets/img/alrictlogo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+                </div>
+                <h3 class="sidebar-title">Admin Dashboard</h3>
             </div>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Order ID</label>
-                    <input type="text" class="form-control" id="modalOrderId" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Customer</label>
-                    <input type="text" class="form-control" id="modalCustomer">
-                </div>
-                <div class="form-group">
-                    <label>Service Type</label>
-                    <select class="form-control" id="modalService">
-                        <option value="prescription">Prescription Delivery</option>
-                        <option value="medical-supply">Medical Supply</option>
-                        <option value="emergency">Emergency</option>
-                        <option value="cold-chain">Cold Chain</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" id="modalStatus">
-                        <option value="new">New</option>
-                        <option value="processing">Processing</option>
-                        <option value="completed">Completed</option>
-                        <option value="urgent">Urgent</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Pickup Location</label>
-                    <input type="text" class="form-control" id="modalPickup">
-                </div>
-                <div class="form-group">
-                    <label>Delivery Location</label>
-                    <input type="text" class="form-control" id="modalDelivery">
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span class="nav-item-icon">📊</span> Overview
+                </a>
+                <a href="#" class="nav-item" data-section="bookings">
+                    <span class="nav-item-icon">📅</span> Bookings
+                </a>
+                <a href="#" class="nav-item" data-section="reviews">
+                    <span class="nav-item-icon">⭐</span> Reviews
+                </a>
+                <a href="#" class="nav-item" data-section="inquiries">
+                    <span class="nav-item-icon">💬</span> Inquiries
+                </a>
+                <a href="#" class="nav-item" data-section="applications">
+                    <span class="nav-item-icon">📋</span> Applications
+                </a>
+                <a href="#" class="nav-item" data-section="fleet">
+                    <span class="nav-item-icon">🚐</span> Fleet Management
+                </a>
+                <a href="#" class="nav-item" data-section="reports">
+                    <span class="nav-item-icon">📈</span> Reports
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <h1 id="pageTitle">Dashboard Overview</h1>
+                <div class="user-info">
+                    <div class="user-avatar">AM</div>
+                    <span>Admin Manager</span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
             </div>
-            <div class="form-group">
-                <label>Special Instructions</label>
-                <textarea class="form-control" rows="3" id="modalInstructions"></textarea>
+
+            <!-- Overview Section -->
+            <div class="dashboard-section active" id="overview">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--info-color);">📅</div>
+                        <div class="stat-number">147</div>
+                        <div class="stat-label">Today's Bookings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--success-color);">✅</div>
+                        <div class="stat-number">134</div>
+                        <div class="stat-label">Completed Trips</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--warning-color);">🕐</div>
+                        <div class="stat-number">13</div>
+                        <div class="stat-label">Active Trips</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--primary-color);">⭐</div>
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent Activity</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Activity</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>10:30 AM</td>
+                                    <td>Medical Transport to City Hospital</td>
+                                    <td>Sarah Johnson</td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>10:15 AM</td>
+                                    <td>Wheelchair Transport to Clinic</td>
+                                    <td>Robert Davis</td>
+                                    <td><span class="status-badge status-confirmed">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>9:45 AM</td>
+                                    <td>Medication Delivery</td>
+                                    <td>Emily Chen</td>
+                                    <td><span class="status-badge status-completed">Delivered</span></td>
+                                </tr>
+                                <tr>
+                                    <td>9:30 AM</td>
+                                    <td>Airport Transfer</td>
+                                    <td>Michael Brown</td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="section-actions">
-                <button class="btn btn-primary" onclick="saveOrder()">Save Changes</button>
-                <button class="btn btn-secondary" onclick="closeModal('orderModal')">Cancel</button>
+
+            <!-- Bookings Section -->
+            <div class="dashboard-section" id="bookings">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Booking Management</h2>
+                        <button class="btn btn-primary">+ New Booking</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Date/Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BK-001234</td>
+                                    <td>John Smith</td>
+                                    <td>Medical Transport</td>
+                                    <td>Today, 2:00 PM</td>
+                                    <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">View</button>
+                                        <button class="action-btn btn-edit">Edit</button>
+                                        <button class="action-btn btn-delete">Cancel</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BK-001235</td>
+                                    <td>Maria Garcia</td>
+                                    <td>Wheelchair Transport</td>
+                                    <td>Today, 3:30 PM</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">View</button>
+                                        <button class="action-btn btn-edit">Edit</button>
+                                        <button class="action-btn btn-delete">Cancel</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="dashboard-section" id="reviews">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Customer Reviews</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div>
+                                    <strong>Sarah Mitchell</strong>
+                                    <div class="review-rating">★★★★★</div>
+                                </div>
+                                <div class="review-date">2 hours ago</div>
+                            </div>
+                            <p>"Excellent service! The driver was professional and the vehicle was very clean. Arrived on time for my medical appointment."</p>
+                            <p><strong>Service:</strong> Medical Transportation</p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div>
+                                    <strong>Robert Wilson</strong>
+                                    <div class="review-rating">★★★★☆</div>
+                                </div>
+                                <div class="review-date">5 hours ago</div>
+                            </div>
+                            <p>"Good wheelchair accessible service. Driver was helpful with getting in and out of the vehicle."</p>
+                            <p><strong>Service:</strong> Wheelchair Transport</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inquiries Section -->
+            <div class="dashboard-section" id="inquiries">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Customer Inquiries</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Service</th>
+                                    <th>Urgency</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jennifer Adams</td>
+                                    <td>jennifer@email.com</td>
+                                    <td>Medication Delivery</td>
+                                    <td><span class="status-badge status-pending">Today</span></td>
+                                    <td>Sep 25, 2025</td>
+                                    <td><span class="status-badge status-pending">New</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">Reply</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="dashboard-section" id="applications">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Service Applications</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Primary Service</th>
+                                    <th>Frequency</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>David Thompson</td>
+                                    <td>Medical Transportation</td>
+                                    <td>Weekly</td>
+                                    <td>Sep 24, 2025</td>
+                                    <td><span class="status-badge status-pending">Under Review</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">Review</button>
+                                        <button class="action-btn btn-edit">Approve</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fleet Management Section -->
+            <div class="dashboard-section" id="fleet">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Fleet Status</h2>
+                        <button class="btn btn-primary">+ Add Vehicle</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Vehicle ID</th>
+                                    <th>Type</th>
+                                    <th>License Plate</th>
+                                    <th>Driver</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>V-001</td>
+                                    <td>Wheelchair Van</td>
+                                    <td>AMT-4567</td>
+                                    <td>Robert Martinez</td>
+                                    <td><span class="status-badge status-confirmed">Active</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">Track</button>
+                                        <button class="action-btn btn-edit">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>V-002</td>
+                                    <td>Standard Van</td>
+                                    <td>AMT-4568</td>
+                                    <td>Sarah Johnson</td>
+                                    <td><span class="status-badge status-completed">Available</span></td>
+                                    <td>
+                                        <button class="action-btn btn-view">Track</button>
+                                        <button class="action-btn btn-edit">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="dashboard-section" id="reports">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Business Reports</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--success-color);">💰</div>
+                                <div class="stat-number">$24,567</div>
+                                <div class="stat-label">This Month Revenue</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--info-color);">🚗</div>
+                                <div class="stat-number">1,247</div>
+                                <div class="stat-label">Trips Completed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--warning-color);">👥</div>
+                                <div class="stat-number">389</div>
+                                <div class="stat-label">Active Customers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--primary-color);">📊</div>
+                                <div class="stat-number">15%</div>
+                                <div class="stat-label">Growth Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Sample data for demonstration
-        let orders = [
-            {
-                id: 'ALR001',
-                customer: 'Metro General Hospital',
-                service: 'Emergency Delivery',
-                from: 'Central Pharmacy',
-                to: 'ER Department',
-                status: 'urgent',
-                created: '2 hours ago'
-            },
-            {
-                id: 'ALR002',
-                customer: 'City Pharmacy',
-                service: 'Prescription Delivery',
-                from: 'Warehouse',
-                to: 'Patient Home',
-                status: 'processing',
-                created: '4 hours ago'
-            },
-            {
-                id: 'ALR003',
-                customer: 'Research Lab Inc',
-                service: 'Cold Chain Transport',
-                from: 'Biotech Center',
-                to: 'Testing Facility',
-                status: 'completed',
-                created: '1 day ago'
-            }
-        ];
-
-        // Initialize dashboard
-        function initDashboard() {
-            updateStats();
-            renderOrdersTable();
-            attachEventListeners();
-        }
-
-        // Update dashboard statistics
-        function updateStats() {
-            // Simulate real-time updates
-            setInterval(() => {
-                const totalOrders = Math.floor(Math.random() * 50) + 200;
-                const activeDeliveries = Math.floor(Math.random() * 20) + 10;
-                const avgRating = (Math.random() * 0.5 + 4.5).toFixed(1);
-                const revenue = (Math.random() * 10 + 40).toFixed(1);
-
-                document.getElementById('totalOrders').textContent = totalOrders;
-                document.getElementById('activeDeliveries').textContent = activeDeliveries;
-                document.getElementById('avgRating').textContent = avgRating;
-                document.getElementById('revenue').textContent = `${revenue}K`;
-            }, 30000); // Update every 30 seconds
-        }
-
-        // Render orders table
-        function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
-            tbody.innerHTML = '';
-
-            orders.forEach(order => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${order.id}</td>
-                    <td>${order.customer}</td>
-                    <td>${order.service}</td>
-                    <td>${order.from}</td>
-                    <td>${order.to}</td>
-                    <td><span class="status-badge status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
-                    <td>${order.created}</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="viewOrder('${order.id}')">View</button>
-                        <button class="btn btn-secondary btn-sm" onclick="editOrder('${order.id}')">Edit</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        // Attach event listeners
-        function attachEventListeners() {
-            // Search functionality
-            document.getElementById('orderSearch').addEventListener('input', filterOrders);
-            document.getElementById('statusFilter').addEventListener('change', filterOrders);
-            document.getElementById('serviceFilter').addEventListener('change', filterOrders);
-        }
-
-        // Filter orders
-        function filterOrders() {
-            const searchTerm = document.getElementById('orderSearch').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            const serviceFilter = document.getElementById('serviceFilter').value;
-
-            const rows = document.querySelectorAll('#ordersTableBody tr');
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                const statusMatch = !statusFilter || row.querySelector('.status-badge').classList.contains(`status-${statusFilter}`);
-                const serviceMatch = !serviceFilter || text.includes(serviceFilter.replace('-', ' '));
-                const searchMatch = !searchTerm || text.includes(searchTerm);
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple authentication (in real app, this would be server-side)
+            if (username === 'admin' && password === 'alric2025') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('show');
+            } else {
+                alert('Invalid credentials. Use username: admin, password: alric2025');
+            }
+        });
 
-                if (statusMatch && serviceMatch && searchMatch) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
+        // Logout functionality
+        function logout() {
+            document.getElementById('dashboard').classList.remove('show');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('loginForm').reset();
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.dataset.section;
+                document.querySelectorAll('.dashboard-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Update page title
+                const pageTitle = this.textContent.trim();
+                document.getElementById('pageTitle').textContent = pageTitle;
+            });
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update stats randomly
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                if (stat.textContent.includes('login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .login-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            margin: 0 auto 2rem;
+        }
+
+        .login-title {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.show {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .sidebar-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 0 auto 1rem;
+        }
+
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .)) {
+                    // Revenue update
+                    const current = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+                    stat.textContent = 'login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .login-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            margin: 0 auto 2rem;
+        }
+
+        .login-title {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.show {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .sidebar-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 0 auto 1rem;
+        }
+
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        . + (current + Math.floor(Math.random() * 100)).toLocaleString();
+                } else if (!stat.textContent.includes('.') && !stat.textContent.includes('%')) {
+                    // Count updates
+                    const current = parseInt(stat.textContent);
+                    const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+                    stat.textContent = Math.max(0, current + change);
                 }
             });
-        }
+        }, 30000); // Update every 30 seconds
 
-        // Modal functions
-        function viewOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                document.getElementById('modalOrderId').value = order.id;
-                document.getElementById('modalCustomer').value = order.customer;
-                document.getElementById('modalPickup').value = order.from;
-                document.getElementById('modalDelivery').value = order.to;
-                document.getElementById('modalStatus').value = order.status;
-                showModal('orderModal');
-            }
-        }
+        // Table row interactions
+        document.querySelectorAll('.data-table tbody tr').forEach(row => {
+            row.addEventListener('click', function() {
+                // Highlight selected row
+                document.querySelectorAll('.data-table tbody tr').forEach(r => {
+                    r.style.backgroundColor = '';
+                });
+                this.style.backgroundColor = 'var(--light-gray)';
+            });
+        });
 
-        function editOrder(orderId) {
-            viewOrder(orderId);
-        }
-
-        function showModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function saveOrder() {
-            alert('Order updated successfully!');
-            closeModal('orderModal');
-        }
-
-        // Action functions
-        function refreshOrders() {
-            renderOrdersTable();
-            showToast('Orders refreshed successfully');
-        }
-
-        function showNewOrderModal() {
-            document.getElementById('modalOrderId').value = 'ALR' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            document.getElementById('modalCustomer').value = '';
-            document.getElementById('modalPickup').value = '';
-            document.getElementById('modalDelivery').value = '';
-            document.getElementById('modalStatus').value = 'new';
-            showModal('orderModal');
-        }
-
-        function refreshContacts() {
-            showToast('Contacts refreshed successfully');
-        }
-
-        function exportContacts() {
-            alert('Contact export functionality would be implemented here');
-        }
-
-        function respondToContact(contactId) {
-            alert(`Opening response form for contact #${contactId}`);
-        }
-
-        function viewContactDetails(contactId) {
-            alert(`Viewing details for contact #${contactId}`);
-        }
-
-        function refreshReviews() {
-            showToast('Reviews refreshed successfully');
-        }
-
-        function moderateReviews() {
-            alert('Opening review moderation panel');
-        }
-
-        function approveReview(reviewId) {
-            alert(`Review #${reviewId} approved`);
-        }
-
-        function rejectReview(reviewId) {
-            if (confirm('Are you sure you want to reject this review?')) {
-                alert(`Review #${reviewId} rejected`);
-            }
-        }
-
-        function viewReview(reviewId) {
-            alert(`Viewing review #${reviewId}`);
-        }
-
-        function hideReview(reviewId) {
-            if (confirm('Are you sure you want to hide this review?')) {
-                alert(`Review #${reviewId} hidden`);
-            }
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Toast notification function
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #27ae60;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 8px;
-                z-index: 10000;
-                animation: slideInRight 0.3s ease-out;
-            `;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Initialize dashboard when page loads
-        window.addEventListener('load', initDashboard);
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
+        // Action button handlers
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const action = this.textContent;
+                const row = this.closest('tr');
+                const firstCell = row.querySelector('td').textContent;
+                
+                // Simulate action
+                alert(`${action} action for: ${firstCell}`);
+            });
         });
     </script>
 </body>
-</html>
+</html>login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .login-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            margin: 0 auto 2rem;
+        }
+
+        .login-title {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard.show {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .sidebar-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 0 auto 1rem;
+        }
+
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .
