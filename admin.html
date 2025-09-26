@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Alric Transportation | Management Portal</title>
     <meta name="description" content="Alric Transportation administrative dashboard for managing bookings, reviews, customer inquiries, and business operations.">
-    <meta name="keywords" content="alric transportation admin, transportation management, booking dashboard, review management">
-    <meta name="author" content="Alric Transportation">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
+    <link rel="icon" type="image/png" href="../assets/img/alrictlogo.png">
     
     <style>
         * {
@@ -40,18 +38,81 @@
             line-height: 1.6;
         }
 
-        /* Login Screen */
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .sidebar-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 0 auto 1rem;
+        }
+
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--light-gray);
+            color: var(--secondary-color);
+            border-left-color: var(--primary-color);
+        }
+
         .nav-item-icon {
             margin-right: 0.5rem;
             font-size: 1.1rem;
         }
 
+        /* Main Content */
         .main-content {
             margin-left: 280px;
             padding: 2rem;
             width: calc(100% - 280px);
         }
 
+        /* Top Bar */
         .top-bar {
             background: var(--white);
             padding: 1rem 2rem;
@@ -111,6 +172,7 @@
             display: block;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -149,6 +211,7 @@
             font-weight: 600;
         }
 
+        /* Content Cards */
         .content-card {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -198,6 +261,7 @@
             background: var(--light-gray);
         }
 
+        /* Status Badges */
         .status-badge {
             padding: 4px 12px;
             border-radius: 20px;
@@ -210,6 +274,7 @@
         .status-completed { background: var(--success-color); color: var(--white); }
         .status-cancelled { background: var(--error-color); color: var(--white); }
 
+        /* Action Buttons */
         .action-btn {
             padding: 6px 12px;
             margin: 0 2px;
@@ -292,7 +357,41 @@
             transform: translateY(-2px);
         }
 
-        /* Reviews Section */
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            color: var(--white);
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success-color);
+        }
+
+        .notification.error {
+            background: var(--error-color);
+        }
+
+        .notification.warning {
+            background: var(--warning-color);
+        }
+
+        .notification.info {
+            background: var(--info-color);
+        }
+
+        /* Review Items */
         .review-item {
             background: var(--light-gray);
             padding: 1.5rem;
@@ -302,7 +401,7 @@
 
         .review-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
@@ -315,6 +414,15 @@
         .review-date {
             color: var(--text-light);
             font-size: 0.9rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
         }
 
         /* Mobile Responsive */
@@ -352,41 +460,36 @@
             .data-table td {
                 padding: 0.5rem;
             }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--light-gray);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-container" id="loginScreen">
-        <div class="login-box">
-            <div class="login-logo">🔐</div>
-            <h1 class="login-title">Admin Login</h1>
-            <p class="login-subtitle">Alric Transportation Management</p>
-            
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                
-                <button type="submit" class="login-btn">Login to Dashboard</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <img src="assets/img/alrictlogo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%;">
-                </div>
+                <div class="sidebar-logo">🚐</div>
                 <h3 class="sidebar-title">Admin Dashboard</h3>
             </div>
             
@@ -397,6 +500,9 @@
                 <a href="#" class="nav-item" data-section="bookings">
                     <span class="nav-item-icon">📅</span> Bookings
                 </a>
+                <a href="#" class="nav-item" data-section="tracking">
+                    <span class="nav-item-icon">🔍</span> Live Tracking
+                </a>
                 <a href="#" class="nav-item" data-section="reviews">
                     <span class="nav-item-icon">⭐</span> Reviews
                 </a>
@@ -406,8 +512,8 @@
                 <a href="#" class="nav-item" data-section="applications">
                     <span class="nav-item-icon">📋</span> Applications
                 </a>
-                <a href="#" class="nav-item" data-section="fleet">
-                    <span class="nav-item-icon">🚐</span> Fleet Management
+                <a href="#" class="nav-item" data-section="drivers">
+                    <span class="nav-item-icon">👨‍🚗</span> Drivers
                 </a>
                 <a href="#" class="nav-item" data-section="reports">
                     <span class="nav-item-icon">📈</span> Reports
@@ -421,8 +527,8 @@
             <div class="top-bar">
                 <h1 id="pageTitle">Dashboard Overview</h1>
                 <div class="user-info">
-                    <div class="user-avatar">AM</div>
-                    <span>Admin Manager</span>
+                    <div class="user-avatar">A</div>
+                    <span id="adminName">Admin</span>
                     <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
             </div>
@@ -432,22 +538,22 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--info-color);">📅</div>
-                        <div class="stat-number">147</div>
+                        <div class="stat-number" id="todayBookings">0</div>
                         <div class="stat-label">Today's Bookings</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--success-color);">✅</div>
-                        <div class="stat-number">134</div>
+                        <div class="stat-number" id="completedTrips">0</div>
                         <div class="stat-label">Completed Trips</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="color: var(--warning-color);">🕐</div>
-                        <div class="stat-number">13</div>
+                        <div class="stat-icon" style="color: var(--warning-color);">🚗</div>
+                        <div class="stat-number" id="activeTrips">0</div>
                         <div class="stat-label">Active Trips</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--primary-color);">⭐</div>
-                        <div class="stat-number">4.8</div>
+                        <div class="stat-number" id="avgRating">0.0</div>
                         <div class="stat-label">Average Rating</div>
                     </div>
                 </div>
@@ -455,6 +561,10 @@
                 <div class="content-card">
                     <div class="card-header">
                         <h2 class="card-title">Recent Activity</h2>
+                        <button class="btn btn-primary" onclick="refreshData()">
+                            <span class="loading-spinner" id="refreshSpinner" style="display: none;"></span>
+                            Refresh
+                        </button>
                     </div>
                     <div class="card-body">
                         <table class="data-table">
@@ -466,30 +576,55 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="recentActivityTable">
                                 <tr>
-                                    <td>10:30 AM</td>
-                                    <td>Medical Transport to City Hospital</td>
-                                    <td>Sarah Johnson</td>
-                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                    <td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading recent activity...
+                                    </td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Tracking Section -->
+            <div class="dashboard-section" id="tracking">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Live Tracking Control</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-actions">
+                            <input type="text" id="trackingIdInput" placeholder="Enter Tracking ID" class="form-group input">
+                            <select id="statusSelect" class="form-group select">
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="dispatched">Dispatched</option>
+                                <option value="enroute">En Route</option>
+                                <option value="arrived">Arrived</option>
+                                <option value="intransit">In Transit</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="updateServiceStatus()">Update Status</button>
+                        </div>
+
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <td>10:15 AM</td>
-                                    <td>Wheelchair Transport to Clinic</td>
-                                    <td>Robert Davis</td>
-                                    <td><span class="status-badge status-confirmed">In Progress</span></td>
+                                    <th>Tracking ID</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Last Updated</th>
+                                    <th>Actions</th>
                                 </tr>
+                            </thead>
+                            <tbody id="liveTrackingTable">
                                 <tr>
-                                    <td>9:45 AM</td>
-                                    <td>Medication Delivery</td>
-                                    <td>Emily Chen</td>
-                                    <td><span class="status-badge status-completed">Delivered</span></td>
-                                </tr>
-                                <tr>
-                                    <td>9:30 AM</td>
-                                    <td>Airport Transfer</td>
-                                    <td>Michael Brown</td>
-                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading live tracking data...
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -502,7 +637,7 @@
                 <div class="content-card">
                     <div class="card-header">
                         <h2 class="card-title">Booking Management</h2>
-                        <button class="btn btn-primary">+ New Booking</button>
+                        <button class="btn btn-primary" onclick="showNewBookingForm()">+ New Booking</button>
                     </div>
                     <div class="card-body">
                         <table class="data-table">
@@ -516,29 +651,49 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="bookingsTable">
                                 <tr>
-                                    <td>BK-001234</td>
-                                    <td>John Smith</td>
-                                    <td>Medical Transport</td>
-                                    <td>Today, 2:00 PM</td>
-                                    <td><span class="status-badge status-confirmed">Confirmed</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">View</button>
-                                        <button class="action-btn btn-edit">Edit</button>
-                                        <button class="action-btn btn-delete">Cancel</button>
+                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading bookings...
                                     </td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="dashboard-section" id="applications">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Service Applications</h2>
+                        <div class="quick-actions">
+                            <select id="appStatusFilter">
+                                <option value="all">All Applications</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterApplications()">Filter</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <td>BK-001235</td>
-                                    <td>Maria Garcia</td>
-                                    <td>Wheelchair Transport</td>
-                                    <td>Today, 3:30 PM</td>
-                                    <td><span class="status-badge status-pending">Pending</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">View</button>
-                                        <button class="action-btn btn-edit">Edit</button>
-                                        <button class="action-btn btn-delete">Cancel</button>
+                                    <th>Tracking ID</th>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTable">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading applications...
                                     </td>
                                 </tr>
                             </tbody>
@@ -552,30 +707,19 @@
                 <div class="content-card">
                     <div class="card-header">
                         <h2 class="card-title">Customer Reviews</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div>
-                                    <strong>Sarah Mitchell</strong>
-                                    <div class="review-rating">★★★★★</div>
-                                </div>
-                                <div class="review-date">2 hours ago</div>
-                            </div>
-                            <p>"Excellent service! The driver was professional and the vehicle was very clean. Arrived on time for my medical appointment."</p>
-                            <p><strong>Service:</strong> Medical Transportation</p>
+                        <div class="quick-actions">
+                            <select id="reviewStatusFilter">
+                                <option value="all">All Reviews</option>
+                                <option value="pending">Pending Approval</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterReviews()">Filter</button>
                         </div>
-                        
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div>
-                                    <strong>Robert Wilson</strong>
-                                    <div class="review-rating">★★★★☆</div>
-                                </div>
-                                <div class="review-date">5 hours ago</div>
-                            </div>
-                            <p>"Good wheelchair accessible service. Driver was helpful with getting in and out of the vehicle."</p>
-                            <p><strong>Service:</strong> Wheelchair Transport</p>
+                    </div>
+                    <div class="card-body" id="reviewsList">
+                        <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                            Loading reviews...
                         </div>
                     </div>
                 </div>
@@ -600,16 +744,10 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="inquiriesTable">
                                 <tr>
-                                    <td>Jennifer Adams</td>
-                                    <td>jennifer@email.com</td>
-                                    <td>Medication Delivery</td>
-                                    <td><span class="status-badge status-pending">Today</span></td>
-                                    <td>Sep 25, 2025</td>
-                                    <td><span class="status-badge status-pending">New</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">Reply</button>
+                                    <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading inquiries...
                                     </td>
                                 </tr>
                             </tbody>
@@ -618,82 +756,30 @@
                 </div>
             </div>
 
-            <!-- Applications Section -->
-            <div class="dashboard-section" id="applications">
+            <!-- Drivers Section -->
+            <div class="dashboard-section" id="drivers">
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">Service Applications</h2>
+                        <h2 class="card-title">Driver Management</h2>
+                        <button class="btn btn-primary" onclick="showAddDriverForm()">+ Add Driver</button>
                     </div>
                     <div class="card-body">
                         <table class="data-table">
                             <thead>
                                 <tr>
+                                    <th>Driver ID</th>
                                     <th>Name</th>
-                                    <th>Primary Service</th>
-                                    <th>Frequency</th>
-                                    <th>Date Submitted</th>
+                                    <th>Phone</th>
+                                    <th>Vehicle</th>
                                     <th>Status</th>
+                                    <th>Current Job</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="driversTable">
                                 <tr>
-                                    <td>David Thompson</td>
-                                    <td>Medical Transportation</td>
-                                    <td>Weekly</td>
-                                    <td>Sep 24, 2025</td>
-                                    <td><span class="status-badge status-pending">Under Review</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">Review</button>
-                                        <button class="action-btn btn-edit">Approve</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fleet Management Section -->
-            <div class="dashboard-section" id="fleet">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2 class="card-title">Fleet Status</h2>
-                        <button class="btn btn-primary">+ Add Vehicle</button>
-                    </div>
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Vehicle ID</th>
-                                    <th>Type</th>
-                                    <th>License Plate</th>
-                                    <th>Driver</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>V-001</td>
-                                    <td>Wheelchair Van</td>
-                                    <td>AMT-4567</td>
-                                    <td>Robert Martinez</td>
-                                    <td><span class="status-badge status-confirmed">Active</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">Track</button>
-                                        <button class="action-btn btn-edit">Edit</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>V-002</td>
-                                    <td>Standard Van</td>
-                                    <td>AMT-4568</td>
-                                    <td>Sarah Johnson</td>
-                                    <td><span class="status-badge status-completed">Available</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view">Track</button>
-                                        <button class="action-btn btn-edit">Edit</button>
+                                    <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                                        Loading drivers...
                                     </td>
                                 </tr>
                             </tbody>
@@ -704,624 +790,720 @@
 
             <!-- Reports Section -->
             <div class="dashboard-section" id="reports">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--success-color);">💰</div>
+                        <div class="stat-number" id="monthRevenue">$0</div>
+                        <div class="stat-label">This Month Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--info-color);">🚗</div>
+                        <div class="stat-number" id="monthTrips">0</div>
+                        <div class="stat-label">Trips This Month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--warning-color);">👥</div>
+                        <div class="stat-number" id="activeCustomers">0</div>
+                        <div class="stat-label">Active Customers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="color: var(--primary-color);">📊</div>
+                        <div class="stat-number" id="growthRate">0%</div>
+                        <div class="stat-label">Growth Rate</div>
+                    </div>
+                </div>
+
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">Business Reports</h2>
+                        <h2 class="card-title">Generate Reports</h2>
                     </div>
                     <div class="card-body">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-icon" style="color: var(--success-color);">💰</div>
-                                <div class="stat-number">$24,567</div>
-                                <div class="stat-label">This Month Revenue</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reportType">Report Type</label>
+                                <select id="reportType">
+                                    <option value="daily">Daily Report</option>
+                                    <option value="weekly">Weekly Report</option>
+                                    <option value="monthly">Monthly Report</option>
+                                </select>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="color: var(--info-color);">🚗</div>
-                                <div class="stat-number">1,247</div>
-                                <div class="stat-label">Trips Completed</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="color: var(--warning-color);">👥</div>
-                                <div class="stat-number">389</div>
-                                <div class="stat-label">Active Customers</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="color: var(--primary-color);">📊</div>
-                                <div class="stat-number">15%</div>
-                                <div class="stat-label">Growth Rate</div>
+                            <div class="form-group">
+                                <label for="reportDate">Date</label>
+                                <input type="date" id="reportDate">
                             </div>
                         </div>
+                        <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <script>
-        // Login functionality
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple authentication (in real app, this would be server-side)
-            if (username === 'admin' && password === 'alric2025') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').classList.add('show');
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAa_GIteOi3r4GtdL8mFD7TkrOr1fE6GdE",
+            authDomain: "alrictransportation.firebaseapp.com",
+            projectId: "alrictransportation",
+            storageBucket: "alrictransportation.firebasestorage.app",
+            messagingSenderId: "257683950593",
+            appId: "1:257683950593:web:8e84e6599a517f9c284400",
+            measurementId: "G-P8EDVYFFJD",
+            databaseURL: "https://alrictransportation-default-rtdb.firebaseio.com/"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const realtimeDb = firebase.database();
+
+        // Global variables
+        let currentUser = null;
+        let refreshInterval = null;
+
+        // Authentication Check
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                try {
+                    const token = await user.getIdTokenResult();
+                    if (token.claims.admin === true) {
+                        currentUser = user;
+                        document.getElementById('adminName').textContent = user.email.split('@')[0];
+                        initializeDashboard();
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error('Auth check error:', error);
+                    window.location.href = 'login.html';
+                }
             } else {
-                alert('Invalid credentials. Use username: admin, password: alric2025');
+                window.location.href = 'login.html';
             }
         });
 
-        // Logout functionality
-        function logout() {
-            document.getElementById('dashboard').classList.remove('show');
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('loginForm').reset();
+        // Initialize Dashboard
+        function initializeDashboard() {
+            setupNavigation();
+            loadDashboardData();
+            setupRealTimeListeners();
+            startAutoRefresh();
         }
 
-        // Navigation functionality
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Update active nav item
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show corresponding section
-                const sectionId = this.dataset.section;
-                document.querySelectorAll('.dashboard-section').forEach(section => {
-                    section.classList.remove('active');
+        // Navigation Setup
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = this.dataset.section;
+                    document.querySelectorAll('.dashboard-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    // Update page title
+                    const pageTitle = this.textContent.trim();
+                    document.getElementById('pageTitle').textContent = pageTitle;
+                    
+                    // Load section specific data
+                    loadSectionData(sectionId);
                 });
-                document.getElementById(sectionId).classList.add('active');
-                
-                // Update page title
-                const pageTitle = this.textContent.trim();
-                document.getElementById('pageTitle').textContent = pageTitle;
             });
-        });
-
-        // Simulate real-time updates
-        setInterval(() => {
-            // Update stats randomly
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                if (stat.textContent.includes('login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            position: relative;
-            overflow: hidden;
         }
 
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        // Load Dashboard Data
+        async function loadDashboardData() {
+            try {
+                await Promise.all([
+                    loadOverviewStats(),
+                    loadRecentActivity(),
+                    loadApplications(),
+                    loadInquiries(),
+                    loadReviews()
+                ]);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showNotification('Error loading dashboard data', 'error');
+            }
         }
 
-        .login-box {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
+        // Load Overview Statistics
+        async function loadOverviewStats() {
+            try {
+                const today = new Date();
+                const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                
+                // Get today's applications/bookings
+                const applicationsSnapshot = await db.collection('applications')
+                    .where('timestamp', '>=', startOfDay)
+                    .get();
+                
+                document.getElementById('todayBookings').textContent = applicationsSnapshot.size;
+                
+                // Get completed trips
+                const completedSnapshot = await db.collection('applications')
+                    .where('status', '==', 'completed')
+                    .get();
+                
+                document.getElementById('completedTrips').textContent = completedSnapshot.size;
+                
+                // Get active trips
+                const activeSnapshot = await db.collection('applications')
+                    .where('status', 'in', ['dispatched', 'enroute', 'arrived', 'intransit'])
+                    .get();
+                
+                document.getElementById('activeTrips').textContent = activeSnapshot.size;
+                
+                // Calculate average rating
+                const reviewsSnapshot = await db.collection('reviews').get();
+                let totalRating = 0;
+                let ratingCount = 0;
+                
+                reviewsSnapshot.forEach(doc => {
+                    const review = doc.data();
+                    if (review.rating) {
+                        totalRating += review.rating;
+                        ratingCount++;
+                    }
+                });
+                
+                const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : '0.0';
+                document.getElementById('avgRating').textContent = avgRating;
+                
+            } catch (error) {
+                console.error('Error loading overview stats:', error);
+            }
         }
 
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-            margin: 0 auto 2rem;
+        // Load Recent Activity
+        async function loadRecentActivity() {
+            try {
+                const activitiesSnapshot = await db.collection('applications')
+                    .orderBy('timestamp', 'desc')
+                    .limit(10)
+                    .get();
+                
+                const tableBody = document.getElementById('recentActivityTable');
+                tableBody.innerHTML = '';
+                
+                if (activitiesSnapshot.empty) {
+                    tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-light);">No recent activity</td></tr>';
+                    return;
+                }
+                
+                activitiesSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    
+                    const timestamp = data.timestamp?.toDate() || new Date();
+                    const timeString = timestamp.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit' 
+                    });
+                    
+                    row.innerHTML = `
+                        <td>${timeString}</td>
+                        <td>${data.primaryService || 'Service Request'}</td>
+                        <td>${data.firstName} ${data.lastName}</td>
+                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+                document.getElementById('recentActivityTable').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--error-color);">Error loading activity</td></tr>';
+            }
         }
 
-        .login-title {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        // Load Applications
+        async function loadApplications() {
+            try {
+                const applicationsSnapshot = await db.collection('applications')
+                    .orderBy('timestamp', 'desc')
+                    .get();
+                
+                const tableBody = document.getElementById('applicationsTable');
+                tableBody.innerHTML = '';
+                
+                if (applicationsSnapshot.empty) {
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">No applications found</td></tr>';
+                    return;
+                }
+                
+                applicationsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    
+                    const timestamp = data.timestamp?.toDate() || new Date();
+                    const dateString = timestamp.toLocaleDateString();
+                    
+                    row.innerHTML = `
+                        <td>${data.trackingId || 'N/A'}</td>
+                        <td>${data.firstName} ${data.lastName}</td>
+                        <td>${data.primaryService}</td>
+                        <td>${dateString}</td>
+                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
+                        <td>
+                            <button class="action-btn btn-view" onclick="viewApplication('${doc.id}')">View</button>
+                            <button class="action-btn btn-edit" onclick="approveApplication('${doc.id}')">Approve</button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading applications:', error);
+            }
         }
 
-        .login-subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
+        // Load Inquiries
+        async function loadInquiries() {
+            try {
+                const inquiriesSnapshot = await db.collection('contacts')
+                    .orderBy('timestamp', 'desc')
+                    .get();
+                
+                const tableBody = document.getElementById('inquiriesTable');
+                tableBody.innerHTML = '';
+                
+                if (inquiriesSnapshot.empty) {
+                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">No inquiries found</td></tr>';
+                    return;
+                }
+                
+                inquiriesSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    
+                    const timestamp = data.timestamp?.toDate() || new Date();
+                    const dateString = timestamp.toLocaleDateString();
+                    
+                    row.innerHTML = `
+                        <td>${data.firstName} ${data.lastName}</td>
+                        <td>${data.email}</td>
+                        <td>${data.serviceNeeded || 'General Inquiry'}</td>
+                        <td>${data.urgency || 'Normal'}</td>
+                        <td>${dateString}</td>
+                        <td><span class="status-badge status-pending">New</span></td>
+                        <td>
+                            <button class="action-btn btn-view" onclick="viewInquiry('${doc.id}')">Reply</button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading inquiries:', error);
+            }
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
+        // Load Reviews
+        async function loadReviews() {
+            try {
+                const reviewsSnapshot = await db.collection('reviews')
+                    .orderBy('timestamp', 'desc')
+                    .get();
+                
+                const reviewsList = document.getElementById('reviewsList');
+                reviewsList.innerHTML = '';
+                
+                if (reviewsSnapshot.empty) {
+                    reviewsList.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-light);">No reviews found</div>';
+                    return;
+                }
+                
+                reviewsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const timestamp = data.timestamp?.toDate() || new Date();
+                    const dateString = timestamp.toLocaleDateString();
+                    
+                    const stars = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
+                    
+                    const reviewItem = document.createElement('div');
+                    reviewItem.className = 'review-item';
+                    reviewItem.innerHTML = `
+                        <div class="review-header">
+                            <div>
+                                <strong>${data.customerName}</strong>
+                                <div class="review-rating">${stars}</div>
+                            </div>
+                            <div class="review-date">${dateString}</div>
+                        </div>
+                        <p>${data.reviewText}</p>
+                        <p><strong>Service:</strong> ${data.serviceUsed}</p>
+                        <div style="margin-top: 10px;">
+                            <button class="action-btn btn-edit" onclick="approveReview('${doc.id}')">Approve</button>
+                            <button class="action-btn btn-delete" onclick="rejectReview('${doc.id}')">Reject</button>
+                        </div>
+                    `;
+                    
+                    reviewsList.appendChild(reviewItem);
+                });
+                
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 600;
+        // Update Service Status
+        async function updateServiceStatus() {
+            const trackingId = document.getElementById('trackingIdInput').value.trim();
+            const status = document.getElementById('statusSelect').value;
+            
+            if (!trackingId || !status) {
+                showNotification('Please enter tracking ID and select status', 'error');
+                return;
+            }
+            
+            try {
+                // Update in Realtime Database for live tracking
+                await realtimeDb.ref(`live_tracking/${trackingId}`).update({
+                    status: status,
+                    lastUpdated: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                // Update in Firestore for historical record
+                const applicationsSnapshot = await db.collection('applications')
+                    .where('trackingId', '==', trackingId)
+                    .get();
+                
+                if (!applicationsSnapshot.empty) {
+                    const docRef = applicationsSnapshot.docs[0].ref;
+                    await docRef.update({
+                        status: status,
+                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                
+                showNotification(`Status updated to ${getStatusText(status)} for ${trackingId}`, 'success');
+                document.getElementById('trackingIdInput').value = '';
+                
+                // Refresh data
+                refreshData();
+                
+            } catch (error) {
+                console.error('Error updating status:', error);
+                showNotification('Error updating status', 'error');
+            }
         }
 
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        // Utility Functions
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Pending',
+                'approved': 'Approved',
+                'dispatched': 'Dispatched',
+                'enroute': 'En Route',
+                'arrived': 'Arrived',
+                'intransit': 'In Transit',
+                'completed': 'Completed',
+                'cancelled': 'Cancelled'
+            };
+            return statusMap[status] || status;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
         }
 
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            color: var(--white);
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        function refreshData() {
+            const spinner = document.getElementById('refreshSpinner');
+            spinner.style.display = 'inline-block';
+            
+            loadDashboardData().then(() => {
+                spinner.style.display = 'none';
+            });
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        function loadSectionData(sectionId) {
+            switch(sectionId) {
+                case 'applications':
+                    loadApplications();
+                    break;
+                case 'inquiries':
+                    loadInquiries();
+                    break;
+                case 'reviews':
+                    loadReviews();
+                    break;
+                case 'tracking':
+                    loadLiveTrackingData();
+                    break;
+                case 'reports':
+                    loadReportData();
+                    break;
+            }
         }
 
-        /* Dashboard Layout */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
+        // Load Live Tracking Data
+        async function loadLiveTrackingData() {
+            try {
+                const trackingSnapshot = await realtimeDb.ref('live_tracking').once('value');
+                const trackingData = trackingSnapshot.val();
+                
+                const tableBody = document.getElementById('liveTrackingTable');
+                tableBody.innerHTML = '';
+                
+                if (!trackingData) {
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">No live tracking data</td></tr>';
+                    return;
+                }
+                
+                Object.keys(trackingData).forEach(trackingId => {
+                    const data = trackingData[trackingId];
+                    const row = document.createElement('tr');
+                    
+                    const lastUpdated = data.lastUpdated ? 
+                        new Date(data.lastUpdated).toLocaleString() : 'Never';
+                    
+                    row.innerHTML = `
+                        <td>${trackingId}</td>
+                        <td>${data.customer?.name || 'N/A'}</td>
+                        <td>${data.service?.type || 'N/A'}</td>
+                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
+                        <td>${lastUpdated}</td>
+                        <td>
+                            <button class="action-btn btn-view" onclick="viewLiveTracking('${trackingId}')">Track</button>
+                            <button class="action-btn btn-edit" onclick="updateTrackingStatus('${trackingId}')">Update</button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading live tracking data:', error);
+            }
         }
 
-        .dashboard.show {
-            display: flex;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-        }
-
-        .sidebar-header {
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .sidebar-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--white);
-            margin: 0 auto 1rem;
-        }
-
-        .sidebar-title {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .nav-item {
-            display: block;
-            padding: 1rem 2rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: var(--light-gray);
-            color: var(--secondary-color);
-            border-left-color: var(--primary-color);
-        }
-
-        .)) {
-                    // Revenue update
-                    const current = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-                    stat.textContent = 'login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-        }
-
-        .login-box {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-            margin: 0 auto 2rem;
-        }
-
-        .login-title {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            color: var(--white);
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Dashboard Layout */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .dashboard.show {
-            display: flex;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-        }
-
-        .sidebar-header {
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .sidebar-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--white);
-            margin: 0 auto 1rem;
-        }
-
-        .sidebar-title {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .nav-item {
-            display: block;
-            padding: 1rem 2rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: var(--light-gray);
-            color: var(--secondary-color);
-            border-left-color: var(--primary-color);
-        }
-
-        . + (current + Math.floor(Math.random() * 100)).toLocaleString();
-                } else if (!stat.textContent.includes('.') && !stat.textContent.includes('%')) {
-                    // Count updates
-                    const current = parseInt(stat.textContent);
-                    const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
-                    stat.textContent = Math.max(0, current + change);
+        // Setup Real-Time Listeners
+        function setupRealTimeListeners() {
+            // Listen for new applications
+            realtimeDb.ref('live_tracking').on('child_changed', (snapshot) => {
+                const activeSection = document.querySelector('.dashboard-section.active').id;
+                if (activeSection === 'tracking') {
+                    loadLiveTrackingData();
                 }
             });
-        }, 30000); // Update every 30 seconds
+        }
 
-        // Table row interactions
-        document.querySelectorAll('.data-table tbody tr').forEach(row => {
-            row.addEventListener('click', function() {
-                // Highlight selected row
-                document.querySelectorAll('.data-table tbody tr').forEach(r => {
-                    r.style.backgroundColor = '';
+        function startAutoRefresh() {
+            refreshInterval = setInterval(() => {
+                loadOverviewStats();
+            }, 30000); // Refresh every 30 seconds
+        }
+
+        // Action Functions
+        async function viewApplication(docId) {
+            try {
+                const doc = await db.collection('applications').doc(docId).get();
+                const data = doc.data();
+                
+                if (data) {
+                    alert(`Application Details:\n\nName: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nPhone: ${data.phone}\nService: ${data.primaryService}\nStatus: ${getStatusText(data.status)}\nTracking ID: ${data.trackingId}`);
+                }
+            } catch (error) {
+                console.error('Error viewing application:', error);
+                showNotification('Error loading application details', 'error');
+            }
+        }
+
+        async function approveApplication(docId) {
+            try {
+                await db.collection('applications').doc(docId).update({
+                    status: 'approved',
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                this.style.backgroundColor = 'var(--light-gray)';
-            });
+                
+                showNotification('Application approved successfully', 'success');
+                loadApplications();
+            } catch (error) {
+                console.error('Error approving application:', error);
+                showNotification('Error approving application', 'error');
+            }
+        }
+
+        async function viewInquiry(docId) {
+            try {
+                const doc = await db.collection('contacts').doc(docId).get();
+                const data = doc.data();
+                
+                if (data) {
+                    const response = prompt(`Inquiry from: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nMessage: ${data.message}\n\nEnter your reply:`);
+                    
+                    if (response) {
+                        // In a real implementation, you would send an email here
+                        console.log(`Reply to ${data.email}: ${response}`);
+                        showNotification('Reply sent successfully', 'success');
+                    }
+                }
+            } catch (error) {
+                console.error('Error viewing inquiry:', error);
+                showNotification('Error loading inquiry details', 'error');
+            }
+        }
+
+        async function approveReview(docId) {
+            try {
+                await db.collection('reviews').doc(docId).update({
+                    approved: true
+                });
+                
+                showNotification('Review approved successfully', 'success');
+                loadReviews();
+            } catch (error) {
+                console.error('Error approving review:', error);
+                showNotification('Error approving review', 'error');
+            }
+        }
+
+        async function rejectReview(docId) {
+            try {
+                await db.collection('reviews').doc(docId).delete();
+                showNotification('Review rejected and deleted', 'success');
+                loadReviews();
+            } catch (error) {
+                console.error('Error rejecting review:', error);
+                showNotification('Error rejecting review', 'error');
+            }
+        }
+
+        function viewLiveTracking(trackingId) {
+            window.open(`../track.html?track=${trackingId}`, '_blank');
+        }
+
+        function updateTrackingStatus(trackingId) {
+            document.getElementById('trackingIdInput').value = trackingId;
+            showNotification(`Tracking ID ${trackingId} loaded. Select status and click Update.`, 'info');
+        }
+
+        // Filter Functions
+        function filterApplications() {
+            const statusFilter = document.getElementById('appStatusFilter').value;
+            // Implementation for filtering would go here
+            showNotification(`Filtering applications by: ${statusFilter}`, 'info');
+        }
+
+        function filterReviews() {
+            const statusFilter = document.getElementById('reviewStatusFilter').value;
+            // Implementation for filtering would go here
+            showNotification(`Filtering reviews by: ${statusFilter}`, 'info');
+        }
+
+        // Report Functions
+        async function loadReportData() {
+            try {
+                const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+                
+                // Get month's applications
+                const monthAppsSnapshot = await db.collection('applications')
+                    .where('timestamp', '>=', startOfMonth)
+                    .get();
+                
+                document.getElementById('monthTrips').textContent = monthAppsSnapshot.size;
+                
+                // Calculate estimated revenue (you'd have pricing data in real implementation)
+                const estimatedRevenue = monthAppsSnapshot.size * 50; // $50 average per trip
+                document.getElementById('monthRevenue').textContent = `${estimatedRevenue.toLocaleString()}`;
+                
+                // Get unique customers
+                const customers = new Set();
+                monthAppsSnapshot.forEach(doc => {
+                    customers.add(doc.data().email);
+                });
+                document.getElementById('activeCustomers').textContent = customers.size;
+                
+                // Calculate growth rate (simplified)
+                const growthRate = Math.floor(Math.random() * 20) + 5; // Demo data
+                document.getElementById('growthRate').textContent = `${growthRate}%`;
+                
+            } catch (error) {
+                console.error('Error loading report data:', error);
+            }
+        }
+
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const reportDate = document.getElementById('reportDate').value;
+            
+            if (!reportDate) {
+                showNotification('Please select a date for the report', 'error');
+                return;
+            }
+            
+            // In a real implementation, you would generate and download a report
+            showNotification(`Generating ${reportType} report for ${reportDate}`, 'success');
+        }
+
+        // Modal Functions (placeholders)
+        function showNewBookingForm() {
+            showNotification('New booking form would open here', 'info');
+        }
+
+        function showAddDriverForm() {
+            showNotification('Add driver form would open here', 'info');
+        }
+
+        // Logout Function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                auth.signOut().then(() => {
+                    sessionStorage.removeItem('adminUser');
+                    if (refreshInterval) {
+                        clearInterval(refreshInterval);
+                    }
+                    window.location.href = 'login.html';
+                }).catch((error) => {
+                    console.error('Logout error:', error);
+                    showNotification('Error during logout', 'error');
+                });
+            }
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
         });
 
-        // Action button handlers
-        document.querySelectorAll('.action-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const action = this.textContent;
-                const row = this.closest('tr');
-                const firstCell = row.querySelector('td').textContent;
-                
-                // Simulate action
-                alert(`${action} action for: ${firstCell}`);
-            });
+        // Initialize date picker with today's date
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            const reportDate = document.getElementById('reportDate');
+            if (reportDate) {
+                reportDate.value = today;
+            }
         });
     </script>
 </body>
-</html>login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-        }
-
-        .login-box {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .login-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-            margin: 0 auto 2rem;
-        }
-
-        .login-title {
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            color: var(--white);
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Dashboard Layout */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .dashboard.show {
-            display: flex;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-        }
-
-        .sidebar-header {
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .sidebar-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--white);
-            margin: 0 auto 1rem;
-        }
-
-        .sidebar-title {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .nav-item {
-            display: block;
-            padding: 1rem 2rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background: var(--light-gray);
-            color: var(--secondary-color);
-            border-left-color: var(--primary-color);
-        }
-
-        .
+</html>
