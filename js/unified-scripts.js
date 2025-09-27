@@ -1,5 +1,6 @@
 // Alric Transportation - Enhanced Real-Time Tracking System
 // Fixed version - prevents blank pages and improves reliability
+// Mobile nav conflict removed - relies on separate mobile-nav.js
 
 const firebaseConfig = {
   apiKey: "AIzaSyAa_GIteOi3r4GtdL8mFD7TkrOr1fE6GdE",
@@ -141,7 +142,7 @@ async function initializeApp() {
         // Always setup these universal features first
         setupScrollAnimations();
         setupHeaderScrollEffect();
-        setupMobileOptimizations();
+        // NOTE: Mobile optimizations removed to prevent conflict with mobile-nav.js
         
         // Page-specific initialization with error handling
         try {
@@ -190,9 +191,6 @@ function setupBasicFallbacks() {
                 form.setAttribute('data-fallback-setup', 'true');
             }
         });
-        
-        // Ensure mobile menu works
-        setupBasicMobileMenu();
         
     } catch (error) {
         console.error('Even fallback setup failed:', error);
@@ -386,7 +384,6 @@ async function handleContactForm(e) {
             console.log('Contact form submitted to Firebase');
         } else {
             console.log('Contact form data (offline mode):', contactData);
-            // Here you could implement alternative submission method
         }
         
         showSuccessMessage('contactSuccess', 'Thank you! We\'ll get back to you within 2 hours.');
@@ -1132,7 +1129,6 @@ function startDemoRealTimeUpdates(trackingId) {
                         id: 'demo_driver',
                         name: 'Robert Martinez',
                         phone: '555-234-5678',
-                        avatar: '👨‍🚗',
                         vehicle: {
                             make: 'Ford',
                             model: 'Transit',
@@ -1240,10 +1236,10 @@ function updateConnectionStatus(connected) {
         
         if (connected) {
             statusDiv.className = 'connection-status';
-            statusText.textContent = '🔗 Connected to real-time updates';
+            statusText.textContent = 'Connected to real-time updates';
         } else {
             statusDiv.className = 'connection-status disconnected';
-            statusText.textContent = '⚠️ Connection lost - retrying...';
+            statusText.textContent = 'Connection lost - retrying...';
         }
     } catch (error) {
         console.warn('Update connection status failed:', error);
@@ -1269,8 +1265,8 @@ function updateDriverInfo(driverData) {
         const contactButtons = safeQuerySelector('.contact-driver');
         if (contactButtons && driverData.phone) {
             contactButtons.innerHTML = `
-                <a href="tel:${driverData.phone}" class="contact-btn">📞 Call Driver</a>
-                <a href="sms:${driverData.phone}" class="contact-btn">💬 Text Driver</a>
+                <a href="tel:${driverData.phone}" class="contact-btn">Call Driver</a>
+                <a href="sms:${driverData.phone}" class="contact-btn">Text Driver</a>
             `;
         }
     } catch (error) {
@@ -1381,136 +1377,6 @@ function stopRealTimeTracking() {
         }
     } catch (error) {
         console.warn('Stop real-time tracking failed:', error);
-    }
-}
-
-// Mobile Optimizations
-function setupMobileOptimizations() {
-    try {
-        if ('ontouchstart' in window) {
-            document.body.classList.add('touch-device');
-        }
-        
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            const inputs = safeQuerySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                try {
-                    input.addEventListener('focus', function() {
-                        this.style.fontSize = '16px';
-                    });
-                    input.addEventListener('blur', function() {
-                        this.style.fontSize = '';
-                    });
-                } catch (error) {
-                    console.warn('Input optimization error:', error);
-                }
-            });
-        }
-        
-        setupMobileMenu();
-    } catch (error) {
-        console.warn('Mobile optimizations setup failed:', error);
-    }
-}
-
-// Mobile Menu Setup
-function setupMobileMenu() {
-    try {
-        const mobileToggle = safeQuerySelector('.mobile-menu-toggle');
-        const navLinks = safeQuerySelector('.nav-links');
-        
-        if (!mobileToggle || !navLinks) {
-            setupBasicMobileMenu();
-            return;
-        }
-        
-        mobileToggle.addEventListener('click', function(e) {
-            try {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                navLinks.classList.toggle('mobile-open');
-                this.classList.toggle('open');
-            } catch (error) {
-                console.warn('Mobile toggle click error:', error);
-            }
-        });
-        
-        document.addEventListener('click', function(e) {
-            try {
-                if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                    navLinks.classList.remove('mobile-open');
-                    mobileToggle.classList.remove('open');
-                }
-            } catch (error) {
-                console.warn('Document click error:', error);
-            }
-        });
-        
-        navLinks.querySelectorAll('a').forEach(link => {
-            try {
-                link.addEventListener('click', function() {
-                    try {
-                        navLinks.classList.remove('mobile-open');
-                        mobileToggle.classList.remove('open');
-                    } catch (error) {
-                        console.warn('Nav link click error:', error);
-                    }
-                });
-            } catch (error) {
-                console.warn('Failed to setup nav link:', error);
-            }
-        });
-        
-        window.addEventListener('resize', function() {
-            try {
-                if (window.innerWidth > 768) {
-                    navLinks.classList.remove('mobile-open');
-                    mobileToggle.classList.remove('open');
-                }
-            } catch (error) {
-                console.warn('Window resize error:', error);
-            }
-        });
-    } catch (error) {
-        console.warn('Mobile menu setup failed:', error);
-        setupBasicMobileMenu();
-    }
-}
-
-// Basic Mobile Menu Setup (fallback)
-function setupBasicMobileMenu() {
-    try {
-        if (window.innerWidth <= 768) {
-            const nav = safeQuerySelector('nav');
-            const existingNavLinks = nav?.querySelector('.nav-links');
-            
-            if (nav && existingNavLinks && !nav.querySelector('.mobile-menu-toggle')) {
-                const toggle = document.createElement('button');
-                toggle.className = 'mobile-menu-toggle';
-                toggle.innerHTML = `
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                `;
-                toggle.setAttribute('aria-label', 'Toggle mobile menu');
-                
-                toggle.addEventListener('click', function(e) {
-                    try {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        existingNavLinks.classList.toggle('mobile-open');
-                        this.classList.toggle('open');
-                    } catch (error) {
-                        console.warn('Basic mobile toggle error:', error);
-                    }
-                });
-                
-                nav.appendChild(toggle);
-            }
-        }
-    } catch (error) {
-        console.warn('Basic mobile menu setup failed:', error);
     }
 }
 
