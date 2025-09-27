@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Alric Transportation | Management Portal</title>
-    <meta name="description" content="Alric Transportation administrative dashboard for managing bookings, reviews, customer inquiries, and business operations.">
+    <title>Admin Dashboard - Alric Transportation</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="../assets/img/alrictlogo.png">
     
@@ -38,7 +37,6 @@
             line-height: 1.6;
         }
 
-        /* Dashboard Layout */
         .dashboard {
             display: flex;
             min-height: 100vh;
@@ -91,6 +89,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            cursor: pointer;
         }
 
         .nav-item:hover,
@@ -98,11 +97,6 @@
             background: var(--light-gray);
             color: var(--secondary-color);
             border-left-color: var(--primary-color);
-        }
-
-        .nav-item-icon {
-            margin-right: 0.5rem;
-            font-size: 1.1rem;
         }
 
         /* Main Content */
@@ -163,7 +157,7 @@
             background: #DC2626;
         }
 
-        /* Dashboard Content */
+        /* Dashboard Sections */
         .dashboard-section {
             display: none;
         }
@@ -186,12 +180,6 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .stat-icon {
@@ -270,67 +258,11 @@
         }
 
         .status-pending { background: var(--warning-color); color: var(--white); }
-        .status-confirmed { background: var(--info-color); color: var(--white); }
+        .status-approved { background: var(--info-color); color: var(--white); }
         .status-completed { background: var(--success-color); color: var(--white); }
         .status-cancelled { background: var(--error-color); color: var(--white); }
 
-        /* Action Buttons */
-        .action-btn {
-            padding: 6px 12px;
-            margin: 0 2px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-view { background: var(--info-color); color: var(--white); }
-        .btn-edit { background: var(--warning-color); color: var(--white); }
-        .btn-delete { background: var(--error-color); color: var(--white); }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Forms */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
-        }
-
+        /* Buttons */
         .btn {
             padding: 10px 20px;
             border: none;
@@ -348,16 +280,63 @@
             color: var(--white);
         }
 
-        .btn-success {
-            background: var(--success-color);
-            color: var(--white);
-        }
-
         .btn:hover {
             transform: translateY(-2px);
         }
 
-        /* Notifications */
+        .action-btn {
+            padding: 6px 12px;
+            margin: 0 2px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view { background: var(--info-color); color: var(--white); }
+        .btn-edit { background: var(--warning-color); color: var(--white); }
+        .btn-delete { background: var(--error-color); color: var(--white); }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        /* Notification */
         .notification {
             position: fixed;
             top: 20px;
@@ -369,60 +348,38 @@
             transform: translateX(100%);
             transition: transform 0.3s ease;
             max-width: 300px;
+            cursor: pointer;
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
-        .notification.success {
-            background: var(--success-color);
-        }
+        .notification.success { background: var(--success-color); }
+        .notification.error { background: var(--error-color); }
+        .notification.warning { background: var(--warning-color); }
+        .notification.info { background: var(--info-color); }
 
-        .notification.error {
-            background: var(--error-color);
-        }
-
-        .notification.warning {
-            background: var(--warning-color);
-        }
-
-        .notification.info {
-            background: var(--info-color);
-        }
-
-        /* Review Items */
-        .review-item {
-            background: var(--light-gray);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .review-rating {
-            color: #FFD700;
-            font-size: 1.2rem;
-        }
-
-        .review-date {
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
             color: var(--text-light);
-            font-size: 0.9rem;
         }
 
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            align-items: center;
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--light-gray);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Mobile Responsive */
@@ -448,7 +405,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .form-row {
+            .quick-actions {
                 grid-template-columns: 1fr;
             }
 
@@ -460,63 +417,36 @@
             .data-table td {
                 padding: 0.5rem;
             }
-
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Loading Animation */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--light-gray);
-            border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">🚐</div>
+                <div class="sidebar-logo">🚗</div>
                 <h3 class="sidebar-title">Admin Dashboard</h3>
             </div>
             
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-section="overview">
-                    <span class="nav-item-icon">📊</span> Overview
+                <a class="nav-item active" data-section="overview">
+                    📊 Overview
                 </a>
-                <a href="#" class="nav-item" data-section="bookings">
-                    <span class="nav-item-icon">📅</span> Bookings
+                <a class="nav-item" data-section="applications">
+                    📋 Applications
                 </a>
-                <a href="#" class="nav-item" data-section="tracking">
-                    <span class="nav-item-icon">🔍</span> Live Tracking
+                <a class="nav-item" data-section="tracking">
+                    📍 Live Tracking
                 </a>
-                <a href="#" class="nav-item" data-section="reviews">
-                    <span class="nav-item-icon">⭐</span> Reviews
+                <a class="nav-item" data-section="inquiries">
+                    💬 Inquiries
                 </a>
-                <a href="#" class="nav-item" data-section="inquiries">
-                    <span class="nav-item-icon">💬</span> Inquiries
+                <a class="nav-item" data-section="reviews">
+                    ⭐ Reviews
                 </a>
-                <a href="#" class="nav-item" data-section="applications">
-                    <span class="nav-item-icon">📋</span> Applications
-                </a>
-                <a href="#" class="nav-item" data-section="drivers">
-                    <span class="nav-item-icon">👨‍🚗</span> Drivers
-                </a>
-                <a href="#" class="nav-item" data-section="reports">
-                    <span class="nav-item-icon">📈</span> Reports
+                <a class="nav-item" data-section="reports">
+                    📈 Reports
                 </a>
             </nav>
         </div>
@@ -527,7 +457,7 @@
             <div class="top-bar">
                 <h1 id="pageTitle">Dashboard Overview</h1>
                 <div class="user-info">
-                    <div class="user-avatar">A</div>
+                    <div class="user-avatar" id="userAvatar">A</div>
                     <span id="adminName">Admin</span>
                     <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
@@ -538,18 +468,18 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--info-color);">📅</div>
-                        <div class="stat-number" id="todayBookings">0</div>
-                        <div class="stat-label">Today's Bookings</div>
+                        <div class="stat-number" id="todayApplications">0</div>
+                        <div class="stat-label">Today's Applications</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--success-color);">✅</div>
-                        <div class="stat-number" id="completedTrips">0</div>
-                        <div class="stat-label">Completed Trips</div>
+                        <div class="stat-number" id="completedServices">0</div>
+                        <div class="stat-label">Completed Services</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--warning-color);">🚗</div>
-                        <div class="stat-number" id="activeTrips">0</div>
-                        <div class="stat-label">Active Trips</div>
+                        <div class="stat-number" id="activeServices">0</div>
+                        <div class="stat-label">Active Services</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--primary-color);">⭐</div>
@@ -562,7 +492,7 @@
                     <div class="card-header">
                         <h2 class="card-title">Recent Activity</h2>
                         <button class="btn btn-primary" onclick="refreshData()">
-                            <span class="loading-spinner" id="refreshSpinner" style="display: none;"></span>
+                            <span class="spinner" id="refreshSpinner" style="display: none;"></span>
                             Refresh
                         </button>
                     </div>
@@ -578,9 +508,44 @@
                             </thead>
                             <tbody id="recentActivityTable">
                                 <tr>
-                                    <td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading recent activity...
-                                    </td>
+                                    <td colspan="4" class="loading">Loading recent activity...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="dashboard-section" id="applications">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Service Applications</h2>
+                        <div class="quick-actions" style="grid-template-columns: auto auto;">
+                            <select id="statusFilter">
+                                <option value="all">All Applications</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterApplications()">Filter</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tracking ID</th>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTable">
+                                <tr>
+                                    <td colspan="6" class="loading">Loading applications...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -596,8 +561,8 @@
                     </div>
                     <div class="card-body">
                         <div class="quick-actions">
-                            <input type="text" id="trackingIdInput" placeholder="Enter Tracking ID" class="form-group input">
-                            <select id="statusSelect" class="form-group select">
+                            <input type="text" id="trackingIdInput" placeholder="Enter Tracking ID" class="form-group">
+                            <select id="statusSelect" class="form-group">
                                 <option value="pending">Pending</option>
                                 <option value="approved">Approved</option>
                                 <option value="dispatched">Dispatched</option>
@@ -620,107 +585,12 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="liveTrackingTable">
+                            <tbody id="trackingTable">
                                 <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading live tracking data...
-                                    </td>
+                                    <td colspan="6" class="loading">Loading tracking data...</td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bookings Section -->
-            <div class="dashboard-section" id="bookings">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2 class="card-title">Booking Management</h2>
-                        <button class="btn btn-primary" onclick="showNewBookingForm()">+ New Booking</button>
-                    </div>
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <th>Customer</th>
-                                    <th>Service</th>
-                                    <th>Date/Time</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bookingsTable">
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading bookings...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Applications Section -->
-            <div class="dashboard-section" id="applications">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2 class="card-title">Service Applications</h2>
-                        <div class="quick-actions">
-                            <select id="appStatusFilter">
-                                <option value="all">All Applications</option>
-                                <option value="pending">Pending</option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                            <button class="btn btn-primary" onclick="filterApplications()">Filter</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Tracking ID</th>
-                                    <th>Name</th>
-                                    <th>Service</th>
-                                    <th>Date Submitted</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="applicationsTable">
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading applications...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reviews Section -->
-            <div class="dashboard-section" id="reviews">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2 class="card-title">Customer Reviews</h2>
-                        <div class="quick-actions">
-                            <select id="reviewStatusFilter">
-                                <option value="all">All Reviews</option>
-                                <option value="pending">Pending Approval</option>
-                                <option value="approved">Approved</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                            <button class="btn btn-primary" onclick="filterReviews()">Filter</button>
-                        </div>
-                    </div>
-                    <div class="card-body" id="reviewsList">
-                        <div style="text-align: center; padding: 2rem; color: var(--text-light);">
-                            Loading reviews...
-                        </div>
                     </div>
                 </div>
             </div>
@@ -740,15 +610,12 @@
                                     <th>Service</th>
                                     <th>Urgency</th>
                                     <th>Date</th>
-                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="inquiriesTable">
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading inquiries...
-                                    </td>
+                                    <td colspan="6" class="loading">Loading inquiries...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -756,34 +623,22 @@
                 </div>
             </div>
 
-            <!-- Drivers Section -->
-            <div class="dashboard-section" id="drivers">
+            <!-- Reviews Section -->
+            <div class="dashboard-section" id="reviews">
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">Driver Management</h2>
-                        <button class="btn btn-primary" onclick="showAddDriverForm()">+ Add Driver</button>
+                        <h2 class="card-title">Customer Reviews</h2>
+                        <div class="quick-actions" style="grid-template-columns: auto auto;">
+                            <select id="reviewFilter">
+                                <option value="all">All Reviews</option>
+                                <option value="pending">Pending Approval</option>
+                                <option value="approved">Approved</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterReviews()">Filter</button>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Driver ID</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Vehicle</th>
-                                    <th>Status</th>
-                                    <th>Current Job</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="driversTable">
-                                <tr>
-                                    <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">
-                                        Loading drivers...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-body" id="reviewsList">
+                        <div class="loading">Loading reviews...</div>
                     </div>
                 </div>
             </div>
@@ -798,8 +653,8 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--info-color);">🚗</div>
-                        <div class="stat-number" id="monthTrips">0</div>
-                        <div class="stat-label">Trips This Month</div>
+                        <div class="stat-number" id="monthServices">0</div>
+                        <div class="stat-label">Services This Month</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon" style="color: var(--warning-color);">👥</div>
@@ -818,7 +673,7 @@
                         <h2 class="card-title">Generate Reports</h2>
                     </div>
                     <div class="card-body">
-                        <div class="form-row">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                             <div class="form-group">
                                 <label for="reportType">Report Type</label>
                                 <select id="reportType">
@@ -839,671 +694,12 @@
         </div>
     </div>
 
-    <!-- Firebase CDN -->
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAa_GIteOi3r4GtdL8mFD7TkrOr1fE6GdE",
-            authDomain: "alrictransportation.firebaseapp.com",
-            projectId: "alrictransportation",
-            storageBucket: "alrictransportation.firebasestorage.app",
-            messagingSenderId: "257683950593",
-            appId: "1:257683950593:web:8e84e6599a517f9c284400",
-            measurementId: "G-P8EDVYFFJD",
-            databaseURL: "https://alrictransportation-default-rtdb.firebaseio.com/"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const realtimeDb = firebase.database();
-
-        // Global variables
-        let currentUser = null;
-        let refreshInterval = null;
-
-        // Authentication Check
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                try {
-                    const token = await user.getIdTokenResult();
-                    if (token.claims.admin === true) {
-                        currentUser = user;
-                        document.getElementById('adminName').textContent = user.email.split('@')[0];
-                        initializeDashboard();
-                    } else {
-                        window.location.href = 'login.html';
-                    }
-                } catch (error) {
-                    console.error('Auth check error:', error);
-                    window.location.href = 'login.html';
-                }
-            } else {
-                window.location.href = 'login.html';
-            }
-        });
-
-        // Initialize Dashboard
-        function initializeDashboard() {
-            setupNavigation();
-            loadDashboardData();
-            setupRealTimeListeners();
-            startAutoRefresh();
-        }
-
-        // Navigation Setup
-        function setupNavigation() {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Update active nav item
-                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show corresponding section
-                    const sectionId = this.dataset.section;
-                    document.querySelectorAll('.dashboard-section').forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    document.getElementById(sectionId).classList.add('active');
-                    
-                    // Update page title
-                    const pageTitle = this.textContent.trim();
-                    document.getElementById('pageTitle').textContent = pageTitle;
-                    
-                    // Load section specific data
-                    loadSectionData(sectionId);
-                });
-            });
-        }
-
-        // Load Dashboard Data
-        async function loadDashboardData() {
-            try {
-                await Promise.all([
-                    loadOverviewStats(),
-                    loadRecentActivity(),
-                    loadApplications(),
-                    loadInquiries(),
-                    loadReviews()
-                ]);
-            } catch (error) {
-                console.error('Error loading dashboard data:', error);
-                showNotification('Error loading dashboard data', 'error');
-            }
-        }
-
-        // Load Overview Statistics
-        async function loadOverviewStats() {
-            try {
-                const today = new Date();
-                const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                
-                // Get today's applications/bookings
-                const applicationsSnapshot = await db.collection('applications')
-                    .where('timestamp', '>=', startOfDay)
-                    .get();
-                
-                document.getElementById('todayBookings').textContent = applicationsSnapshot.size;
-                
-                // Get completed trips
-                const completedSnapshot = await db.collection('applications')
-                    .where('status', '==', 'completed')
-                    .get();
-                
-                document.getElementById('completedTrips').textContent = completedSnapshot.size;
-                
-                // Get active trips
-                const activeSnapshot = await db.collection('applications')
-                    .where('status', 'in', ['dispatched', 'enroute', 'arrived', 'intransit'])
-                    .get();
-                
-                document.getElementById('activeTrips').textContent = activeSnapshot.size;
-                
-                // Calculate average rating
-                const reviewsSnapshot = await db.collection('reviews').get();
-                let totalRating = 0;
-                let ratingCount = 0;
-                
-                reviewsSnapshot.forEach(doc => {
-                    const review = doc.data();
-                    if (review.rating) {
-                        totalRating += review.rating;
-                        ratingCount++;
-                    }
-                });
-                
-                const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : '0.0';
-                document.getElementById('avgRating').textContent = avgRating;
-                
-            } catch (error) {
-                console.error('Error loading overview stats:', error);
-            }
-        }
-
-        // Load Recent Activity
-        async function loadRecentActivity() {
-            try {
-                const activitiesSnapshot = await db.collection('applications')
-                    .orderBy('timestamp', 'desc')
-                    .limit(10)
-                    .get();
-                
-                const tableBody = document.getElementById('recentActivityTable');
-                tableBody.innerHTML = '';
-                
-                if (activitiesSnapshot.empty) {
-                    tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-light);">No recent activity</td></tr>';
-                    return;
-                }
-                
-                activitiesSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const row = document.createElement('tr');
-                    
-                    const timestamp = data.timestamp?.toDate() || new Date();
-                    const timeString = timestamp.toLocaleTimeString('en-US', { 
-                        hour: 'numeric', 
-                        minute: '2-digit' 
-                    });
-                    
-                    row.innerHTML = `
-                        <td>${timeString}</td>
-                        <td>${data.primaryService || 'Service Request'}</td>
-                        <td>${data.firstName} ${data.lastName}</td>
-                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Error loading recent activity:', error);
-                document.getElementById('recentActivityTable').innerHTML = 
-                    '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--error-color);">Error loading activity</td></tr>';
-            }
-        }
-
-        // Load Applications
-        async function loadApplications() {
-            try {
-                const applicationsSnapshot = await db.collection('applications')
-                    .orderBy('timestamp', 'desc')
-                    .get();
-                
-                const tableBody = document.getElementById('applicationsTable');
-                tableBody.innerHTML = '';
-                
-                if (applicationsSnapshot.empty) {
-                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">No applications found</td></tr>';
-                    return;
-                }
-                
-                applicationsSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const row = document.createElement('tr');
-                    
-                    const timestamp = data.timestamp?.toDate() || new Date();
-                    const dateString = timestamp.toLocaleDateString();
-                    
-                    row.innerHTML = `
-                        <td>${data.trackingId || 'N/A'}</td>
-                        <td>${data.firstName} ${data.lastName}</td>
-                        <td>${data.primaryService}</td>
-                        <td>${dateString}</td>
-                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
-                        <td>
-                            <button class="action-btn btn-view" onclick="viewApplication('${doc.id}')">View</button>
-                            <button class="action-btn btn-edit" onclick="approveApplication('${doc.id}')">Approve</button>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Error loading applications:', error);
-            }
-        }
-
-        // Load Inquiries
-        async function loadInquiries() {
-            try {
-                const inquiriesSnapshot = await db.collection('contacts')
-                    .orderBy('timestamp', 'desc')
-                    .get();
-                
-                const tableBody = document.getElementById('inquiriesTable');
-                tableBody.innerHTML = '';
-                
-                if (inquiriesSnapshot.empty) {
-                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">No inquiries found</td></tr>';
-                    return;
-                }
-                
-                inquiriesSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const row = document.createElement('tr');
-                    
-                    const timestamp = data.timestamp?.toDate() || new Date();
-                    const dateString = timestamp.toLocaleDateString();
-                    
-                    row.innerHTML = `
-                        <td>${data.firstName} ${data.lastName}</td>
-                        <td>${data.email}</td>
-                        <td>${data.serviceNeeded || 'General Inquiry'}</td>
-                        <td>${data.urgency || 'Normal'}</td>
-                        <td>${dateString}</td>
-                        <td><span class="status-badge status-pending">New</span></td>
-                        <td>
-                            <button class="action-btn btn-view" onclick="viewInquiry('${doc.id}')">Reply</button>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Error loading inquiries:', error);
-            }
-        }
-
-        // Load Reviews
-        async function loadReviews() {
-            try {
-                const reviewsSnapshot = await db.collection('reviews')
-                    .orderBy('timestamp', 'desc')
-                    .get();
-                
-                const reviewsList = document.getElementById('reviewsList');
-                reviewsList.innerHTML = '';
-                
-                if (reviewsSnapshot.empty) {
-                    reviewsList.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-light);">No reviews found</div>';
-                    return;
-                }
-                
-                reviewsSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const timestamp = data.timestamp?.toDate() || new Date();
-                    const dateString = timestamp.toLocaleDateString();
-                    
-                    const stars = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
-                    
-                    const reviewItem = document.createElement('div');
-                    reviewItem.className = 'review-item';
-                    reviewItem.innerHTML = `
-                        <div class="review-header">
-                            <div>
-                                <strong>${data.customerName}</strong>
-                                <div class="review-rating">${stars}</div>
-                            </div>
-                            <div class="review-date">${dateString}</div>
-                        </div>
-                        <p>${data.reviewText}</p>
-                        <p><strong>Service:</strong> ${data.serviceUsed}</p>
-                        <div style="margin-top: 10px;">
-                            <button class="action-btn btn-edit" onclick="approveReview('${doc.id}')">Approve</button>
-                            <button class="action-btn btn-delete" onclick="rejectReview('${doc.id}')">Reject</button>
-                        </div>
-                    `;
-                    
-                    reviewsList.appendChild(reviewItem);
-                });
-                
-            } catch (error) {
-                console.error('Error loading reviews:', error);
-            }
-        }
-
-        // Update Service Status
-        async function updateServiceStatus() {
-            const trackingId = document.getElementById('trackingIdInput').value.trim();
-            const status = document.getElementById('statusSelect').value;
-            
-            if (!trackingId || !status) {
-                showNotification('Please enter tracking ID and select status', 'error');
-                return;
-            }
-            
-            try {
-                // Update in Realtime Database for live tracking
-                await realtimeDb.ref(`live_tracking/${trackingId}`).update({
-                    status: status,
-                    lastUpdated: firebase.database.ServerValue.TIMESTAMP
-                });
-                
-                // Update in Firestore for historical record
-                const applicationsSnapshot = await db.collection('applications')
-                    .where('trackingId', '==', trackingId)
-                    .get();
-                
-                if (!applicationsSnapshot.empty) {
-                    const docRef = applicationsSnapshot.docs[0].ref;
-                    await docRef.update({
-                        status: status,
-                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-                
-                showNotification(`Status updated to ${getStatusText(status)} for ${trackingId}`, 'success');
-                document.getElementById('trackingIdInput').value = '';
-                
-                // Refresh data
-                refreshData();
-                
-            } catch (error) {
-                console.error('Error updating status:', error);
-                showNotification('Error updating status', 'error');
-            }
-        }
-
-        // Utility Functions
-        function getStatusText(status) {
-            const statusMap = {
-                'pending': 'Pending',
-                'approved': 'Approved',
-                'dispatched': 'Dispatched',
-                'enroute': 'En Route',
-                'arrived': 'Arrived',
-                'intransit': 'In Transit',
-                'completed': 'Completed',
-                'cancelled': 'Cancelled'
-            };
-            return statusMap[status] || status;
-        }
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.classList.add('show'), 100);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
-        }
-
-        function refreshData() {
-            const spinner = document.getElementById('refreshSpinner');
-            spinner.style.display = 'inline-block';
-            
-            loadDashboardData().then(() => {
-                spinner.style.display = 'none';
-            });
-        }
-
-        function loadSectionData(sectionId) {
-            switch(sectionId) {
-                case 'applications':
-                    loadApplications();
-                    break;
-                case 'inquiries':
-                    loadInquiries();
-                    break;
-                case 'reviews':
-                    loadReviews();
-                    break;
-                case 'tracking':
-                    loadLiveTrackingData();
-                    break;
-                case 'reports':
-                    loadReportData();
-                    break;
-            }
-        }
-
-        // Load Live Tracking Data
-        async function loadLiveTrackingData() {
-            try {
-                const trackingSnapshot = await realtimeDb.ref('live_tracking').once('value');
-                const trackingData = trackingSnapshot.val();
-                
-                const tableBody = document.getElementById('liveTrackingTable');
-                tableBody.innerHTML = '';
-                
-                if (!trackingData) {
-                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">No live tracking data</td></tr>';
-                    return;
-                }
-                
-                Object.keys(trackingData).forEach(trackingId => {
-                    const data = trackingData[trackingId];
-                    const row = document.createElement('tr');
-                    
-                    const lastUpdated = data.lastUpdated ? 
-                        new Date(data.lastUpdated).toLocaleString() : 'Never';
-                    
-                    row.innerHTML = `
-                        <td>${trackingId}</td>
-                        <td>${data.customer?.name || 'N/A'}</td>
-                        <td>${data.service?.type || 'N/A'}</td>
-                        <td><span class="status-badge status-${data.status}">${getStatusText(data.status)}</span></td>
-                        <td>${lastUpdated}</td>
-                        <td>
-                            <button class="action-btn btn-view" onclick="viewLiveTracking('${trackingId}')">Track</button>
-                            <button class="action-btn btn-edit" onclick="updateTrackingStatus('${trackingId}')">Update</button>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-                
-            } catch (error) {
-                console.error('Error loading live tracking data:', error);
-            }
-        }
-
-        // Setup Real-Time Listeners
-        function setupRealTimeListeners() {
-            // Listen for new applications
-            realtimeDb.ref('live_tracking').on('child_changed', (snapshot) => {
-                const activeSection = document.querySelector('.dashboard-section.active').id;
-                if (activeSection === 'tracking') {
-                    loadLiveTrackingData();
-                }
-            });
-        }
-
-        function startAutoRefresh() {
-            refreshInterval = setInterval(() => {
-                loadOverviewStats();
-            }, 30000); // Refresh every 30 seconds
-        }
-
-        // Action Functions
-        async function viewApplication(docId) {
-            try {
-                const doc = await db.collection('applications').doc(docId).get();
-                const data = doc.data();
-                
-                if (data) {
-                    alert(`Application Details:\n\nName: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nPhone: ${data.phone}\nService: ${data.primaryService}\nStatus: ${getStatusText(data.status)}\nTracking ID: ${data.trackingId}`);
-                }
-            } catch (error) {
-                console.error('Error viewing application:', error);
-                showNotification('Error loading application details', 'error');
-            }
-        }
-
-        async function approveApplication(docId) {
-            try {
-                await db.collection('applications').doc(docId).update({
-                    status: 'approved',
-                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                showNotification('Application approved successfully', 'success');
-                loadApplications();
-            } catch (error) {
-                console.error('Error approving application:', error);
-                showNotification('Error approving application', 'error');
-            }
-        }
-
-        async function viewInquiry(docId) {
-            try {
-                const doc = await db.collection('contacts').doc(docId).get();
-                const data = doc.data();
-                
-                if (data) {
-                    const response = prompt(`Inquiry from: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nMessage: ${data.message}\n\nEnter your reply:`);
-                    
-                    if (response) {
-                        // In a real implementation, you would send an email here
-                        console.log(`Reply to ${data.email}: ${response}`);
-                        showNotification('Reply sent successfully', 'success');
-                    }
-                }
-            } catch (error) {
-                console.error('Error viewing inquiry:', error);
-                showNotification('Error loading inquiry details', 'error');
-            }
-        }
-
-        async function approveReview(docId) {
-            try {
-                await db.collection('reviews').doc(docId).update({
-                    approved: true
-                });
-                
-                showNotification('Review approved successfully', 'success');
-                loadReviews();
-            } catch (error) {
-                console.error('Error approving review:', error);
-                showNotification('Error approving review', 'error');
-            }
-        }
-
-        async function rejectReview(docId) {
-            try {
-                await db.collection('reviews').doc(docId).delete();
-                showNotification('Review rejected and deleted', 'success');
-                loadReviews();
-            } catch (error) {
-                console.error('Error rejecting review:', error);
-                showNotification('Error rejecting review', 'error');
-            }
-        }
-
-        function viewLiveTracking(trackingId) {
-            window.open(`../track.html?track=${trackingId}`, '_blank');
-        }
-
-        function updateTrackingStatus(trackingId) {
-            document.getElementById('trackingIdInput').value = trackingId;
-            showNotification(`Tracking ID ${trackingId} loaded. Select status and click Update.`, 'info');
-        }
-
-        // Filter Functions
-        function filterApplications() {
-            const statusFilter = document.getElementById('appStatusFilter').value;
-            // Implementation for filtering would go here
-            showNotification(`Filtering applications by: ${statusFilter}`, 'info');
-        }
-
-        function filterReviews() {
-            const statusFilter = document.getElementById('reviewStatusFilter').value;
-            // Implementation for filtering would go here
-            showNotification(`Filtering reviews by: ${statusFilter}`, 'info');
-        }
-
-        // Report Functions
-        async function loadReportData() {
-            try {
-                const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-                
-                // Get month's applications
-                const monthAppsSnapshot = await db.collection('applications')
-                    .where('timestamp', '>=', startOfMonth)
-                    .get();
-                
-                document.getElementById('monthTrips').textContent = monthAppsSnapshot.size;
-                
-                // Calculate estimated revenue (you'd have pricing data in real implementation)
-                const estimatedRevenue = monthAppsSnapshot.size * 50; // $50 average per trip
-                document.getElementById('monthRevenue').textContent = `${estimatedRevenue.toLocaleString()}`;
-                
-                // Get unique customers
-                const customers = new Set();
-                monthAppsSnapshot.forEach(doc => {
-                    customers.add(doc.data().email);
-                });
-                document.getElementById('activeCustomers').textContent = customers.size;
-                
-                // Calculate growth rate (simplified)
-                const growthRate = Math.floor(Math.random() * 20) + 5; // Demo data
-                document.getElementById('growthRate').textContent = `${growthRate}%`;
-                
-            } catch (error) {
-                console.error('Error loading report data:', error);
-            }
-        }
-
-        function generateReport() {
-            const reportType = document.getElementById('reportType').value;
-            const reportDate = document.getElementById('reportDate').value;
-            
-            if (!reportDate) {
-                showNotification('Please select a date for the report', 'error');
-                return;
-            }
-            
-            // In a real implementation, you would generate and download a report
-            showNotification(`Generating ${reportType} report for ${reportDate}`, 'success');
-        }
-
-        // Modal Functions (placeholders)
-        function showNewBookingForm() {
-            showNotification('New booking form would open here', 'info');
-        }
-
-        function showAddDriverForm() {
-            showNotification('Add driver form would open here', 'info');
-        }
-
-        // Logout Function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                auth.signOut().then(() => {
-                    sessionStorage.removeItem('adminUser');
-                    if (refreshInterval) {
-                        clearInterval(refreshInterval);
-                    }
-                    window.location.href = 'login.html';
-                }).catch((error) => {
-                    console.error('Logout error:', error);
-                    showNotification('Error during logout', 'error');
-                });
-            }
-        }
-
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (refreshInterval) {
-                clearInterval(refreshInterval);
-            }
-        });
-
-        // Initialize date picker with today's date
-        document.addEventListener('DOMContentLoaded', () => {
-            const today = new Date().toISOString().split('T')[0];
-            const reportDate = document.getElementById('reportDate');
-            if (reportDate) {
-                reportDate.value = today;
-            }
-        });
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>
