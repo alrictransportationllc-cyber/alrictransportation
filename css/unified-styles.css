@@ -189,26 +189,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
     font-weight: 700;
 }
 
 h2 {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
 }
 
 h3 {
-    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
 }
 
 h4 {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
 }
 
 p {
     margin-bottom: var(--spacing-sm);
     color: var(--text-light);
     line-height: 1.7;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
 }
 
 /* ==========================================================================
@@ -507,10 +508,11 @@ nav {
     color: var(--white);
     margin-bottom: var(--spacing-md);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
 }
 
 .hero p {
-    font-size: var(--font-size-large);
+    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: var(--spacing-xl);
     max-width: 600px;
@@ -667,10 +669,11 @@ nav {
 .section-title h2 {
     color: var(--text-color);
     margin-bottom: var(--spacing-sm);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
 }
 
 .section-title p {
-    font-size: var(--font-size-large);
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
     color: var(--text-light);
 }
 
