@@ -742,12 +742,13 @@ nav {
 .about-content {
     display: grid;
     gap: var(--spacing-xl);
-    align-items: center;
+    align-items: start;
 }
 
 @media (min-width: 1024px) {
     .about-content {
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 3fr 1fr;
+        gap: var(--spacing-xxl);
     }
 }
 
@@ -758,15 +759,25 @@ nav {
 
 .about-image {
     text-align: center;
+    align-self: start;
 }
 
 .placeholder-image {
-    font-size: 8rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     color: var(--accent-color);
     background: var(--light-blue);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-md);
     border-radius: var(--border-radius-large);
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 200px;
+    min-height: 120px;
+    max-height: 150px;
+    text-align: center;
+    line-height: 1.2;
+    margin: 0 auto;
 }
 
 .mvv-section {
