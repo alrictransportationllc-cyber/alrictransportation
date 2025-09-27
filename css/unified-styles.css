@@ -1010,22 +1010,82 @@ nav {
 
 .emergency-section {
     padding: var(--spacing-xxl) 0;
-    background: linear-gradient(135deg, var(--error-color) 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
     color: var(--white);
     text-align: center;
+    border: 3px solid #7f1d1d;
+    position: relative;
+}
+
+/* Add a subtle pattern for better visual distinction */
+.emergency-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.03) 10px,
+        rgba(255, 255, 255, 0.03) 20px
+    );
+    pointer-events: none;
+}
+
+.emergency-content {
+    position: relative;
+    z-index: 1;
 }
 
 .emergency-content h2 {
     color: var(--white);
     margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.emergency-content p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: var(--font-size-large);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: var(--spacing-md);
 }
 
 .emergency-phone {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 800;
     color: var(--white);
     margin: var(--spacing-md) 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    display: inline-block;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* High contrast mode override for accessibility */
+@media (prefers-contrast: high) {
+    .emergency-section {
+        background: #800000;
+        border: 3px solid #000000;
+    }
+    
+    .emergency-content h2,
+    .emergency-content p,
+    .emergency-phone {
+        color: #ffffff;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    }
+    
+    .emergency-phone {
+        background: rgba(0, 0, 0, 0.7);
+        border: 3px solid #ffffff;
+    }
 }
 
 .map-section {
