@@ -1519,6 +1519,29 @@ nav {
     border-radius: var(--border-radius);
     font-size: var(--font-size-base);
     transition: var(--transition);
+    min-width: 0;
+    font-family: var(--font-family);
+}
+
+@media (max-width: 767px) {
+    .tracking-input-group {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        gap: var(--spacing-sm);
+    }
+    
+    .tracking-input {
+        width: 100%;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        padding: 14px 16px;
+    }
+    
+    .track-btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: clamp(0.9rem, 3vw, 1rem);
+    }
 }
 
 .tracking-input:focus {
@@ -1618,6 +1641,21 @@ nav {
     font-family: monospace;
     font-size: var(--font-size-large);
     margin-bottom: var(--spacing-sm);
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+@media (max-width: 767px) {
+    .tracking-id {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        word-break: break-all;
+        white-space: normal;
+        line-height: 1.4;
+        padding: var(--spacing-xs);
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius-small);
+    }
 }
 
 .status-indicator {
@@ -2148,6 +2186,57 @@ footer {
         background-color: var(--white);
         color: var(--text-color);
     }
+}
+
+/* ==========================================================================
+   Page-Specific Footer Adjustments
+   ========================================================================== */
+
+/* Smaller footer fonts for FAQ and Track pages */
+body[data-page="faq"] footer,
+body[data-page="track"] footer {
+    font-size: 0.85rem;
+}
+
+body[data-page="faq"] .footer-section h3,
+body[data-page="track"] .footer-section h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+body[data-page="faq"] .footer-section p,
+body[data-page="track"] .footer-section p {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+body[data-page="faq"] .footer-bottom,
+body[data-page="track"] .footer-bottom {
+    font-size: 0.75rem;
+}
+
+/* Alternative approach using page-specific classes */
+.faq-page footer,
+.track-page footer {
+    font-size: 0.85rem;
+}
+
+.faq-page .footer-section h3,
+.track-page .footer-section h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.faq-page .footer-section p,
+.track-page .footer-section p {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+}
+
+.faq-page .footer-bottom,
+.track-page .footer-bottom {
+    font-size: 0.75rem;
 }
 
 /* ==========================================================================
