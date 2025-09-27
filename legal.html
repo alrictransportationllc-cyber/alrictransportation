@@ -107,6 +107,47 @@
             width: 100%;
         }
 
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.open .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-toggle.open .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.open .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
         /* Main Content */
         .container {
             max-width: 1000px;
@@ -132,6 +173,28 @@
         .legal-header p {
             font-size: 1.1rem;
             opacity: 0.9;
+        }
+
+        /* Home Button */
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .home-button:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .legal-nav {
@@ -301,8 +364,58 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+                order: 999;
+            }
+            
+            nav {
+                position: relative;
+            }
+            
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                max-width: 80vw;
+                height: 100vh;
+                background: white;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                padding: 80px 20px 20px;
+                overflow-y: auto;
+                transition: right 0.3s ease;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav-links.mobile-open {
+                right: 0;
+            }
+            
+            .nav-links li {
+                width: 100%;
+                margin: 0;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 15px 0;
+                color: #333;
+                text-decoration: none;
+                font-size: 16px;
+                transition: color 0.3s ease;
+                width: 100%;
+            }
+            
+            .nav-links a:hover {
+                color: #007bff;
             }
             
             .legal-header {
@@ -327,6 +440,18 @@
                 padding: 2rem 1.5rem;
             }
         }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
     </style>
 </head>
 <body>
@@ -345,15 +470,25 @@
                 <li><a href="faq.html">FAQ</a></li>
                 <li><a href="track.html">Track</a></li>
             </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </nav>
     </header>
 
     <!-- Main Content -->
     <div class="container">
         <div class="legal-header">
-            <h1>📋 Legal Information</h1>
+            <h1>Legal Information</h1>
             <p>Our commitment to transparency, privacy, and compliance</p>
         </div>
+
+        <!-- Home Button -->
+        <a href="index.html" class="home-button">
+            <span>← Back to Home</span>
+        </a>
 
         <div class="last-updated">
             Last Updated: September 25, 2025
@@ -404,7 +539,7 @@
             <p>We reserve the right to refuse service in cases where safety cannot be ensured, or where our equipment is not suitable for the client's needs. We are not a medical emergency service and recommend calling 911 for life-threatening emergencies.</p>
 
             <div class="highlight-box">
-                <h4>📞 Contact for Service Issues</h4>
+                <h4>Contact for Service Issues</h4>
                 <p>If you experience any issues with our service, please contact us immediately at (555) 123-4567 or info@alrictransportation.com</p>
             </div>
         </div>
@@ -450,7 +585,7 @@
             <p>You have the right to access, correct, or delete your personal information. You may also opt-out of non-essential communications. Contact us to exercise these rights.</p>
 
             <div class="highlight-box">
-                <h4>🔒 Data Protection</h4>
+                <h4>Data Protection</h4>
                 <p>Your privacy is important to us. We are committed to protecting your personal and medical information in compliance with all applicable privacy laws.</p>
             </div>
         </div>
@@ -492,7 +627,7 @@
             </ul>
 
             <div class="highlight-box">
-                <h4>📋 HIPAA Notice of Privacy Practices</h4>
+                <h4>HIPAA Notice of Privacy Practices</h4>
                 <p>Upon request, we will provide you with a complete Notice of Privacy Practices that details how we use and protect your health information.</p>
             </div>
         </div>
@@ -542,7 +677,7 @@
             </ul>
 
             <div class="highlight-box">
-                <h4>🛡️ Safety First</h4>
+                <h4>Safety First</h4>
                 <p>Your safety is our top priority. All vehicles are regularly inspected and maintained, and our drivers undergo background checks and safety training.</p>
             </div>
         </div>
@@ -581,9 +716,9 @@
             
             <div class="footer-section">
                 <h3>Contact Info</h3>
-                <p>📞 (555) 123-4567</p>
-                <p>📧 info@alrictransportation.com</p>
-                <p>📍 123 Medical Center Dr</p>
+                <p>Phone: (555) 123-4567</p>
+                <p>Email: info@alrictransportation.com</p>
+                <p>Address: 123 Medical Center Dr</p>
             </div>
         </div>
         
@@ -593,6 +728,78 @@
     </footer>
 
     <script>
+        // Mobile Navigation Script
+        (function() {
+            'use strict';
+            
+            function initMobileNav() {
+                const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (!mobileToggle || !navLinks) return;
+                
+                mobileToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const isOpen = navLinks.classList.contains('mobile-open');
+                    
+                    if (isOpen) {
+                        closeNav();
+                    } else {
+                        openNav();
+                    }
+                });
+                
+                function openNav() {
+                    navLinks.classList.add('mobile-open');
+                    mobileToggle.classList.add('open');
+                    document.body.classList.add('nav-open');
+                    
+                    if (!document.querySelector('.nav-overlay')) {
+                        const overlay = document.createElement('div');
+                        overlay.className = 'nav-overlay';
+                        overlay.addEventListener('click', closeNav);
+                        document.body.appendChild(overlay);
+                    }
+                }
+                
+                function closeNav() {
+                    navLinks.classList.remove('mobile-open');
+                    mobileToggle.classList.remove('open');
+                    document.body.classList.remove('nav-open');
+                    
+                    const overlay = document.querySelector('.nav-overlay');
+                    if (overlay) {
+                        overlay.remove();
+                    }
+                }
+                
+                // Close nav on link clicks
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            closeNav();
+                        }
+                    });
+                });
+                
+                // Close nav on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeNav();
+                    }
+                });
+            }
+            
+            // Initialize when DOM is ready
+            if (document.readyState !== 'loading') {
+                initMobileNav();
+            } else {
+                document.addEventListener('DOMContentLoaded', initMobileNav);
+            }
+        })();
+
         // Tab functionality
         document.querySelectorAll('.legal-tab').forEach(tab => {
             tab.addEventListener('click', function() {
