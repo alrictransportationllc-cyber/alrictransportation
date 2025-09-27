@@ -327,6 +327,7 @@ nav {
     z-index: 1001;
 }
 
+.mobile-menu-toggle .hamburger-line,
 .mobile-menu-toggle span {
     width: 100%;
     height: 3px;
@@ -336,72 +337,147 @@ nav {
     transform-origin: center;
 }
 
+.mobile-menu-toggle:hover .hamburger-line,
 .mobile-menu-toggle:hover span {
     background-color: var(--primary-color);
 }
 
 /* Mobile Menu Active State */
+.mobile-menu-toggle.active .hamburger-line:nth-child(1),
 .mobile-menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(6px, 6px);
 }
 
+.mobile-menu-toggle.active .hamburger-line:nth-child(2),
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
 }
 
+.mobile-menu-toggle.active .hamburger-line:nth-child(3),
 .mobile-menu-toggle.active span:nth-child(3) {
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* Mobile Navigation Menu */
-.mobile-nav {
+.nav-links {
+    display: none;
+    gap: var(--spacing-md);
+}
+
+/* Mobile Navigation Overlay */
+.mobile-nav-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--white);
-    z-index: 999;
-    padding-top: 80px;
-    transform: translateY(-100%);
-    transition: transform 0.3s ease-in-out;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
 }
 
-.mobile-nav.active {
-    transform: translateY(0);
+.mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-.mobile-nav ul {
-    padding: var(--spacing-lg);
-}
-
-.mobile-nav li {
-    margin-bottom: var(--spacing-md);
-}
-
-.mobile-nav a {
-    display: block;
-    font-size: var(--font-size-large);
-    font-weight: 500;
-    color: var(--text-color);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-}
-
-.mobile-nav a:hover {
-    color: var(--primary-color);
-    background-color: var(--light-blue);
-}
-
-/* Desktop Navigation - Show on larger screens */
-@media (min-width: 768px) {
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
     .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        max-width: 85vw;
+        height: 100vh;
+        background: var(--white);
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        padding: 80px 20px 20px;
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        flex-direction: column;
+        align-items: flex-start;
         display: flex;
     }
     
+    .nav-links.mobile-open {
+        right: 0;
+    }
+    
+    .nav-links li {
+        width: 100%;
+        margin: 0 0 var(--spacing-sm) 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: var(--spacing-sm) 0;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: var(--font-size-large);
+        font-weight: 500;
+        transition: var(--transition);
+        width: 100%;
+    }
+    
+    .nav-links a:hover {
+        color: var(--primary-color);
+        background-color: var(--light-blue);
+        padding-left: var(--spacing-sm);
+        border-radius: var(--border-radius);
+    }
+    
+    body.nav-open {
+        overflow: hidden;
+    }
+}
+
+/* Desktop Navigation - Show on larger screens */
+@media (min-width: 769px) {
+    .nav-links {
+        display: flex !important;
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        background: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        flex-direction: row !important;
+        overflow: visible !important;
+        gap: var(--spacing-md);
+    }
+    
+    .nav-links li {
+        width: auto !important;
+        margin: 0 !important;
+        border-bottom: none !important;
+    }
+    
+    .nav-links a {
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        font-size: var(--font-size-base) !important;
+        font-weight: 500;
+        color: var(--text-color);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+    }
+    
+    .nav-links a:hover {
+        color: var(--primary-color);
+        background-color: var(--light-blue);
+        padding-left: var(--spacing-sm) !important;
+    }
+    
     .mobile-menu-toggle {
-        display: none;
+        display: none !important;
     }
 }
 
