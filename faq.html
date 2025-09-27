@@ -12,47 +12,42 @@
     <meta property="og:description" content="Frequently asked questions about medical transportation services">
     <meta property="og:image" content="assets/img/alrictlogo.png">
     <link rel="icon" type="image/png" href="assets/img/alrictlogo.png">
-    <!-- Unified CSS file that includes all styles and animations -->
     <link rel="stylesheet" href="css/unified-styles.css">
 </head>
 <body>
-    <!-- Header - Use this exact structure in ALL HTML files -->
-<header>
-    <nav>
-        <div class="logo">
-            <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
-            <h1>Alric Transportation</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="track.html">Track</a></li>
-        </ul>
-        <!-- MOBILE MENU TOGGLE - ADD THIS TO ALL PAGES -->
-        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
-</header>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="assets/img/alrictlogo.png" alt="Alric Transportation Logo">
+                <h1>Alric Transportation</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="track.html">Track</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </header>
 
-    <!-- Hero Section with default grid animation -->
     <section class="hero">
         <div class="hero-content">
-            <h1>❓ Frequently Asked Questions</h1>
+            <h1>Frequently Asked Questions</h1>
             <p>Find answers to common questions about our medical transportation services</p>
         </div>
     </section>
 
-    <!-- Search Section -->
     <section class="search-section">
         <div class="container">
             <div class="search-box">
-                <input type="text" class="search-input" id="faqSearch" placeholder="🔍 Search for answers...">
+                <input type="text" class="search-input" id="faqSearch" placeholder="Search for answers...">
             </div>
 
             <div class="categories">
@@ -63,9 +58,8 @@
                 <button class="category-btn" data-category="safety">Safety & Policies</button>
             </div>
 
-            <!-- Booking & Scheduling FAQs -->
             <div class="faq-section" data-category="booking">
-                <h2 class="faq-category-title">📅 Booking & Scheduling</h2>
+                <h2 class="faq-category-title">Booking & Scheduling</h2>
                 
                 <div class="faq-item fade-in">
                     <div class="faq-question">
@@ -112,9 +106,8 @@
                 </div>
             </div>
 
-            <!-- Services FAQs -->
             <div class="faq-section" data-category="services">
-                <h2 class="faq-category-title">🚐 Our Services</h2>
+                <h2 class="faq-category-title">Our Services</h2>
                 
                 <div class="faq-item fade-in">
                     <div class="faq-question">
@@ -180,9 +173,8 @@
                 </div>
             </div>
 
-            <!-- Pricing & Payment FAQs -->
             <div class="faq-section" data-category="pricing">
-                <h2 class="faq-category-title">💰 Pricing & Payment</h2>
+                <h2 class="faq-category-title">Pricing & Payment</h2>
                 
                 <div class="faq-item fade-in">
                     <div class="faq-question">
@@ -247,9 +239,8 @@
                 </div>
             </div>
 
-            <!-- Safety & Policies FAQs -->
             <div class="faq-section" data-category="safety">
-                <h2 class="faq-category-title">🛡️ Safety & Policies</h2>
+                <h2 class="faq-category-title">Safety & Policies</h2>
                 
                 <div class="faq-item fade-in">
                     <div class="faq-question">
@@ -324,17 +315,15 @@
                 </div>
             </div>
 
-            <!-- Contact CTA -->
             <div class="contact-cta fade-in">
                 <h2>Still Have Questions?</h2>
                 <p>Our friendly team is here to help! Contact us anytime for personalized assistance.</p>
                 <a href="contact.html" class="btn btn-white">Contact Us Now</a>
-                <a href="tel:+15551234567" class="btn btn-white">📞 (555) 123-4567</a>
+                <a href="tel:+15551234567" class="btn btn-white">Call (555) 123-4567</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -360,9 +349,9 @@
             
             <div class="footer-section">
                 <h3>Contact Info</h3>
-                <p>📞 (555) 123-4567</p>
-                <p>📧 info@alrictransportation.com</p>
-                <p>📍 123 Medical Center Dr</p>
+                <p>Phone: (555) 123-4567</p>
+                <p>Email: info@alrictransportation.com</p>
+                <p>Address: 123 Medical Center Dr</p>
             </div>
         </div>
         
@@ -370,8 +359,7 @@
             <p>&copy; 2025 Alric Transportation. All rights reserved. | <a href="legal.html">Privacy Policy</a> | <a href="legal.html">Terms of Service</a></p>
         </div>
     </footer>
-        <!-- Unified JavaScript -->
-    <script src="js/unified-scripts.js"></script>
+
     <script src="js/mobile-nav.js"></script>
     <script>
         // Scroll animations
@@ -410,6 +398,7 @@
                 // Toggle current FAQ
                 this.classList.toggle('active');
                 answer.classList.toggle('active');
+                icon.style.transform = this.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
             });
         });
 
@@ -430,6 +419,9 @@
                         section.style.display = 'none';
                     }
                 });
+
+                // Clear search when changing categories
+                document.getElementById('faqSearch').value = '';
             });
         });
 
