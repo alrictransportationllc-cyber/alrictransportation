@@ -64,6 +64,8 @@
 html {
     scroll-behavior: smooth;
     font-size: var(--font-size-base);
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -72,6 +74,8 @@ body {
     color: var(--text-color);
     background-color: var(--white);
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 img {
@@ -99,8 +103,83 @@ button {
 }
 
 /* ==========================================================================
-   Typography
+   Mobile Overflow Prevention
    ========================================================================== */
+
+/* Prevent horizontal scroll on all elements */
+*, *::before, *::after {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+/* Ensure all text elements wrap properly */
+h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Prevent images and media from overflowing */
+img, video, iframe, embed, object {
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* Fix for flexbox and grid containers */
+.services-grid, .features-grid, .contact-info, 
+.mvv-grid, .team-grid, .stats-grid, .forms-container,
+.tracking-examples, .quick-actions, .footer-content {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 767px) {
+    /* Reduce padding on mobile to prevent overflow */
+    .hero {
+        padding: 100px var(--spacing-sm) 60px;
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-xs);
+        max-width: calc(100vw - 2rem);
+    }
+    
+    /* Ensure buttons don't overflow */
+    .cta-buttons {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .btn {
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+    
+    /* Fix form inputs on mobile */
+    .tracking-input-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .tracking-input, .track-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Ensure tables and wide content are scrollable */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix for hero animations that might cause overflow */
+    .hero::before, .hero::after {
+        max-width: 100vw;
+        overflow: hidden;
+    }
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
@@ -140,6 +219,8 @@ p {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -152,6 +233,14 @@ p {
     .container {
         padding: 0 var(--spacing-lg);
     }
+}
+
+/* Prevent all containers and sections from overflowing */
+section {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -176,6 +265,14 @@ nav {
     padding: var(--spacing-sm) var(--spacing-md);
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+    nav {
+        padding: var(--spacing-sm);
+    }
 }
 
 .logo {
@@ -1898,4 +1995,74 @@ footer {
         background-color: var(--white);
         color: var(--text-color);
     }
+}
+
+/* ==========================================================================
+   Additional Mobile Overflow Fixes
+   ========================================================================== */
+
+/* Ultimate overflow prevention */
+body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+}
+
+/* Fix for any remaining wide elements */
+.hero-medical-icons::before {
+    left: 5%;
+    right: 5%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Ensure all grid containers don't overflow */
+@media (max-width: 767px) {
+    .services-grid, .features-grid, .mvv-grid, .team-grid, 
+    .contact-info, .stats-grid, .tracking-examples {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .forms-container {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Fix for long words or URLs */
+    p, span, div, a {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Ensure form elements don't exceed viewport */
+    .form-group input, .form-group select, .form-group textarea {
+        max-width: 100%;
+        min-width: 0;
+    }
+    
+    /* Fix for tracking input group */
+    .tracking-input-group {
+        max-width: 100%;
+    }
+    
+    /* Prevent any floating elements from causing overflow */
+    .float-left, .float-right {
+        float: none;
+    }
+}
+
+/* Additional safety net */
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.no-scroll-x {
+    overflow-x: hidden;
 }
