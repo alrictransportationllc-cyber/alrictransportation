@@ -1253,20 +1253,66 @@ function updateDriverInfo(driverData) {
         
         const driverDetails = safeQuerySelector('.driver-details');
         if (driverDetails) {
+            // Clear any existing styles that might cause layout issues
+            driverDetails.style.display = 'block';
+            driverDetails.style.width = '100%';
+            driverDetails.style.wordWrap = 'break-word';
+            driverDetails.style.overflowWrap = 'break-word';
+            
             driverDetails.innerHTML = `
-                <h4>${driverData.name}</h4>
-                <p>Professional Medical Transport Driver</p>
-                <p>Vehicle: ${driverData.vehicle.year} ${driverData.vehicle.make} ${driverData.vehicle.model} 
-                   ${driverData.vehicle.type === 'wheelchair_accessible' ? '(Wheelchair Accessible)' : ''}</p>
-                <p>License Plate: ${driverData.vehicle.licensePlate}</p>
+                <div style="display: block; width: 100%; margin-bottom: 10px;">
+                    <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: #333; display: block; width: 100%;">${driverData.name}</h4>
+                </div>
+                <div style="display: block; width: 100%; margin-bottom: 8px;">
+                    <p style="margin: 0; font-size: 0.9rem; color: #666; display: block; width: 100%;">Professional Medical Transport Driver</p>
+                </div>
+                <div style="display: block; width: 100%; margin-bottom: 8px;">
+                    <p style="margin: 0; font-size: 0.9rem; color: #666; display: block; width: 100%; word-wrap: break-word;">
+                        Vehicle: ${driverData.vehicle.year} ${driverData.vehicle.make} ${driverData.vehicle.model}
+                        ${driverData.vehicle.type === 'wheelchair_accessible' ? ' (Wheelchair Accessible)' : ''}
+                    </p>
+                </div>
+                <div style="display: block; width: 100%;">
+                    <p style="margin: 0; font-size: 0.9rem; color: #666; display: block; width: 100%;">License Plate: ${driverData.vehicle.licensePlate}</p>
+                </div>
             `;
         }
         
         const contactButtons = safeQuerySelector('.contact-driver');
         if (contactButtons && driverData.phone) {
+            // Ensure contact buttons display properly on mobile
+            contactButtons.style.display = 'flex';
+            contactButtons.style.flexDirection = 'column';
+            contactButtons.style.gap = '10px';
+            contactButtons.style.width = '100%';
+            contactButtons.style.marginTop = '15px';
+            
             contactButtons.innerHTML = `
-                <a href="tel:${driverData.phone}" class="contact-btn">Call Driver</a>
-                <a href="sms:${driverData.phone}" class="contact-btn">Text Driver</a>
+                <a href="tel:${driverData.phone}" class="contact-btn" style="
+                    display: block; 
+                    width: 100%; 
+                    padding: 12px; 
+                    text-align: center; 
+                    background: #007bff; 
+                    color: white; 
+                    text-decoration: none; 
+                    border-radius: 6px; 
+                    font-size: 14px;
+                    margin-bottom: 8px;
+                    box-sizing: border-box;
+                ">Call Driver</a>
+                <a href="sms:${driverData.phone}" class="contact-btn" style="
+                    display: block; 
+                    width: 100%; 
+                    padding: 12px; 
+                    text-align: center; 
+                    background: #28a745; 
+                    color: white; 
+                    text-decoration: none; 
+                    border-radius: 6px; 
+                    font-size: 14px;
+                    box-sizing: border-box;
+                ">Text Driver</a>
             `;
         }
     } catch (error) {
