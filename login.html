@@ -275,16 +275,27 @@
         // Check if user is admin
         async function checkAdminAccess(user) {
             try {
-                // Check if user document exists in admins collection
+                console.log('Checking admin access for:', user.email);
+                
+                // First check if user exists in admins collection
                 const adminDoc = await db.collection('admins').doc(user.uid).get();
                 
-                if (adminDoc.exists && adminDoc.data().active === true) {
-                    return true;
+                if (adminDoc.exists) {
+                    const adminData = adminDoc.data();
+                    console.log('Admin document found:', adminData);
+                    
+                    if (adminData.active === true) {
+                        console.log('User is active admin');
+                        return true;
+                    }
                 }
                 
                 // Fallback: check custom claims
                 const token = await user.getIdTokenResult();
-                return token.claims.admin === true;
+                const isAdmin = token.claims.admin === true;
+                console.log('Custom claims admin status:', isAdmin);
+                
+                return isAdmin;
                 
             } catch (error) {
                 console.error('Error checking admin access:', error);
@@ -307,14 +318,19 @@
             setLoading(true);
 
             try {
+                console.log('Attempting login for:', email);
+                
                 // Sign in user
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
+                
+                console.log('User signed in successfully:', user.uid);
 
                 // Check admin access
                 const isAdmin = await checkAdminAccess(user);
                 
                 if (isAdmin) {
+                    console.log('Admin access confirmed, redirecting...');
                     showMessage('Login successful! Redirecting...', 'success');
                     
                     // Store admin session
@@ -324,13 +340,21 @@
                         loginTime: Date.now()
                     }));
                     
-                    // Redirect to dashboard
+                    // Redirect to dashboard - try different approaches
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        // Try relative path first
+                        try {
+                            window.location.href = './dashboard.html';
+                        } catch (error) {
+                            console.error('Redirect error:', error);
+                            // Fallback: try absolute path
+                            window.location.href = window.location.origin + window.location.pathname.replace('login.html', 'dashboard.html');
+                        }
                     }, 1000);
                     
                 } else {
                     // Not an admin
+                    console.log('User is not admin, signing out');
                     await auth.signOut();
                     showMessage('Access denied. Admin privileges required.', 'error');
                 }
@@ -367,9 +391,15 @@
         // Check if already logged in
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                const isAdmin = await checkAdminAccess(user);
-                if (isAdmin) {
-                    window.location.href = 'dashboard.html';
+                console.log('User already logged in:', user.email);
+                try {
+                    const isAdmin = await checkAdminAccess(user);
+                    if (isAdmin) {
+                        console.log('Already logged in as admin, redirecting...');
+                        window.location.href = './dashboard.html';
+                    }
+                } catch (error) {
+                    console.error('Auth state check error:', error);
                 }
             }
         });
@@ -383,6 +413,11 @@
                 passwordInput.focus();
             }
         });
+
+        // Debug info
+        console.log('Admin login page loaded');
+        console.log('Current URL:', window.location.href);
+        console.log('Dashboard URL will be:', window.location.href.replace('login.html', 'dashboard.html'));
     </script>
 </body>
 </html>
